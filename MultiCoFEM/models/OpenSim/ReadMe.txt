@@ -1,0 +1,1 @@
+Set in this path the OpenSim file (.osim) of set up analysis (setup.ini)

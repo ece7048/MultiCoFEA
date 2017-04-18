@@ -1,0 +1,1 @@
+Set in this path the FEBio file (.feb) of set up analysis (setup.ini)
