@@ -2,7 +2,7 @@
 
   A co-operation program between multibody (OpenSim) and finite element method (FEBio) analysis programs.
   Used by set the OpenSim model (.osim) and the FEBio model in setup.ini file in .../data/setup.ini.
-  Also the user have to set the other variables of the setup.ini file (like the CMC states of motion for the OpenSim model under  observation) and then copy that file two times with setup1.ini and setup2.ini names.
+  Also the user have to set the other variables of the setup.ini file (like the CMC states of motion for the OpenSim model under  observation).
   
 # Dependency
 It is based on OpenSim 3.3. The user must define the OPENSIM_HOME variable and to add OPENSIM_HOME/bin to path.
@@ -10,4 +10,4 @@ It is based on FEBio 2.5 The user must define the FEBio variable and to add FEBi
 #  Building
 Run CMake in the root directory.
 # Running
-You can configure your simulation through data/setup.ini, where the path configured by CMake through src/Setting.h. also you have to do two copy paste the file setup.ini with name setup1.ini and setup2.ini (this will be modified later for not need it...)
+You can configure your simulation through data/setup.ini, where the path configured by CMake through src/Setting.h. 
