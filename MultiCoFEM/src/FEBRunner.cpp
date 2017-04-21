@@ -348,6 +348,15 @@ void FEBRunner::WriteFEBFile(int itteration,char mode)
 	string prl2 = ini.Get("FEBIOSTEP", "PRINT_LEVEL2", "");
 	string mres2 = ini.Get("FEBIOSTEP", "MINRESIDUAL2", "");
 	string out2 = ini.Get("FEBIOSTEP", "OUT2", "");
+	//newmark parameters////
+	double alpha1 = ini.GetReal("FEBIOSTEP", "alpha1", 1);
+	double beta1 = ini.GetReal("FEBIOSTEP", "beta1", 0.25);
+	double gamma1 = ini.GetReal("FEBIOSTEP", "gamma1", 0.5);
+
+	double alpha2 = ini.GetReal("FEBIOSTEP", "alpha2", 1);
+	double beta2 = ini.GetReal("FEBIOSTEP", "beta2", 0.25);
+	double gamma2 = ini.GetReal("FEBIOSTEP", "gamma2", 0.5);
+
 	// build the step one //////////
 	ofstream stepone(resultDir2 + "/stepone" + itter + ".txt", ofstream::out);
 	ofstream steptwo(resultDir2 + "/steptwo" + itter + ".txt", ofstream::out);
@@ -361,28 +370,83 @@ void FEBRunner::WriteFEBFile(int itteration,char mode)
 	stepone << " <title>tf_joint</title>" << endl;
 	stepone << " <time_steps>" << ts1 << "</time_steps>" << endl;
 	stepone << " <step_size>" << ss1 << "</step_size>" << endl;
-	stepone << " <dtol>" << dt1 << "</dtol>" << endl;
-	stepone << " <etol>" << et1 << "</etol>" << endl;
-	stepone << " <rtol>" << rt1 << "</rtol>" << endl;
-	stepone << " <lstol>" << lst1 << "</lstol>" << endl;
-	stepone << " <pressure_stiffness>" << ps1 << "</pressure_stiffness>" << endl;
+	if (dt1 != "NAN"){
+		stepone << " <dtol>" << dt1 << "</dtol>" << endl;
+	}
+	if (et1 != "NAN"){
+		stepone << " <etol>" << et1 << "</etol>" << endl;
+	}
+	if (rt1 != "NAN"){
+		stepone << " <rtol>" << rt1 << "</rtol>" << endl;
+	}
+	if (lst1 != "NAN"){
+		stepone << " <lstol>" << lst1 << "</lstol>" << endl;
+	}
+	if (ps1 != "NAN"){
+		stepone << " <pressure_stiffness>" << ps1 << "</pressure_stiffness>" << endl;
+	}
+
 	stepone << " <time_stepper>" << endl;
-	stepone << "  <dtmin>" << dtm1 << "</dtmin>" << endl;
-	stepone << "  <dtmax>" << dtma1 << "</dtmax>" << endl;
-	stepone << "  <max_retries>" << maxre1 << "</max_retries>" << endl;
-	stepone << "  <opt_iter>" << oi1 << "</opt_iter>" << endl;
-	stepone << "  <aggressiveness>" << a1 << "</aggressiveness>" << endl;
+
+	if (dtm1 != "NAN"){
+		stepone << "  <dtmin>" << dtm1 << "</dtmin>" << endl;
+	}
+	if (dtma1 != "NAN"){
+		stepone << "  <dtmax>" << dtma1 << "</dtmax>" << endl;
+	}
+	if (maxre1 != "NAN"){
+		stepone << "  <max_retries>" << maxre1 << "</max_retries>" << endl;
+	}
+	if (oi1 != "NAN"){
+		stepone << "  <opt_iter>" << oi1 << "</opt_iter>" << endl;
+	}
+	if (a1 != "NAN"){
+		stepone << "  <aggressiveness>" << a1 << "</aggressiveness>" << endl;
+	}
 	stepone << " </time_stepper>" << endl;
-	stepone << " <max_refs>" << mr1 << "</max_refs>" << endl;
-	stepone << " <max_ups>" << mu1 << "</max_ups>" << endl;
-	stepone << " <optimize_bw>" << ob1 << "</optimize_bw>" << endl;
-	stepone << " <restart>" << re1 << "</restart>" << endl;
-	stepone << " <plot_level>" << pl1 << "</plot_level>" << endl;
-	stepone << " <cmax>" << cm1 << "</cmax>" << endl;
+	if (mr1 != "NAN"){
+		stepone << " <max_refs>" << mr1 << "</max_refs>" << endl;
+	}
+	if (mu1 != "NAN"){
+		stepone << " <max_ups>" << mu1 << "</max_ups>" << endl;
+	}
+	if (ob1 != "NAN"){
+		stepone << " <optimize_bw>" << ob1 << "</optimize_bw>" << endl;
+	}
+	if (re1 != "NAN"){
+		stepone << " <restart>" << re1 << "</restart>" << endl;
+	}
+	if (pl1 != "NAN"){
+		stepone << " <plot_level>" << pl1 << "</plot_level>" << endl;
+	}
+	if (cm1 != "NAN"){
+		stepone << " <cmax>" << cm1 << "</cmax>" << endl;
+	}
+
 	stepone << " <analysis type =" << '"' << analysis1 << '"' << "/>" << endl;
-	stepone << " <print_level>" << prl1 << "</print_level>" << endl;
-	stepone << " <min_residual>" << mres1 << "</min_residual>" << endl;
-	stepone << "<output_level>"<<out1<<"</output_level> "<< endl;
+	if (alpha1 != 0){
+		stepone << " <alpha>" << alpha1 << "</alpha>" << endl;
+
+	}
+	if (beta1 != 0){
+		stepone << " <beta>" << beta1 << "</beta>" << endl;
+
+	}
+	if (gamma1 != 0){
+		stepone << " <gamma>" << gamma1 << "</gamma>" << endl;
+
+	}
+
+	if (prl1 != "NAN"){
+		stepone << " <print_level>" << prl1 << "</print_level>" << endl;
+	}
+	if (mres1 != "NAN"){
+		stepone << " <min_residual>" << mres1 << "</min_residual>" << endl;
+	}
+	if (out1 != "NAN"){
+		stepone << "<output_level>" << out1 << "</output_level> " << endl;
+	}
+
 	stepone << " </Control>" << endl;
 
 
@@ -392,28 +456,82 @@ void FEBRunner::WriteFEBFile(int itteration,char mode)
 	steptwo << " <title>tf_joint</title>" << endl;
 	steptwo << " <time_steps>" << ts2 << "</time_steps>" << endl;
 	steptwo << " <step_size>" << ss2 << "</step_size>" << endl;
-	steptwo << " <dtol>" << dt2 << "</dtol>" << endl;
-	steptwo << " <etol>" << et2 << "</etol>" << endl;
-	steptwo << " <rtol>" << rt2 << "</rtol>" << endl;
-	steptwo << " <lstol>" << lst2 << "</lstol>" << endl;
-	steptwo << " <pressure_stiffness>" << ps2 << "</pressure_stiffness>" << endl;
-	steptwo << " <time_stepper>" << endl;
-	steptwo << "  <dtmin>" << dtm2 << "</dtmin>" << endl;
-	steptwo << "  <dtmax>" << dtma2 << "</dtmax>" << endl;
-	steptwo << "  <max_retries>" << maxre2 << "</max_retries>" << endl;
-	steptwo << "  <opt_iter>" << oi2 << "</opt_iter>" << endl;
-	steptwo << "  <aggressiveness>" << a2 << "</aggressiveness>" << endl;
+	if (dt2 != "NAN"){
+		steptwo << " <dtol>" << dt2 << "</dtol>" << endl;
+	}
+	if (et2 != "NAN"){
+		steptwo << " <etol>" << et2 << "</etol>" << endl;
+	}
+	if (rt2 != "NAN"){
+		steptwo << " <rtol>" << rt2 << "</rtol>" << endl;
+	}
+	if (lst2 != "NAN"){
+		steptwo << " <lstol>" << lst2 << "</lstol>" << endl;
+	}
+	if (ps2 != "NAN"){
+		steptwo << " <pressure_stiffness>" << ps2 << "</pressure_stiffness>" << endl;
+	}
+	
+		steptwo << " <time_stepper>" << endl;
+	
+		if (dtm2 != "NAN"){
+		steptwo << "  <dtmin>" << dtm2 << "</dtmin>" << endl;
+	}
+	if (dtma2 != "NAN"){
+		steptwo << "  <dtmax>" << dtma2 << "</dtmax>" << endl;
+	}
+	if (maxre2 != "NAN"){
+		steptwo << "  <max_retries>" << maxre2 << "</max_retries>" << endl;
+	}
+	if (oi2 != "NAN"){
+		steptwo << "  <opt_iter>" << oi2 << "</opt_iter>" << endl;
+	}
+	if (a2 != "NAN"){
+		steptwo << "  <aggressiveness>" << a2 << "</aggressiveness>" << endl;
+	}
 	steptwo << " </time_stepper>" << endl;
-	steptwo << " <max_refs>" << mr2 << "</max_refs>" << endl;
-	steptwo << " <max_ups>" << mu2 << "</max_ups>" << endl;
-	steptwo << " <optimize_bw>" << ob2 << "</optimize_bw>" << endl;
-	steptwo << " <restart>" << re2 << "</restart>" << endl;
-	steptwo << " <plot_level>" << pl2 << "</plot_level>" << endl;
-	steptwo << " <cmax>" << cm2 << "</cmax>" << endl;
-	steptwo << " <analysis type =" << '"' << analysis2 << '"' << "/>" << endl;
-	steptwo << " <print_level>" << prl2 << "</print_level>" << endl;
-	steptwo << " <min_residual>" << mres2 << "</min_residual>" << endl;
-	steptwo << "<output_level>" << out2 << "</output_level> " << endl;
+	if (mr2 != "NAN"){
+		steptwo << " <max_refs>" << mr2 << "</max_refs>" << endl;
+	}
+	if (mu2 != "NAN"){
+		steptwo << " <max_ups>" << mu2 << "</max_ups>" << endl;
+	}
+	if (ob2 != "NAN"){
+		steptwo << " <optimize_bw>" << ob2 << "</optimize_bw>" << endl;
+	}
+	if (re2 != "NAN"){
+		steptwo << " <restart>" << re2 << "</restart>" << endl;
+	}
+	if (pl2 != "NAN"){
+		steptwo << " <plot_level>" << pl2 << "</plot_level>" << endl;
+	}
+	if (cm2 != "NAN"){
+		steptwo << " <cmax>" << cm2 << "</cmax>" << endl;
+	}
+	
+		steptwo << " <analysis type =" << '"' << analysis2 << '"' << "/>" << endl;
+		if (alpha2 != 0){
+			steptwo << " <alpha>" << alpha2 << "</alpha>" << endl;
+
+		}
+		if (beta2 != 0){
+			steptwo << " <beta>" << beta2 << "</beta>" << endl;
+
+		}
+		if (gamma2 != 0){
+			steptwo << " <gamma>" << gamma2 << "</gamma>" << endl;
+
+		}
+		
+	if (prl2 != "NAN"){
+		steptwo << " <print_level>" << prl2 << "</print_level>" << endl;
+	}
+	if (mres2 != "NAN"){
+		steptwo << " <min_residual>" << mres2 << "</min_residual>" << endl;
+	}
+		if (out2 != "NAN"){
+		steptwo << "<output_level>" << out2 << "</output_level> " << endl;
+	}
 	steptwo << " </Control>" << endl;
 	
 	

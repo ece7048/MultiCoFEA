@@ -74,6 +74,30 @@ try{
 	cout << "Copyright (c) all rights reserved/////////////////////oooo///oooo/////////////ooooo/////o/////o/////o/////////////" << endl;
 	cout << "///////////////////////////////////////////////////////////////////////////////////////////////////////////////////" << endl;
 	//cout << "" << endl;
+
+	cout << "INITIALIZE MODE...please wait..." << endl;
+
+	string residul = "C:/Users/ece/Desktop/Co_SiM_withFEBiocoding/data/";
+	ifstream std(residul + "setup1.ini");
+	ifstream std2(residul + "setup2.ini");
+	std2.close();
+	std.close();
+	ifstream step1(residul + "setup.ini");
+	ofstream st(residul + "setup1.ini");
+	ofstream st2(residul + "setup2.ini");
+	string line1;
+
+	for (int i = 0; i < 200; i++)
+	{
+		getline(step1, line1);
+		//if (except >= number){
+		st << line1 << endl;
+		st2 << line1 << endl;
+	}
+	step1.close();
+	st.close();
+	st2.close();
+
 	cout << "For this co-simulation it will need the states after the two bodies of interest's CMC analysis. Do you have them? (y/n)" << endl;
 	string kind = ini.Get("BASICSETUP", "CMCanalysis", "");
 	cout<< kind << endl;

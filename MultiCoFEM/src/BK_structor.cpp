@@ -58,7 +58,7 @@ void BK_structor::begining(int iteration,string kind[24], int place, int sizer1,
 		cout << "PS if you set a rotation DOF Prescribed then the other rotDOF have to be fixed or Prescribed too" << endl;
 		cout << "PS1 for the rotation dof set rx or ry or rz and for traslation x y or z." << endl;
 		cout << "PS2 if you set in setup file set the Prescribed dof like xyz_rxryrz first the traslation DOF and second the rotation seperate with _ " << endl;
-		cout << "PS3 if you do not want ant DOF Prescribed just set in setup.ini file the word, NAN" << endl;
+		cout << "PS3 if you do not want any DOF Prescribed just set in setup.ini file the word, NAN" << endl;
 		cout << "PS4 if you already set the Prescribed stragety in setup.ini file then your choice will be below :" << endl;
 
 
@@ -93,16 +93,18 @@ void BK_structor::begining(int iteration,string kind[24], int place, int sizer1,
 			if (presc1[0] != 'x' && presc1[1] != 'x' && presc1[2] != 'x'){ fx1  = 0; }
 			if (presc1[0] != 'y' && presc1[1] != 'y' && presc1[2] != 'y'){ fy1  = 0; }
 			if (presc1[0] != 'z' && presc1[1] != 'z' && presc1[2] != 'z'){ fz1  = 0; }
-			if (presc1[1] != '_' && presc1[2] != '_' && presc1[3] != '_'){
-				if (presc1[3] != 'x' && presc1[5] != 'x' && presc1[7] != 'x'&& presc1[9] != 'x'&& presc1[11] != 'x'){ fox1  = 0; }
-				if (presc1[3] != 'y' && presc1[5] != 'y' && presc1[7] != 'y'&& presc1[9] != 'y'&& presc1[11] != 'y'){ foy1  = 0; }
-				if (presc1[3] != 'z' && presc1[5] != 'z' && presc1[7] != 'z'&& presc1[9] != 'z'&& presc1[11] != 'z'){ foz1  = 0; }
+			if (presc1[1] == '_' || presc1[2] == '_' || presc1[3] == '_'){
+				cout << "new" << endl;
+				if (presc1[3] != 'x'&& presc1[4] != 'x' && presc1[5] != 'x' && presc1[6] != 'x' && presc1[7] != 'x'&& presc1[8] != 'x'&& presc1[9] != 'x'&& presc1[10] != 'x'&& presc1[11] != 'x'){ fox1 = 0; }
+				if (presc1[3] != 'y'&& presc1[4] != 'y' && presc1[5] != 'y' && presc1[6] != 'y' && presc1[7] != 'y'&& presc1[8] != 'y'&& presc1[9] != 'y'&& presc1[10] != 'y'&& presc1[11] != 'y'){ foy1 = 0; }
+				if (presc1[3] != 'z'&& presc1[4] != 'z' && presc1[5] != 'z' && presc1[6] != 'z' && presc1[7] != 'z'&& presc1[8] != 'z'&& presc1[9] != 'z'&& presc1[10] != 'z'&& presc1[11] != 'z'){ foz1 = 0; }
 			}
 			if (presc1[0] == 'r'){
-				if (presc1[2] != 'x' && presc1[4] != 'x' && presc1[6] != 'x'){ fox1  = 0; }
-				if (presc1[2] != 'y' && presc1[4] != 'y' && presc1[6] != 'y'){ foy1  = 0; }
-				if (presc1[2] != 'z' && presc1[4] != 'z' && presc1[6] != 'z'){ foz1 = 0; }
+				if (presc1[1] != 'x'&& presc1[3] != 'x' && presc1[5] != 'x'){ fox1 = 0; }
+				if (presc1[1] != 'y' && presc1[3] != 'y' && presc1[5] != 'y'){ foy1 = 0; }
+				if (presc1[1] != 'z' && presc1[3] != 'z' && presc1[5] != 'z'){ foz1 = 0; }
 			}
+		
 		}
 
 		if (presc2 == "NAN"){ tx1 = ty1 = tz1 = tox1 = toy1 = toz1 = 0; }
@@ -110,16 +112,19 @@ void BK_structor::begining(int iteration,string kind[24], int place, int sizer1,
 			if (presc2[0] != 'x' && presc2[1] != 'x' && presc2[2] != 'x'){ tx1 = 0; }
 			if (presc2[0] != 'y' && presc2[1] != 'y' && presc2[2] != 'y'){ ty1 = 0; }
 			if (presc2[0] != 'z' && presc2[1] != 'z' && presc2[2] != 'z'){ tz1 = 0; }
-			if (presc2[1] != '_' && presc2[2] != '_' && presc2[3] != '_'){
-				if (presc2[3] != 'x' && presc2[5] != 'x' && presc2[7] != 'x'&& presc2[9] != 'x'&& presc2[11] != 'x'){ tox1 = 0; }
-				if (presc2[3] != 'y' && presc2[5] != 'y' && presc2[7] != 'y'&& presc2[9] != 'y'&& presc2[11] != 'y'){ toy1 = 0; }
-				if (presc2[3] != 'z' && presc2[5] != 'z' && presc2[7] != 'z'&& presc2[9] != 'z'&& presc2[11] != 'z'){ toz1 = 0; }
+			if (presc2[1] == '_' || presc2[2] == '_' || presc2[3] == '_'){
+				cout << "new" << endl;
+				if (presc2[3] != 'x'&& presc2[4] != 'x' && presc2[5] != 'x' && presc2[6] != 'x' && presc2[7] != 'x'&& presc2[8] != 'x'&& presc2[9] != 'x'&& presc2[10] != 'x'&& presc2[11] != 'x'){ tox1 = 0; }
+				if (presc2[3] != 'y'&& presc2[4] != 'y' && presc2[5] != 'y' && presc2[6] != 'y' && presc2[7] != 'y'&& presc2[8] != 'y'&& presc2[9] != 'y'&& presc2[10] != 'y'&& presc2[11] != 'y'){ toy1 = 0; }
+				if (presc2[3] != 'z'&& presc2[4] != 'z' && presc2[5] != 'z' && presc2[6] != 'z' && presc2[7] != 'z'&& presc2[8] != 'z'&& presc2[9] != 'z'&& presc2[10] != 'z'&& presc2[11] != 'z'){ toz1 = 0; }
 			}
+		
 			if (presc2[0] == 'r'){
-				if (presc2[2] != 'x' && presc2[4] != 'x' && presc2[6] != 'x'){ tox1 = 0; }
-				if (presc2[2] != 'y' && presc2[4] != 'y' && presc2[6] != 'y'){ toy1 = 0; }
-				if (presc2[2] != 'z' && presc2[4] != 'z' && presc2[6] != 'z'){ toz1 = 0; }
+				if (presc2[1] != 'x'&& presc2[3] != 'x' && presc2[5] != 'x'){ tox1 = 0; }
+				if (presc2[1] != 'y'&& presc2[3] != 'y' && presc2[5] != 'y'){ toy1 = 0; }
+				if (presc2[1] != 'z'&& presc2[3] != 'z' && presc2[5] != 'z'){ toz1 = 0; }
 			}
+			
 		}
 
 
@@ -172,16 +177,17 @@ void BK_structor::begining(int iteration,string kind[24], int place, int sizer1,
 			if (fix1[0] != 'x' && fix1[1] != 'x' && fix1[2] != 'x'){ fx = 0; }
 			if (fix1[0] != 'y' && fix1[1] != 'y' && fix1[2] != 'y'){ fy = 0; }
 			if (fix1[0] != 'z' && fix1[1] != 'z' && fix1[2] != 'z'){ fz = 0; }
-			if (fix1[1] != '_' && fix1[2] != '_' && fix1[3] != '_'){
-				if (fix1[3] != 'x' && fix1[5] != 'x' && fix1[7] != 'x'&& fix1[9] != 'x'&& fix1[11] != 'x'){ fox = 0; }
-				if (fix1[3] != 'y' && fix1[5] != 'y' && fix1[7] != 'y'&& fix1[9] != 'y'&& fix1[11] != 'y'){ foy = 0; }
-				if (fix1[3] != 'z' && fix1[5] != 'z' && fix1[7] != 'z'&& fix1[9] != 'z'&& fix1[11] != 'z'){ foz= 0; }
+			if (fix1[1] == '_' || fix1[2] == '_' || fix1[3] == '_'){
+				if (fix1[3] != 'x' && fix1[4] != 'x'&& fix1[5] != 'x' && fix1[6] != 'x'&& fix1[7] != 'x'&& fix1[8] != 'x'&& fix1[9] != 'x'&& fix1[10] != 'x'&& fix1[11] != 'x'){ fox = 0; }
+				if (fix1[3] != 'y' && fix1[4] != 'y'&& fix1[5] != 'y' && fix1[6] != 'y'&& fix1[7] != 'y'&& fix1[8] != 'y'&& fix1[9] != 'y'&& fix1[10] != 'y'&& fix1[11] != 'y'){ foy = 0; }
+				if (fix1[3] != 'z' && fix1[4] != 'y'&& fix1[5] != 'z' && fix1[6] != 'y'&& fix1[7] != 'z'&& fix1[8] != 'y'&& fix1[9] != 'z'&& fix1[10] != 'y'&& fix1[11] != 'z'){ foz = 0; }
 			}
 			if (fix1[0] == 'r'){
-				if (fix1[2] != 'x' && fix1[4] != 'x' && fix1[6] != 'x'){ fox = 0; }
-				if (fix1[2] != 'y' && fix1[4] != 'y' && fix1[6] != 'y'){ foy = 0; }
-				if (fix1[2] != 'z' && fix1[4] != 'z' && fix1[6] != 'z'){ foz = 0; }
+				if (fix1[1] != 'x' && fix1[3] != 'x' && fix1[5] != 'x'){ fox = 0; }
+				if (fix1[1] != 'y' && fix1[3] != 'y' && fix1[5] != 'y'){ foy = 0; }
+				if (fix1[1] != 'z' &&  fix1[3] != 'z' && fix1[5] != 'z'){ foz = 0; }
 			}
+		
 		}
 
 		if (fix2 == "NAN"){ tox = toy = toz = tx = ty = tz = 0; }
@@ -189,16 +195,17 @@ void BK_structor::begining(int iteration,string kind[24], int place, int sizer1,
 			if (fix2[0] != 'x' && fix2[1] != 'x' && fix2[2] != 'x'){ tx = 0; }
 			if (fix2[0] != 'y' && fix2[1] != 'y' && fix2[2] != 'y'){ ty = 0; }
 			if (fix2[0] != 'z' && fix2[1] != 'z' && fix2[2] != 'z'){ tz = 0; }
-			if (fix2[1] != '_' && fix2[2] != '_' && fix2[3] != '_'){
-				if (fix2[3] != 'x' && fix2[5] != 'x' && fix2[7] != 'x'&& fix2[9] != 'x'&& fix2[11] != 'x'){ tox = 0; }
-				if (fix2[3] != 'y' && fix2[5] != 'y' && fix2[7] != 'y'&& fix2[9] != 'y'&& fix2[11] != 'y'){ toy = 0; }
-				if (fix2[3] != 'z' && fix2[5] != 'z' && fix2[7] != 'z'&& fix2[9] != 'z'&& fix2[11] != 'z'){ toz = 0; }
+			if (fix2[1] == '_' || fix2[2] == '_' || fix2[3] == '_'){
+				if (fix2[3] != 'x' && fix2[4] != 'x'&& fix2[5] != 'x' && fix2[6] != 'x'&& fix2[7] != 'x'&& fix2[8] != 'x'&& fix2[9] != 'x'&& fix2[10] != 'x'&& fix2[11] != 'x'){ tox = 0; }
+				if (fix2[3] != 'y' && fix2[4] != 'y'&& fix2[5] != 'y' && fix2[6] != 'y'&& fix2[7] != 'y'&& fix2[8] != 'y'&& fix2[9] != 'y'&& fix2[10] != 'y'&& fix2[11] != 'y'){ toy = 0; }
+				if (fix2[3] != 'z' && fix2[4] != 'y'&& fix2[5] != 'z' && fix2[6] != 'y'&& fix2[7] != 'z'&& fix2[8] != 'y'&& fix2[9] != 'z'&& fix2[10] != 'y'&& fix2[11] != 'z'){ toz = 0; }
 			}
 			if (fix2[0] == 'r'){
-				if (fix2[2] != 'x' && fix2[4] != 'x' && fix2[6] != 'x'){ tox = 0; }
-				if (fix2[2] != 'y' && fix2[4] != 'y' && fix2[6] != 'y'){ toy = 0; }
-				if (fix2[2] != 'z' && fix2[4] != 'z' && fix2[6] != 'z'){ toz = 0; }
+				if (fix2[1] != 'x' && fix2[3] != 'x' && fix2[5] != 'x'){ tox = 0; }
+				if (fix2[1] != 'y' && fix2[3] != 'y' && fix2[5] != 'y'){ toy = 0; }
+				if (fix2[1] != 'z' && fix2[3] != 'z' && fix2[5] != 'z'){ toz = 0; }
 			}
+		
 		}
 
 
@@ -736,27 +743,27 @@ for (int i = 1; i < sizer1 - 1; i++){
 	if (foz1[0] != 0){
 		stepstatic << "<prescribed bc = " << '"' << "Rz" << '"' << "lc=" << '"' << "30" << '"' << ">1<" << "/prescribed>" << endl;
 	}
-	//stepstatic << "</rigid_body>" << endl;
+	stepstatic << "</rigid_body>" << endl;
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	//stepstatic << "<rigid_body mat = " << '"' << "1" << '"' << ">" << endl;
+	stepstatic << "<rigid_body mat = " << '"' << "1" << '"' << ">" << endl;
 
-	if (fx1[0] == 0){
+	if (fx == 1){
 		stepstatic << "<fixed bc = " << '"' << "x" << '"' << "/>" << endl;
 	}
-	if (fy1[0] == 0){
+	if (fy == 1){
 		stepstatic << "<fixed bc = " << '"' << "y" << '"' << "/>" << endl;;
 	}
-	if (fz1[0] == 0){
+	if (fz == 1){
 		stepstatic << "<fixed bc = " << '"' << "z" << '"' << "/>" << endl;;
 	}
-	if (fox1[0] == 0){
+	if (fox == 1){
 		stepstatic << "<fixed bc = " << '"' << "Rx" << '"' << "/>" << endl;;
 	}
-	if (foy1[0] == 0){
+	if (foy == 1){
 		stepstatic << "<fixed bc = " << '"' << "Ry" << '"' << "/>" << endl;;
 	}
-	if (foz1[0] == 0){
+	if (foz == 1){
 		stepstatic << "<fixed bc = " << '"' << "Rz" << '"' << "/>" << endl;;
 	}
 	stepstatic << "</rigid_body>" << endl;
@@ -824,10 +831,10 @@ for (int i = 1; i < sizer1 - 1; i++){
 		}
 	}
 
-	//stepstatic << "</rigid_body>" << endl;
+	stepstatic << "</rigid_body>" << endl;
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	//stepstatic << "<rigid_body mat = " << '"' << "2" << '"' << ">" << endl;
+	stepstatic << "<rigid_body mat = " << '"' << "2" << '"' << ">" << endl;
 
 	if (tx== 1){
 		stepstatic << "<fixed bc = " << '"' << "x" << '"' << "/>" << endl;

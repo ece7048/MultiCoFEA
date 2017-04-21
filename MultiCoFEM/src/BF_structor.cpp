@@ -67,16 +67,20 @@ void BF_structor::begining(int iteration, string kind[24], int sizer, string res
 			if (presc1[0] != 'x' && presc1[1] != 'x' && presc1[2] != 'x'){ fx = 0; }
 			if (presc1[0] != 'y' && presc1[1] != 'y' && presc1[2] != 'y'){ fy = 0; }
 			if (presc1[0] != 'z' && presc1[1] != 'z' && presc1[2] != 'z'){ fz = 0; }
-			if (presc1[1] != '_' && presc1[2] != '_' && presc1[3] != '_'){
-				if (presc1[3] != 'x' && presc1[5] != 'x' && presc1[7] != 'x'&& presc1[9] != 'x'&& presc1[11] != 'x'){ fox = 0; }
-				if (presc1[3] != 'y' && presc1[5] != 'y' && presc1[7] != 'y'&& presc1[9] != 'y'&& presc1[11] != 'y'){ foy = 0; }
-				if (presc1[3] != 'z' && presc1[5] != 'z' && presc1[7] != 'z'&& presc1[9] != 'z'&& presc1[11] != 'z'){ foz = 0; }
+			if (presc1[1] == '_' || presc1[2] == '_' || presc1[3] == '_'){
+				cout << "new" << endl;
+				if (presc1[3] != 'x'&& presc1[4] != 'x' && presc1[5] != 'x' && presc1[6] != 'x' && presc1[7] != 'x'&& presc1[8] != 'x'&& presc1[9] != 'x'&& presc1[10] != 'x'&& presc1[11] != 'x'){ fox = 0; }
+				if (presc1[3] != 'y'&& presc1[4] != 'y' && presc1[5] != 'y' && presc1[6] != 'y' && presc1[7] != 'y'&& presc1[8] != 'y'&& presc1[9] != 'y'&& presc1[10] != 'y'&& presc1[11] != 'y'){ foy = 0; }
+				if (presc1[3] != 'z'&& presc1[4] != 'z' && presc1[5] != 'z' && presc1[6] != 'z' && presc1[7] != 'z'&& presc1[8] != 'z'&& presc1[9] != 'z'&& presc1[10] != 'z'&& presc1[11] != 'z'){ foz = 0; }
 			}
 			if (presc1[0] == 'r'){
-				if (presc1[2] != 'x' && presc1[4] != 'x' && presc1[6] != 'x'){ fox = 0; }
-				if (presc1[2] != 'y' && presc1[4] != 'y' && presc1[6] != 'y'){ foy = 0; }
-				if (presc1[2] != 'z' && presc1[4] != 'z' && presc1[6] != 'z'){ foz = 0; }
+				if (presc1[1] != 'x' ){ fox = 0; }
+				if (presc1[1] != 'y' ){ foy = 0; }
+				if (presc1[1] != 'z' ){ foz = 0; }
 			}
+			if ( presc1[3] != 'x' && presc1[5] != 'x'){ fox = 0; }
+			if ( presc1[3] != 'y' && presc1[5] != 'y'){ foy = 0; }
+			if ( presc1[3] != 'z' && presc1[5] != 'z'){ foz = 0; }
 		}
 
 		if (presc2 == "NAN"){ tx = ty = tz = tox = toy = toz = 0; }
@@ -84,16 +88,20 @@ void BF_structor::begining(int iteration, string kind[24], int sizer, string res
 			if (presc2[0] != 'x' && presc2[1] != 'x' && presc2[2] != 'x'){ tx = 0; }
 			if (presc2[0] != 'y' && presc2[1] != 'y' && presc2[2] != 'y'){ ty = 0; }
 			if (presc2[0] != 'z' && presc2[1] != 'z' && presc2[2] != 'z'){ tz = 0; }
-			if (presc2[1] != '_' && presc2[2] != '_' && presc2[3] != '_'){
-				if (presc2[3] != 'x' && presc2[5] != 'x' && presc2[7] != 'x'&& presc2[9] != 'x'&& presc2[11] != 'x'){ tox = 0; }
-				if (presc2[3] != 'y' && presc2[5] != 'y' && presc2[7] != 'y'&& presc2[9] != 'y'&& presc2[11] != 'y'){ toy = 0; }
-				if (presc2[3] != 'z' && presc2[5] != 'z' && presc2[7] != 'z'&& presc2[9] != 'z'&& presc2[11] != 'z'){ toz = 0; }
+			if (presc2[1] == '_' || presc2[2] == '_' || presc2[3] == '_'){
+				cout << "new" << endl;
+				if (presc2[3] != 'x'&& presc2[4] != 'x' && presc2[5] != 'x' && presc2[6] != 'x' && presc2[7] != 'x'&& presc2[8] != 'x'&& presc2[9] != 'x'&& presc2[10] != 'x'&& presc2[11] != 'x'){ tox = 0; }
+				if (presc2[3] != 'y'&& presc2[4] != 'y' && presc2[5] != 'y' && presc2[6] != 'y' && presc2[7] != 'y'&& presc2[8] != 'y'&& presc2[9] != 'y'&& presc2[10] != 'y'&& presc2[11] != 'y'){ toy = 0; }
+				if (presc2[3] != 'z'&& presc2[4] != 'z' && presc2[5] != 'z' && presc2[6] != 'z' && presc2[7] != 'z'&& presc2[8] != 'z'&& presc2[9] != 'z'&& presc2[10] != 'z'&& presc2[11] != 'z'){ toz = 0; }
 			}
 			if (presc2[0] == 'r'){
-				if (presc2[2] != 'x' && presc2[4] != 'x' && presc2[6] != 'x'){ tox = 0; }
-				if (presc2[2] != 'y' && presc2[4] != 'y' && presc2[6] != 'y'){ toy = 0; }
-				if (presc2[2] != 'z' && presc2[4] != 'z' && presc2[6] != 'z'){ toz = 0; }
+				if (presc2[1] != 'x' ){ tox = 0; }
+				if (presc2[1] != 'y' ){ toy = 0; }
+				if (presc2[1] != 'z' ){ toz = 0; }
 			}
+			if (presc2[3] != 'x' && presc2[5] != 'x'){ tox = 0; }
+			if (presc2[3] != 'y' && presc2[5] != 'y'){ toy = 0; }
+			if (presc2[3] != 'z' && presc2[5] != 'z'){ toz = 0; }
 		}
 
 
@@ -414,24 +422,24 @@ void BF_structor::begining(int iteration, string kind[24], int sizer, string res
 		stepstatic << "<Constraints>" << endl;
 		stepstatic << "<rigid_body mat = " << '"' << "1" << '"' << ">" << endl;
 		if (fx[0] != 0){
-			stepstatic << "<force bc = " << '"' << "x" << '"' << " type="<<'"'<<"follow"<<'" '<< "lc=" << '"' << "1" << '"' << ">1<" << "/force>" << endl;
+			stepstatic << "<force bc = " << '"' << "x" << '"' << " type="<<'"'<<"follow"<<'"'<< "lc=" << '"' << "1" << '"' << ">1<" << "/force>" << endl;
 		}
 		if (fy[0] != 0){
-			stepstatic << "<force bc = " << '"' << "y" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "2" << '"' << ">1<" << "/force>" << endl;
+			stepstatic << "<force bc = " << '"' << "y" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "2" << '"' << ">1<" << "/force>" << endl;
 		}
 		if (fz[0] != 0){
-			stepstatic << "<force bc = " << '"' << "z" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "3" << '"' << ">1<" << "/force>" << endl;
+			stepstatic << "<force bc = " << '"' << "z" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "3" << '"' << ">1<" << "/force>" << endl;
 		}
 		if (fox[0] != 0){
-			stepstatic << "<force bc = " << '"' << "Rx" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "4" << '"' << ">1<" << "/force>" << endl;
+			stepstatic << "<force bc = " << '"' << "Rx" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "4" << '"' << ">1<" << "/force>" << endl;
 		}
 		if (foy[0] != 0){
-			stepstatic << "<force bc = " << '"' << "Ry" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "5" << '"' << ">1<" << "/force>" << endl;
+			stepstatic << "<force bc = " << '"' << "Ry" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "5" << '"' << ">1<" << "/force>" << endl;
 		}
 		if (foz[0] != 0){
-			stepstatic << "<force bc = " << '"' << "Rz" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "6" << '"' << ">1<" << "/force>" << endl;
+			stepstatic << "<force bc = " << '"' << "Rz" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "6" << '"' << ">1<" << "/force>" << endl;
 		}
-		//stepstatic << "</rigid_body>" << endl;
+		stepstatic << "</rigid_body>" << endl;
 ///////////////////////////////////////////////////////////////////////////////////////////////
 		
 			//stepstatic << "<rigid_body mat = " << '"' << "1" << '"' << ">" << endl;
@@ -464,64 +472,64 @@ void BF_structor::begining(int iteration, string kind[24], int sizer, string res
 		int out31 = compaire(fx, tx);
 		if (tx[0] != 0){
 			if (out31 == 2){
-				stepstatic << "<force bc = " << '"' << "x" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "1" << '"' << ">1<" << "/force>" << endl;
+				stepstatic << "<force bc = " << '"' << "x" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "1" << '"' << ">1<" << "/force>" << endl;
 			}
 			else if (out31 != 2){
-				stepstatic << "<force bc = " << '"' << "x" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "7" << '"' << ">1<" << "/force>" << endl;
+				stepstatic << "<force bc = " << '"' << "x" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "7" << '"' << ">1<" << "/force>" << endl;
 			}
 		}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		int out41 = compaire(fy, ty);
 		if (ty[0] != 0){
 			if (out41 == 2){
-				stepstatic << "<force bc = " << '"' << "y" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "2" << '"' << ">1<" << "/force>" << endl;
+				stepstatic << "<force bc = " << '"' << "y" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "2" << '"' << ">1<" << "/force>" << endl;
 			}
 			else if (out41 != 2){
-				stepstatic << "<force bc = " << '"' << "y" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "8" << '"' << ">1<" << "/force>" << endl;
+				stepstatic << "<force bc = " << '"' << "y" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "8" << '"' << ">1<" << "/force>" << endl;
 			}
 		}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
 		int out51 = compaire(fz, tz);
 		if (tz[0] != 0){
 			if (out51 == 2){
-				stepstatic << "<force bc = " << '"' << "z" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "3" << '"' << ">1<" << "/force>" << endl;
+				stepstatic << "<force bc = " << '"' << "z" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "3" << '"' << ">1<" << "/force>" << endl;
 			}
 			else if (out51 != 2){
-				stepstatic << "<force bc = " << '"' << "z" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "9" << '"' << ">1<" << "/force>" << endl;
+				stepstatic << "<force bc = " << '"' << "z" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "9" << '"' << ">1<" << "/force>" << endl;
 			}
 		}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		int out61 = compaire(fox, tox);
 		if (tox[0] != 0){
 			if (out61 == 2){
-				stepstatic << "<force bc = " << '"' << "Rx" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "4" << '"' << ">1<" << "/force>" << endl;
+				stepstatic << "<force bc = " << '"' << "Rx" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "4" << '"' << ">1<" << "/force>" << endl;
 			}
 			else if (out61 != 2){
-				stepstatic << "<force bc = " << '"' << "Rx" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "10" << '"' << ">1<" << "/force>" << endl;
+				stepstatic << "<force bc = " << '"' << "Rx" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "10" << '"' << ">1<" << "/force>" << endl;
 			}
 		}
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		int out71 = compaire(foy, toy);
 		if (toy[0] != 0){
 			if (out71 == 2){
-				stepstatic << "<force bc = " << '"' << "Ry" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "5" << '"' << ">1<" << "/force>" << endl;
+				stepstatic << "<force bc = " << '"' << "Ry" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "5" << '"' << ">1<" << "/force>" << endl;
 			}
 			else if (out71 != 2){
-				stepstatic << "<force bc = " << '"' << "Ry" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "11" << '"' << ">1<" << "/force>" << endl;
+				stepstatic << "<force bc = " << '"' << "Ry" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "11" << '"' << ">1<" << "/force>" << endl;
 			}
 		}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		int out81 = compaire(foz, toz);
 		if (toz[0] != 0){
 			if (out81 == 2){
-				stepstatic << "<force bc = " << '"' << "Rz" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "6" << '"' << ">1<" << "/force>" << endl;
+				stepstatic << "<force bc = " << '"' << "Rz" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "6" << '"' << ">1<" << "/force>" << endl;
 			}
 			else if (out81 != 2){
-				stepstatic << "<force bc = " << '"' << "Rz" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "12" << '"' << ">1<" << "/force>" << endl;
+				stepstatic << "<force bc = " << '"' << "Rz" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "12" << '"' << ">1<" << "/force>" << endl;
 			}
 		}
 		
-		//stepstatic << "</rigid_body>" << endl;
+		stepstatic << "</rigid_body>" << endl;
 		///////////////////////////////////////////////////////////////////////////////////////////////
 
 		//stepstatic << "<rigid_body mat = " << '"' << "2" << '"' << ">" << endl;
@@ -556,7 +564,7 @@ void BF_structor::begining(int iteration, string kind[24], int sizer, string res
 		//	stepdynamic << "<fixed bc = " << '"' << "x" << '"' << "/>" << endl;
 		//}
 		if (out == 0){
-			stepdynamic << "<force bc = " << '"' << "x" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "13" << '"' << ">1<" << "/force>" << endl;
+			stepdynamic << "<force bc = " << '"' << "x" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "13" << '"' << ">1<" << "/force>" << endl;
 				}
 			
 			
@@ -567,7 +575,7 @@ void BF_structor::begining(int iteration, string kind[24], int sizer, string res
 		//	stepdynamic << "<fixed bc = " << '"' << "y" << '"' << "/>" << endl;
 		//}
 		if (out2 == 0){
-			stepdynamic << "<force bc = " << '"' << "y" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "14" << '"' << ">1<" << "/force>" << endl;
+			stepdynamic << "<force bc = " << '"' << "y" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "14" << '"' << ">1<" << "/force>" << endl;
 		}
 		//////////////////
 		int out3 = detect(fz);
@@ -575,7 +583,7 @@ void BF_structor::begining(int iteration, string kind[24], int sizer, string res
 		//	stepdynamic << "<fixed bc = " << '"' << "z" << '"' << "/>" << endl;
 		//}
 		if (out3 == 0){
-			stepdynamic << "<force bc = " << '"' << "z" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "15" << '"' << ">1<" << "/force>" << endl;
+			stepdynamic << "<force bc = " << '"' << "z" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "15" << '"' << ">1<" << "/force>" << endl;
 		}
 		/////////////////////
 		int out4 = detect(fox);
@@ -583,7 +591,7 @@ void BF_structor::begining(int iteration, string kind[24], int sizer, string res
 		//	stepdynamic << "<fixed bc = " << '"' << "Rx" << '"' << "/>" << endl;
 		//}
 		if (out4 == 0){
-			stepdynamic << "<force bc = " << '"' << "Rx" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "16" << '"' << ">1<" << "/force>" << endl;
+			stepdynamic << "<force bc = " << '"' << "Rx" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "16" << '"' << ">1<" << "/force>" << endl;
 		}
 		///////////////////////
 		int out5 = detect(foy);
@@ -591,7 +599,7 @@ void BF_structor::begining(int iteration, string kind[24], int sizer, string res
 		//	stepdynamic << "<fixed bc = " << '"' << "Ry" << '"' << "/>" << endl;
 		//}
 		if (out5 == 0){
-			stepdynamic << "<force bc = " << '"' << "Ry" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "17" << '"' << ">1<" << "/force>" << endl;
+			stepdynamic << "<force bc = " << '"' << "Ry" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "17" << '"' << ">1<" << "/force>" << endl;
 		}
 		/////////////////////////
 		int out6 = detect(foz);
@@ -599,7 +607,7 @@ void BF_structor::begining(int iteration, string kind[24], int sizer, string res
 		//	stepdynamic << "<fixed bc = " << '"' << "Rz" << '"' << "/>" << endl;
 		//}
 		if (out6 == 0){
-			stepdynamic << "<force bc = " << '"' << "Rz" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "18" << '"' << ">1<" << "/force>" << endl;
+			stepdynamic << "<force bc = " << '"' << "Rz" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "18" << '"' << ">1<" << "/force>" << endl;
 		}
 		stepdynamic << "</rigid_body>" << endl;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -613,10 +621,10 @@ int out7 = detect(tx);
 		//}
 		if (out7 == 0){
 			if (out31 == 2){
-				stepdynamic << "<force bc = " << '"' << "x" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "13" << '"' << ">1<" << "/force>" << endl;
+				stepdynamic << "<force bc = " << '"' << "x" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "13" << '"' << ">1<" << "/force>" << endl;
 			}
 			else if (out31 != 2){
-				stepdynamic << "<force bc = " << '"' << "x" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "19" << '"' << ">1<" << "/force>" << endl;
+				stepdynamic << "<force bc = " << '"' << "x" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "19" << '"' << ">1<" << "/force>" << endl;
 			}
 		}
 		////////////////////
@@ -626,10 +634,10 @@ int out7 = detect(tx);
 		//}
 		if (out8 == 0){
 			if (out41 == 2){
-				stepdynamic << "<force bc = " << '"' << "y" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "14" << '"' << ">1<" << "/force>" << endl;
+				stepdynamic << "<force bc = " << '"' << "y" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "14" << '"' << ">1<" << "/force>" << endl;
 			}
 			else if (out41 != 2){
-				stepdynamic << "<force bc = " << '"' << "y" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "20" << '"' << ">1<" << "/force>" << endl;
+				stepdynamic << "<force bc = " << '"' << "y" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "20" << '"' << ">1<" << "/force>" << endl;
 			}
 		}
 		////////////////////
@@ -639,10 +647,10 @@ int out7 = detect(tx);
 	//	}
 		if (out9 == 0){
 			if (out51 == 2){
-				stepdynamic << "<force bc = " << '"' << "z" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "15" << '"' << ">1<" << "/force>" << endl;
+				stepdynamic << "<force bc = " << '"' << "z" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "15" << '"' << ">1<" << "/force>" << endl;
 			}
 			else if (out51 != 2){
-				stepdynamic << "<force bc = " << '"' << "z" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "21" << '"' << ">1<" << "/force>" << endl;
+				stepdynamic << "<force bc = " << '"' << "z" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "21" << '"' << ">1<" << "/force>" << endl;
 			}
 		}
 		//////////////////////////
@@ -652,10 +660,10 @@ int out7 = detect(tx);
 		//}
 		if (out10 == 0){
 			if (out61 == 2){
-				stepdynamic << "<force bc = " << '"' << "Rx" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "16" << '"' << ">1<" << "/force>" << endl;
+				stepdynamic << "<force bc = " << '"' << "Rx" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "16" << '"' << ">1<" << "/force>" << endl;
 			}
 			else if (out61 != 2){
-				stepdynamic << "<force bc = " << '"' << "Rx" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "22" << '"' << ">1<" << "/force>" << endl;
+				stepdynamic << "<force bc = " << '"' << "Rx" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "22" << '"' << ">1<" << "/force>" << endl;
 			}
 		}
 		////////////////////
@@ -665,10 +673,10 @@ int out7 = detect(tx);
 		//}
 		if (out11 == 0){
 			if (out71 == 2){
-				stepdynamic << "<force bc = " << '"' << "Ry" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "17" << '"' << ">1<" << "/force>" << endl;
+				stepdynamic << "<force bc = " << '"' << "Ry" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "17" << '"' << ">1<" << "/force>" << endl;
 			}
 			else if (out71 != 2){
-				stepdynamic << "<force bc = " << '"' << "Ry" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "23" << '"' << ">1<" << "/force>" << endl;
+				stepdynamic << "<force bc = " << '"' << "Ry" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "23" << '"' << ">1<" << "/force>" << endl;
 			}
 		}
 		/////////////////////////
@@ -678,10 +686,10 @@ int out7 = detect(tx);
 		//}
 		if (out12 == 0){
 			if (out81 == 2){
-				stepdynamic << "<force bc = " << '"' << "Rz" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "18" << '"' << ">1<" << "/force>" << endl;
+				stepdynamic << "<force bc = " << '"' << "Rz" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "18" << '"' << ">1<" << "/force>" << endl;
 			}
 			else if (out81 != 2){
-				stepdynamic << "<force bc = " << '"' << "Rz" << '"' << " type=" << '"' << "follow" << '" ' << "lc=" << '"' << "24" << '"' << ">1<" << "/force>" << endl;
+				stepdynamic << "<force bc = " << '"' << "Rz" << '"' << " type=" << '"' << "follow" << '"' << "lc=" << '"' << "24" << '"' << ">1<" << "/force>" << endl;
 			}
 		}
 		//////////////////////////

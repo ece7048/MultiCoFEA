@@ -196,13 +196,28 @@ void JR_starter::started(int number, int itteration)
 	int endend = tim.size();
 	//Vector time(endend, tim[endend]);
 	Vector timefinal(endend, tim[endend]);
+	//////////////Kind of initial step you need//////////
+	cout << "Which is the initial time you want to reach the model for the initial prescribed motions and forces for the model?" << endl;
+		cout << "Set the end time of the Initila step one analysis (THE STEP FOR REACH the initial contitions)" << endl;
+		cout << " in the .ini file (setup) set it in variable Initialtime...if is empty will ask to you here to set it..." << endl;
+		double intim = ini.GetReal("BASICSETUP", "Initialtime", 0);
+		if (intim != 0){
+			cout << intim << endl;
+		}
+		if (intim == 0){
+			cout<<"Give the initialtime end here..." << endl;
+			cin >> intim;
+		}
 
 	for (int i = 0; i < endend; ++i){
 		timefinal[i] = tim[i] - tim[0];//+0.01;//calibration step until 0.01 of two models
 		timefinal[i] = timefinal[i] * 100000;
 		int pat = (int)timefinal[i];
 		timefinal[i] = pat * 0.00001;
+		timefinal[i] = timefinal[i]+intim;
 	}
+	timefinal[0] = 0;
+
 
 	///TRANSFORM MATRIX FOR COPERATION/////////////////////////////////////////////////
 	Vector fFx(endend, 1);
