@@ -52,12 +52,12 @@ void OpenSimRunner::runST(){
 	//ofstream valueno;
 	string modelPath = BASE_DIR + ini.Get("INVERSEKINEMATICSTATIC", "MODEL", "");
 	string resultDir = BASE_DIR + ini.Get("INVERSEKINEMATICSTATIC", "RESULT_DIR", "");
-	string coord = BASE_DIR + ini.Get("INVERSEKINEMATICSTATIC", "COORDINATION", "");
+	//string coord = BASE_DIR + ini.Get("INVERSEKINEMATICSTATIC", "COORDINATION", "");
 	//string task = BASE_DIR + ini.Get("INVERSEKINEMATICS", "TASK", "");
 	string setup = BASE_DIR + ini.Get("INVERSEKINEMATICSTATIC", "SETUP", "");
 	double t1 = ini.GetReal("INVERSEKINEMATICSTATIC", "START_TIME", 0);
 	double t2 = ini.GetReal("INVERSEKINEMATICSTATIC", "END_TIME", 0);
-	string marker = BASE_DIR + ini.Get("INVERSEKINEMATICSTATIC", "MARKER", "");
+	//string marker = BASE_DIR + ini.Get("INVERSEKINEMATICSTATIC", "MARKER", "");
 	//ofstream valueno;
 	Model model(modelPath);
 	//////////////////////////////////////////////////////////////////////////////////////////////////
@@ -276,8 +276,11 @@ void OpenSimRunner::runCMC(){
 	ofstream valpo;
 	ofstream valpi;
 	//ofstream valueno;
+	string resultDir = BASE_DIR + ini.Get("RRA", "RESULT_DIR", "");
 	string resultDir2 = BASE_DIR + ini.Get("CMC", "RESULT_DIR", "");
-	string motion = BASE_DIR + ini.Get("CMC", "MOTION", "");
+	string grfname =  ini.Get("INVERSEKINEMATICS", "GRFNAME", "");
+	string motion = resultDir +"/"+ grfname + "_RRA_Kinematics_q.sto";
+
 	string setup = BASE_DIR + ini.Get("CMC", "SETUP", "");
 	double t0 = ini.GetReal("CMC", "START_TIME", 0);
 	double tf = ini.GetReal("CMC", "END_TIME", 0);
@@ -287,7 +290,19 @@ void OpenSimRunner::runCMC(){
 	string task = BASE_DIR + ini.Get("CMC", "TASK", "");
 	string actuator = BASE_DIR + ini.Get("CMC", "ACTUATOR", "");
 	string force = BASE_DIR + ini.Get("CMC", "EXFORCES", "");
-	string modelPath = BASE_DIR + ini.Get("RRA", "RESULT_DIR", "") + "/rramodel2.osim";
+	string modelPath1 = ini.Get("RRA", "RESULT_DIR", "") + "/rramodel2.osim";
+	string modelPath;
+	if (modelPath1 != ""){
+		 modelPath= BASE_DIR + modelPath1;
+	}
+	if (modelPath1 == ""){
+		string modelPath2 = ini.Get("INVERSEKINEMATICSTATIC", "MODEL", "");
+		cout << "No RRA analysis model, so we will use the IK model without RRA analysis.." << endl;
+		if (modelPath2 != ""){
+			modelPath = BASE_DIR + modelPath2;
+		}
+		if (modelPath1 == ""){ cout << "ERROR NO MODEL FOR THE CMC ANALYSIS.." << endl; }
+	}
 	Model model(modelPath);
 	if (setup != BASE_DIR){
 		CMCTool tool3(setup);

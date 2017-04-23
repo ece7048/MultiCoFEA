@@ -87,7 +87,7 @@ try{
 	ofstream st2(residul + "setup2.ini");
 	string line1;
 
-	for (int i = 0; i < 200; i++)
+	for (int i = 0; i < 300; i++)
 	{
 		getline(step1, line1);
 		//if (except >= number){
@@ -102,24 +102,95 @@ try{
 	string kind = ini.Get("BASICSETUP", "CMCanalysis", "");
 	cout<< kind << endl;
 	if (kind == "n"){
-		cout << "Which of the analysis below you do not have done?  " << endl;
+		cout << "The analysis you have to do are:  " << endl;
 		cout << "Inverse Kinematics (IK) Inverse Dynamic (ID) Reduce Residual Actuator (RRA) Compute Muscle Control (CMC) " << endl;
+		cout << "In setup.ini you have to set ALL the variables of these analysis in IK in variable GRFNAME you have to set " << endl;
+		cout << "the name before the _grf.trc file because it used as output in RRA and CMC and need it for these program..." << endl;
 		OpenSimRunner open;
 		open.runST();
 		open.~OpenSimRunner();
 
-OpenSimRunner open3;
-open3.runIK();
-open3.~OpenSimRunner();
+//OpenSimRunner open3;
+//open3.runIK();
+//open3.~OpenSimRunner();
 
-		OpenSimRunner open1;
-		open1.runRRA();
-		open1.~OpenSimRunner();
+	//	OpenSimRunner open1;
+	//	open1.runRRA();
+	//	open1.~OpenSimRunner();
 
-		OpenSimRunner open2;
-		open2.runCMC();
-		open2.~OpenSimRunner();
+//		OpenSimRunner open2;
+//		open2.runCMC();
+//		open2.~OpenSimRunner();
+		string modelPath1 = BASE_DIR + ini.Get("PATH", "MODELS", "");
+		string residul5 =  ini.Get("RRA", "RESULT_DIR", "") + "/rramodel2.osim";
+
+		string grfname = ini.Get("INVERSEKINEMATICS", "GRFNAME", "");
+		string residul6 =  ini.Get("CMC", "RESULT_DIR", "") + "/" + grfname + "_states.sto";
+		ifstream step123(residul + "setup3.ini");
+		step123.close();
+
+
+		ifstream step12(residul + "setup.ini");
+		ofstream step12w(residul + "setup3.ini");
+		string line1;
+		int write = 0;
+		for (int i = 0; i < 300; i++)
+		{
+			getline(step12, line1);
+			if (write != 2){
+					step12w << line1 << endl;
+				}
+			if (write == 2){ write = 0; }
+				if (line1.compare("[PATH]") == 0){
+					//step12w << "[PATH]" << endl;
+					step12w << "MODELS = " + residul5 << endl;
+					write = 2;
+				}
+
+				if (line1.compare("[BODYFORCES]") == 0){
+					//step12w << "[BODYFORCES]" << endl;
+					step12w << "STATE = " + residul6 << endl;
+					write = 2;
+
+				}
+			}
+			
+			
+	
+
+		step12w.close();
+		step12.close();
+		ifstream stqi(residul + "setup1.ini");
+		ifstream st2qi(residul + "setup2.ini");
+		ifstream st2qwi(residul + "setup.ini");
+		stqi.close();
+		st2qi.close();
+		st2qwi.close();
+
+		ifstream step1q(residul + "setup3.ini");
+		ofstream stq(residul + "setup1.ini");
+		ofstream st2q(residul + "setup2.ini");
+		ofstream st2qw(residul + "setup.ini");
+		string line1q;
+
+		for (int i = 0; i < 300; i++)
+		{
+			getline(step1q, line1q);
+			//if (except >= number){
+			stq << line1q << endl;
+			st2q << line1q << endl;
+			st2qw << line1q << endl;
+		}
+		step1q.close();
+		stq.close();
+		st2q.close();
+		st2qw.close();
+	
 	}
+
+
+
+
 	if (kind == "y"){
 
 		cout << "Please add the .sto and .osim file in the setup.ini file in the BODYFORCE section in STATE variable and in PATH sextion in MODELS variable"<< endl;
