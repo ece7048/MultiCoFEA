@@ -38,6 +38,7 @@ public:
 		void WriteFEBFile(int itteration, char mode);
 		void CopyFEBFile(int number);
 		void clearsetup();
+		void jointwrite(int itteration, int bodynum);
 		HANDLE ShellExecuteHandler(string program, string args,string name);
 private:
 	

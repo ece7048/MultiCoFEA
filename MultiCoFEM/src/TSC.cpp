@@ -169,6 +169,10 @@ void TSC::run(Vector fpx, Vector fpy, Vector fpz, Vector fox, Vector foy, Vector
 	cout << "" << endl;
 	cout << "Do you want TSC method ? (y/n)" << endl;
 	string answer1 = ini.Get("BASICSETUP", "TSC_method", "");
+	if (answer1 == ""){
+		cout << "PLEASE,ansswer the question" << endl;
+		cin >> answer1;
+	}
 	cout << answer1 << endl;
 
 	if (answer1 == "y"){
@@ -201,7 +205,7 @@ void TSC::run(Vector fpx, Vector fpy, Vector fpz, Vector fox, Vector foy, Vector
 	}
 	if (answer1 == "n"){
 		
-		stepswriter();
+		stepswriter(time);
 	}
 	cout << "" << endl;
 }
@@ -485,19 +489,27 @@ void TSC::stepdetermine(int sizer, Vector t, Vector f, int maxtimestep, int mint
 }
 
 
-void TSC::stepswriter(){
+void TSC::stepswriter(Vector time){
 	int timestep, timestep2;
+	int g = time.size();
 	 double step, step2;
 	 INIReader ini = INIReader(INI_FILE);
-
-	cout << "1. Give the  timestep number you want for static step: " << endl;
-	cin >> timestep;
-	cout << "2. Give the step you want for static step: " << endl;
+	 cout << "The end time of initial step is :" << time[1] << endl;
+	 cout << "The end time of main analysis step is :" << time[g-1] << endl;
+	//cout << "1. Give the  timestep number you want for static step: " << endl;
+	//cin >> timestep;
+	cout << "1. Give the step you want for static step: " << endl;
 	cin >> step;
-	cout << "3. Give the  timestep number you want for dynamic step: " << endl;
-	cin >> timestep2;
-	cout << "4. Give the step you want for dynamic step: " << endl;
+	//cout << "3. Give the  timestep number you want for dynamic step: " << endl;
+	//cin >> timestep2;
+	cout << "2. Give the step you want for dynamic step: " << endl;
 	cin >> step2;
+	timestep = (time[1] / step)+1;
+	double diff;
+	 diff = (time[g-1] - time[1]);
+	timestep2 = ( diff/ step2) + 1;
+	cout << "The number of steps in initial will be: " << timestep << endl;
+	cout << "The number of steps in main will be: " << timestep2 << endl;
 
 	char line[100];
 	string residul = "C:/Users/ece/Desktop/Co_SiM_withFEBiocoding/data/";

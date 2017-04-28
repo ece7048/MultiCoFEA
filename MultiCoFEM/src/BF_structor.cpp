@@ -25,6 +25,9 @@ void BF_structor::begining(int iteration, string kind[24], int sizer, string res
 		INIReader ini = INIReader(INI_FILE);
 		//////////////////////////////////////////////strategy fem ////////////////////////////////////////
 
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////Forced  RBs//////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////////
 
 		cout << "" << endl;
 		cout << "Which will be the stragety that we will follow for the FEM analysis for the Forced DOF of the RBs?" << endl;
@@ -64,44 +67,54 @@ void BF_structor::begining(int iteration, string kind[24], int sizer, string res
 
 		if (presc1 == "NAN"){ fx = fy = fz = fox = foy = foz = 0; }
 		if (presc1 != "NAN"){
-			if (presc1[0] != 'x' && presc1[1] != 'x' && presc1[2] != 'x'){ fx = 0; }
-			if (presc1[0] != 'y' && presc1[1] != 'y' && presc1[2] != 'y'){ fy = 0; }
-			if (presc1[0] != 'z' && presc1[1] != 'z' && presc1[2] != 'z'){ fz = 0; }
-			if (presc1[1] == '_' || presc1[2] == '_' || presc1[3] == '_'){
-				cout << "new" << endl;
-				if (presc1[3] != 'x'&& presc1[4] != 'x' && presc1[5] != 'x' && presc1[6] != 'x' && presc1[7] != 'x'&& presc1[8] != 'x'&& presc1[9] != 'x'&& presc1[10] != 'x'&& presc1[11] != 'x'){ fox = 0; }
-				if (presc1[3] != 'y'&& presc1[4] != 'y' && presc1[5] != 'y' && presc1[6] != 'y' && presc1[7] != 'y'&& presc1[8] != 'y'&& presc1[9] != 'y'&& presc1[10] != 'y'&& presc1[11] != 'y'){ foy = 0; }
-				if (presc1[3] != 'z'&& presc1[4] != 'z' && presc1[5] != 'z' && presc1[6] != 'z' && presc1[7] != 'z'&& presc1[8] != 'z'&& presc1[9] != 'z'&& presc1[10] != 'z'&& presc1[11] != 'z'){ foz = 0; }
+			if (presc1[0] != 'r'){
+				if (presc1[0] != 'x' && presc1[1] != 'x' && presc1[2] != 'x'){ fx = 0; }
+				if (presc1[0] != 'y' && presc1[1] != 'y' && presc1[2] != 'y'){ fy = 0; }
+				if (presc1[0] != 'z' && presc1[1] != 'z' && presc1[2] != 'z'){ fz = 0; }
+				if (presc1[1] == '_' || presc1[2] == '_' || presc1[3] == '_'){
+
+					if (presc1[3] != 'x'&& presc1[4] != 'x' && presc1[5] != 'x' && presc1[6] != 'x' && presc1[7] != 'x'&& presc1[8] != 'x'&& presc1[9] != 'x'&& presc1[10] != 'x'&& presc1[11] != 'x'){ fox = 0; }
+					if (presc1[3] != 'y'&& presc1[4] != 'y' && presc1[5] != 'y' && presc1[6] != 'y' && presc1[7] != 'y'&& presc1[8] != 'y'&& presc1[9] != 'y'&& presc1[10] != 'y'&& presc1[11] != 'y'){ foy = 0; }
+					if (presc1[3] != 'z'&& presc1[4] != 'z' && presc1[5] != 'z' && presc1[6] != 'z' && presc1[7] != 'z'&& presc1[8] != 'z'&& presc1[9] != 'z'&& presc1[10] != 'z'&& presc1[11] != 'z'){ foz = 0; }
+				}
+				if (presc1[1] != '_' && presc1[2] != '_' && presc1[3] != '_'){
+					fox = 0; foy = 0; foz = 0;
+				}
 			}
 			if (presc1[0] == 'r'){
-				if (presc1[1] != 'x' ){ fox = 0; }
-				if (presc1[1] != 'y' ){ foy = 0; }
-				if (presc1[1] != 'z' ){ foz = 0; }
+				if (presc1[1] != 'x' && presc1[3] != 'x' && presc1[5] != 'x'){ fox = 0; }
+				if (presc1[1] != 'y' && presc1[3] != 'y' && presc1[5] != 'y'){ foy = 0; }
+				if (presc1[1] != 'z' && presc1[3] != 'z' && presc1[5] != 'z'){ foz = 0; }
+				fx = 0;
+				fy = 0;
+				fz = 0;
 			}
-			if ( presc1[3] != 'x' && presc1[5] != 'x'){ fox = 0; }
-			if ( presc1[3] != 'y' && presc1[5] != 'y'){ foy = 0; }
-			if ( presc1[3] != 'z' && presc1[5] != 'z'){ foz = 0; }
 		}
 
 		if (presc2 == "NAN"){ tx = ty = tz = tox = toy = toz = 0; }
 		if (presc2 != "NAN"){
-			if (presc2[0] != 'x' && presc2[1] != 'x' && presc2[2] != 'x'){ tx = 0; }
-			if (presc2[0] != 'y' && presc2[1] != 'y' && presc2[2] != 'y'){ ty = 0; }
-			if (presc2[0] != 'z' && presc2[1] != 'z' && presc2[2] != 'z'){ tz = 0; }
-			if (presc2[1] == '_' || presc2[2] == '_' || presc2[3] == '_'){
-				cout << "new" << endl;
-				if (presc2[3] != 'x'&& presc2[4] != 'x' && presc2[5] != 'x' && presc2[6] != 'x' && presc2[7] != 'x'&& presc2[8] != 'x'&& presc2[9] != 'x'&& presc2[10] != 'x'&& presc2[11] != 'x'){ tox = 0; }
-				if (presc2[3] != 'y'&& presc2[4] != 'y' && presc2[5] != 'y' && presc2[6] != 'y' && presc2[7] != 'y'&& presc2[8] != 'y'&& presc2[9] != 'y'&& presc2[10] != 'y'&& presc2[11] != 'y'){ toy = 0; }
-				if (presc2[3] != 'z'&& presc2[4] != 'z' && presc2[5] != 'z' && presc2[6] != 'z' && presc2[7] != 'z'&& presc2[8] != 'z'&& presc2[9] != 'z'&& presc2[10] != 'z'&& presc2[11] != 'z'){ toz = 0; }
+			if (presc2[0] != 'r'){
+				if (presc2[0] != 'x' && presc2[1] != 'x' && presc2[2] != 'x'){ tx = 0; }
+				if (presc2[0] != 'y' && presc2[1] != 'y' && presc2[2] != 'y'){ ty = 0; }
+				if (presc2[0] != 'z' && presc2[1] != 'z' && presc2[2] != 'z'){ tz = 0; }
+				if (presc2[1] == '_' || presc2[2] == '_' || presc2[3] == '_'){
+
+					if (presc2[3] != 'x'&& presc2[4] != 'x' && presc2[5] != 'x' && presc2[6] != 'x' && presc2[7] != 'x'&& presc2[8] != 'x'&& presc2[9] != 'x'&& presc2[10] != 'x'&& presc2[11] != 'x'){ tox = 0; }
+					if (presc2[3] != 'y'&& presc2[4] != 'y' && presc2[5] != 'y' && presc2[6] != 'y' && presc2[7] != 'y'&& presc2[8] != 'y'&& presc2[9] != 'y'&& presc2[10] != 'y'&& presc2[11] != 'y'){ toy = 0; }
+					if (presc2[3] != 'z'&& presc2[4] != 'z' && presc2[5] != 'z' && presc2[6] != 'z' && presc2[7] != 'z'&& presc2[8] != 'z'&& presc2[9] != 'z'&& presc2[10] != 'z'&& presc2[11] != 'z'){ toz = 0; }
+				}
+				if (presc2[1] != '_' && presc2[2] != '_' && presc2[3] != '_'){
+					tox = 0; toy = 0; toz = 0;
+				}
 			}
 			if (presc2[0] == 'r'){
-				if (presc2[1] != 'x' ){ tox = 0; }
-				if (presc2[1] != 'y' ){ toy = 0; }
-				if (presc2[1] != 'z' ){ toz = 0; }
+				if (presc2[1] != 'x' && presc2[3] != 'x' && presc2[5] != 'x'){ tox = 0; }
+				if (presc2[1] != 'y' && presc2[3] != 'y' && presc2[5] != 'y'){ toy = 0; }
+				if (presc2[1] != 'z' && presc2[3] != 'z' && presc2[5] != 'z'){ toz = 0; }
+				tx = 0;
+				ty = 0;
+				tz = 0;
 			}
-			if (presc2[3] != 'x' && presc2[5] != 'x'){ tox = 0; }
-			if (presc2[3] != 'y' && presc2[5] != 'y'){ toy = 0; }
-			if (presc2[3] != 'z' && presc2[5] != 'z'){ toz = 0; }
 		}
 
 

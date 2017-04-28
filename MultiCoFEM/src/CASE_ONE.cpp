@@ -69,6 +69,7 @@ Vector CASE_ONE::return_vect(int which){
 }
 
 void CASE_ONE::run(int itteration, string kind[24], int endend, string resultDir2, int pass, char dof){
+	INIReader ini = INIReader(INI_FILE);
 
 	timefinal = return_vect(0);
 	fPx = return_vect(1);
@@ -102,7 +103,7 @@ void CASE_ONE::run(int itteration, string kind[24], int endend, string resultDir
 	char resamplernow = 'n';
 	if (pass == 1){
 		TSC t;
-		t.stepswriter();
+		t.stepswriter(timefinal);
 		t.~TSC();
 	}
 
@@ -110,7 +111,10 @@ void CASE_ONE::run(int itteration, string kind[24], int endend, string resultDir
 
 		cout << "" << endl;
 		cout << "Do you want a DoF Resample for case it not need it a DoF of the bodies? (y/n)" << endl;
-		string  which = ini.Get("BASICSETUP", "DOF_Resample", "");
+		string  which =  ini.Get("BASICSETUP", "DOF_Resample", "");
+		if (which == ""){ cout << "PLEASE,answer the question!" << endl;
+		cin >> which;
+		}
 		cout << which << endl;
 		cout << "" << endl;
 
@@ -330,6 +334,10 @@ void CASE_ONE::run(int itteration, string kind[24], int endend, string resultDir
 
 			cout << "Do you want a visualizer of pre motion of the FEBio geometry? (y/n)" << endl;
 			string f = ini.Get("BASICSETUP", "Visualizer_premotion", "");
+			if (f == ""){
+				cout << "PLEASE,answer the question!" << endl;
+				cin >> f;
+			}
 			cout << f << endl;
 			if (f == "y"){
 

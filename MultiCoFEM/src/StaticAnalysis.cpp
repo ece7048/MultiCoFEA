@@ -121,6 +121,7 @@ int StaticAnalysis::record(const SimTK::State& s)
 	double time = s.getTime();
 	cout << "Static Position_Analysis time: " << time << endl;
 	cout << "press enter..." << endl;
+
 	
 	fstream point2bs (resultDir + "/_Staticpoint" + "/staticpoint.txt", std::ios_base::in);
 	double a1, b1, c1;

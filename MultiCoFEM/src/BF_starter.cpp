@@ -85,8 +85,12 @@ void BF_starter::started(int number, int itteration,char mode){
 	//////////STATIC CALIBRATION OF THE POINT OF INTEREST/////////////
 	if (itteration == 0){
 		cout << " GIVE THE POINT OF INTEREST OF CHILD BODY : " << bodyname2 << "(x/y/z of OpenSim orientation)" << endl;
-		cout << "For default value setup: d ,  or setup: nd , to give your own value " << endl;
+		cout << "For default value set: d ,  or to give your own value set: nd  " << endl;
 		string setcase = ini.Get("BASICSETUP", "Point_of_acting_forces", "");
+		if (setcase == ""){
+			cout << " PLEASE, GIVE THE POINT OF INTEREST OF CHILD BODY : " << bodyname2 << "(x/y/z of OpenSim orientation)" << endl;
+			cin >> setcase;
+		}
 		cout<< setcase <<endl;
 		double xval;
 		double yval;
@@ -174,7 +178,7 @@ void BF_starter::started(int number, int itteration,char mode){
 		*/
 		string stateFilestatic = ini.Get("STATIC", "STATE", "");
 		double t0s = ini.GetReal("STATIC", "START_TIME", 0);
-		double tfs = ini.GetReal("STATIC", "END_TIME", 0);
+		double tfs = ini.GetReal("STATIC", "END_TIME", 0.1);
 
 		/*
 		////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -461,7 +465,12 @@ void BF_starter::started(int number, int itteration,char mode){
 		cout << "Which is the initial time you want to reach the model for the initial prescribed motions and forces of the model?" << endl;
 		cout << "Set the end time of the Initial step one analysis (THE STEP FOR REACH the initial contitions)" << endl;
 		cout << " in the .ini file (setup) set it in variable Initialtime...if is empty will ask to you here to set it..." << endl;
-		double intim = ini.GetReal("BASICSETUP", "Initialtime", 0);
+		
+		double intim = ini.GetReal("BASICSETUP", "Initialtime", NAN );
+		if (intim == NAN){
+			cout << "Please answer: Set the end time of Initial step analysis" << endl;
+			cin >> intim;
+		}
 		if (intim != 0){
 			cout << intim << endl;
 		}
@@ -620,9 +629,13 @@ void BF_starter::started(int number, int itteration,char mode){
 		////////////////////////////////////ASK IF WANT MOTION DETECTION BASED THE POINT OR BASED THE DOF OF JOINTS//////////////////////////
 
 
-		cout <<"Do you want to detect the motion of two bodies base the point of interest you give previusly ? (/P)" << endl;
+		cout <<"Do you want to detect the motion of two bodies base the point of interest you give previewsly ? (/P)" << endl;
 		cout << "or you want to set the degree of freedom of two bodies based the virtual joint of OpenSim ? (/J)" << endl;
 		string dof = ini.Get("BASICSETUP", "DOF_case_F", "");
+		if (dof == ""){
+			cout << "Please answer: Which case you want J/P?" << endl;
+			cin >> dof;
+		}
 		cout << dof << endl;
 		if (dof == "P"){
 			cout << "we will continue with point of interest detection motion for the " << bodyname1 << " and " << bodyname2 << " now..." << endl;
@@ -681,21 +694,29 @@ void BF_starter::started(int number, int itteration,char mode){
 			cout << "Do you want to detect the interpolation matching kind for all the DoFs of model? (y/n)" << endl;
 			//TODO ask for give the sample he want!!!!!!!!
 			string dicession = ini.Get("BASICSETUP", "Interpolation_Detect", "");
+			if (dicession == ""){
+				cout << "Please answer: Do you want to detect the interpolation matching kind for all the DoFs of model? (y/n)" << endl;
+				cin >> dicession;
+			}
 			cout << dicession << endl;
-			char kin;
+			//char kin;
 			//cout << dicession << endl;
 			//send the sums for fixed the tibia body
 			if (dicession == "n"){
 				cout << "Do you want to the interpolation be smooth 's' or linear 'l' for the DoF? (s/l)" << endl;
-				cin >> kin;
-				if (kin == 'l'){
+				string kin = ini.Get("BASICSETUP", "Interpolation_kind", "");
+				if (kin == ""){
+					cout << "give the kind of interpolation function:" << endl;
+					cin >> kin;
+				}
+				if (kin == "l"){
 					int co = 0;
 					while (co < 24){
 						kind[co] = "linear";
 						++co;
 					}
 				}
-				if (kin == 's'){
+				if (kin == "s"){
 					int co = 0;
 					while (co < 24){
 						kind[co] = "smooth";
@@ -796,6 +817,10 @@ void BF_starter::started(int number, int itteration,char mode){
 			cout << "Do you want to resample the DoF's sample? (y/n)" << endl;
 			//TODO ask for give the sample he want!!!!!!!!
 			string  dicession1 = ini.Get("BASICSETUP", "Time_Resample", "");
+			if (dicession1 == ""){
+				cout << "Please answer: Do you want to resample the DoF's sample? (y/n)" << endl;
+				cin >> dicession1;
+			}
 			cout << dicession1 << endl;
 			//cout << dicession << endl;
 			//send the sums for fixed the tibia body
@@ -877,7 +902,7 @@ void BF_starter::started(int number, int itteration,char mode){
 			}
 
 
-cout << "FEBWRITTER" << endl;
+//cout << "FEBWRITTER" << endl;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 FEBRunner feb;
 feb.WriteFEBFile(itteration,mode);

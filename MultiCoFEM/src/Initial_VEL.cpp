@@ -784,12 +784,177 @@ void Initial_VEL::initial(int itteration, char kase, int behavior,char dof){
 
 void Initial_VEL::write(int iteration, string resultDir1, Vector fxf, Vector fyf, Vector fzf, Vector foxf, Vector foyf, Vector fozf, Vector txf, Vector tyf, Vector tzf, Vector toxf, Vector toyf, Vector tozf)
 {
+	INIReader ini = INIReader(INI_FILE);
 	cout << "Writting the initial_velocities..." << endl;
 	char itter = iteration + '0';
 	ofstream velocity;
 	ofstream number;
 	velocity = ofstream(resultDir1 + "/initialvel" + itter + ".txt", ofstream::out);
 	//cout << fxf* 1000 << endl;
+
+	//////dof detection///////////////
+	string presc11 = ini.Get("BASICSETUP", "Prescribed_DOF_1", "");
+
+
+	string presc21 = ini.Get("BASICSETUP", "Prescribed_DOF_2", "");
+	int fox, foy, tox, toy, foz, toz, tz, tx, ty, fx, fy, fz, fox1, foy1, tox1, toy1, foz1, toz1, tx1, ty1, tz1, fx1, fy1, fz1;
+	fox = foy = tox = toy = foz = toz = tz, tx, ty = fx = fy = fz = fox1 = foy1 = tox1 = toy1 = foz1 = toz1 = tx1 = ty1 = tz1 = fx1 = fy1 = fz1=1;
+
+	if (presc11 == ""){
+		cout << "Give now the DOF velocity  of prescribed dof first traslation, second rotation seperated by _ for the first Rigid Body" << endl;
+		cout << "If you do not want any DOF Prescribed set NAN, you can set only rotation if you want." << endl;
+		string forc;
+		cin >> forc;
+		presc11 = forc;
+	}
+	if (presc21 == ""){
+		cout << "give now the DOF velocity  of prescribed dof first traslation, second rotation seperated by _ for the second Rigid Body" << endl;
+		cout << "If you do not want any DOF Prescribed set NAN, you can set only rotation if you want." << endl;
+		string forc;
+		cin >> forc;
+		presc21 = forc;
+	}
+
+	//////////////////first RB body/////////////////////
+
+	if (presc11 == "NAN"){ fx1 = fy1 = fz1 = fox1 = foy1 = foz1 = 0; }
+	if (presc11 != "NAN"){
+		if (presc11[0] != 'r'){
+			if (presc11[0] != 'x' && presc11[1] != 'x' && presc11[2] != 'x'){ fx1 = 0; }
+			if (presc11[0] != 'y' && presc11[1] != 'y' && presc11[2] != 'y'){ fy1 = 0; }
+			if (presc11[0] != 'z' && presc11[1] != 'z' && presc11[2] != 'z'){ fz1 = 0; }
+			if (presc11[1] == '_' || presc11[2] == '_' || presc11[3] == '_'){
+
+				if (presc11[3] != 'x'&& presc11[4] != 'x' && presc11[5] != 'x' && presc11[6] != 'x' && presc11[7] != 'x'&& presc11[8] != 'x'&& presc11[9] != 'x'&& presc11[10] != 'x'&& presc11[11] != 'x'){ fox1 = 0; }
+				if (presc11[3] != 'y'&& presc11[4] != 'y' && presc11[5] != 'y' && presc11[6] != 'y' && presc11[7] != 'y'&& presc11[8] != 'y'&& presc11[9] != 'y'&& presc11[10] != 'y'&& presc11[11] != 'y'){ foy1 = 0; }
+				if (presc11[3] != 'z'&& presc11[4] != 'z' && presc11[5] != 'z' && presc11[6] != 'z' && presc11[7] != 'z'&& presc11[8] != 'z'&& presc11[9] != 'z'&& presc11[10] != 'z'&& presc11[11] != 'z'){ foz1 = 0; }
+			}
+			if (presc11[1] != '_' && presc11[2] != '_' && presc11[3] != '_'){
+				fox1 = 0; foy1 = 0; foz1 = 0;
+			}
+		}
+		if (presc11[0] == 'r'){
+			if (presc11[1] != 'x' && presc11[3] != 'x' && presc11[5] != 'x'){ fox1 = 0; }
+			if (presc11[1] != 'y' && presc11[3] != 'y' && presc11[5] != 'y'){ foy1 = 0; }
+			if (presc11[1] != 'z' && presc11[3] != 'z' && presc11[5] != 'z'){ foz1 = 0; }
+			fx1 = 0;
+			fy1 = 0;
+			fz1 = 0;
+		}
+	}
+	//////////////////////////////second RB////////////////////////////////////////////////////////
+	if (presc21 == "NAN"){ tx1 = ty1 = tz1 = tox1 = toy1 = toz1 = 0; }
+	if (presc21 != "NAN"){
+		if (presc21[0] != 'r'){
+			if (presc21[0] != 'x' && presc21[1] != 'x' && presc21[2] != 'x'){ tx1 = 0; }
+			if (presc21[0] != 'y' && presc21[1] != 'y' && presc21[2] != 'y'){ ty1 = 0; }
+			if (presc21[0] != 'z' && presc21[1] != 'z' && presc21[2] != 'z'){ tz1 = 0; }
+			if (presc21[1] == '_' || presc21[2] == '_' || presc21[3] == '_'){
+
+				if (presc21[3] != 'x'&& presc21[4] != 'x' && presc21[5] != 'x' && presc21[6] != 'x' && presc21[7] != 'x'&& presc21[8] != 'x'&& presc21[9] != 'x'&& presc21[10] != 'x'&& presc21[11] != 'x'){ tox1 = 0; }
+				if (presc21[3] != 'y'&& presc21[4] != 'y' && presc21[5] != 'y' && presc21[6] != 'y' && presc21[7] != 'y'&& presc21[8] != 'y'&& presc21[9] != 'y'&& presc21[10] != 'y'&& presc21[11] != 'y'){ toy1 = 0; }
+				if (presc21[3] != 'z'&& presc21[4] != 'z' && presc21[5] != 'z' && presc21[6] != 'z' && presc21[7] != 'z'&& presc21[8] != 'z'&& presc21[9] != 'z'&& presc21[10] != 'z'&& presc21[11] != 'z'){ toz1 = 0; }
+			}
+			if (presc21[1] != '_' && presc21[2] != '_' && presc21[3] != '_'){
+				tox1 = 0; toy1 = 0; toz1 = 0;
+			}
+		}
+		if (presc21[0] == 'r'){
+			if (presc21[1] != 'x' && presc21[3] != 'x' && presc21[5] != 'x'){ tox1 = 0; }
+			if (presc21[1] != 'y' && presc21[3] != 'y' && presc21[5] != 'y'){ toy1 = 0; }
+			if (presc21[1] != 'z' && presc21[3] != 'z' && presc21[5] != 'z'){ toz1 = 0; }
+			tx1 = 0;
+			ty1 = 0;
+			tz1 = 0;
+		}
+	}
+
+	string presc1 = ini.Get("BASICSETUP", "Forced_DOF_1", "");
+	
+	string presc2 = ini.Get("BASICSETUP", "Forced_DOF_2", "");
+	
+	if (presc1 == ""){
+		cout << "give now the DOF velocity  of  Forced dof first traslation, second rotation seperated by _ for the first Rigid Body" << endl;
+		cout << "If you do not want any DOF Forced set NAN, you can set only rotation if you want." << endl;
+		string forc;
+		cin >> forc;
+		presc1 = forc;
+	}
+	if (presc2 == ""){
+		cout << "give now the DOF velocity  of  Forced dof first traslation, second rotation seperated by _ for the second Rigid Body" << endl;
+		cout << "If you do not want any DOF Forced set NAN, you can set only rotation if you want." << endl;
+		string forc;
+		cin >> forc;
+		presc2 = forc;
+	}
+
+
+	if (presc1 == "NAN"){ fx = fy = fz = fox = foy = foz = 0; }
+	if (presc1 != "NAN"){
+		if (presc1[0] != 'r'){
+			if (presc1[0] != 'x' && presc1[1] != 'x' && presc1[2] != 'x'){ fx = 0; }
+			if (presc1[0] != 'y' && presc1[1] != 'y' && presc1[2] != 'y'){ fy = 0; }
+			if (presc1[0] != 'z' && presc1[1] != 'z' && presc1[2] != 'z'){ fz = 0; }
+			if (presc1[1] == '_' || presc1[2] == '_' || presc1[3] == '_'){
+
+				if (presc1[3] != 'x'&& presc1[4] != 'x' && presc1[5] != 'x' && presc1[6] != 'x' && presc1[7] != 'x'&& presc1[8] != 'x'&& presc1[9] != 'x'&& presc1[10] != 'x'&& presc1[11] != 'x'){ fox = 0; }
+				if (presc1[3] != 'y'&& presc1[4] != 'y' && presc1[5] != 'y' && presc1[6] != 'y' && presc1[7] != 'y'&& presc1[8] != 'y'&& presc1[9] != 'y'&& presc1[10] != 'y'&& presc1[11] != 'y'){ foy = 0; }
+				if (presc1[3] != 'z'&& presc1[4] != 'z' && presc1[5] != 'z' && presc1[6] != 'z' && presc1[7] != 'z'&& presc1[8] != 'z'&& presc1[9] != 'z'&& presc1[10] != 'z'&& presc1[11] != 'z'){ foz = 0; }
+			}
+			if (presc1[1] != '_' && presc1[2] != '_' && presc1[3] != '_'){
+				fox = 0; foy = 0; foz = 0;
+			}
+		}
+		if (presc1[0] == 'r'){
+			if (presc1[1] != 'x' && presc1[3] != 'x' && presc1[5] != 'x'){ fox = 0; }
+			if (presc1[1] != 'y' && presc1[3] != 'y' && presc1[5] != 'y'){ foy = 0; }
+			if (presc1[1] != 'z' && presc1[3] != 'z' && presc1[5] != 'z'){ foz = 0; }
+			fx = 0;
+			fy = 0;
+			fz = 0;
+		}
+	}
+
+	if (presc2 == "NAN"){ tx = ty = tz = tox = toy = toz = 0; }
+	if (presc2 != "NAN"){
+		if (presc2[0] != 'r'){
+			if (presc2[0] != 'x' && presc2[1] != 'x' && presc2[2] != 'x'){ tx = 0; }
+			if (presc2[0] != 'y' && presc2[1] != 'y' && presc2[2] != 'y'){ ty = 0; }
+			if (presc2[0] != 'z' && presc2[1] != 'z' && presc2[2] != 'z'){ tz = 0; }
+			if (presc2[1] == '_' || presc2[2] == '_' || presc2[3] == '_'){
+
+				if (presc2[3] != 'x'&& presc2[4] != 'x' && presc2[5] != 'x' && presc2[6] != 'x' && presc2[7] != 'x'&& presc2[8] != 'x'&& presc2[9] != 'x'&& presc2[10] != 'x'&& presc2[11] != 'x'){ tox = 0; }
+				if (presc2[3] != 'y'&& presc2[4] != 'y' && presc2[5] != 'y' && presc2[6] != 'y' && presc2[7] != 'y'&& presc2[8] != 'y'&& presc2[9] != 'y'&& presc2[10] != 'y'&& presc2[11] != 'y'){ toy = 0; }
+				if (presc2[3] != 'z'&& presc2[4] != 'z' && presc2[5] != 'z' && presc2[6] != 'z' && presc2[7] != 'z'&& presc2[8] != 'z'&& presc2[9] != 'z'&& presc2[10] != 'z'&& presc2[11] != 'z'){ toz = 0; }
+			}
+			if (presc2[1] != '_' && presc2[2] != '_' && presc2[3] != '_'){
+				tox = 0; toy = 0; toz = 0;
+			}
+		}
+		if (presc2[0] == 'r'){
+			if (presc2[1] != 'x' && presc2[3] != 'x' && presc2[5] != 'x'){ tox = 0; }
+			if (presc2[1] != 'y' && presc2[3] != 'y' && presc2[5] != 'y'){ toy = 0; }
+			if (presc2[1] != 'z' && presc2[3] != 'z' && presc2[5] != 'z'){ toz = 0; }
+			tx = 0;
+			ty = 0;
+			tz = 0;
+		}
+	}
+
+	if (fx1 == 0 && fx == 0){ fxf[0] = 0; }
+	if (fy1 == 0 && fy == 0){ fyf[0] = 0; }
+	if (fz1 == 0 && fz == 0){ fzf[0] = 0; }
+	if (fox1 == 0 && fox == 0){ foxf[0] = 0; }
+	if (foy1 == 0 && foy == 0){ foyf[0] = 0; }
+	if (foz1 == 0 && foz == 0){ fozf[0] = 0; }
+	if (tx1 == 0 && tx == 0){ txf[0] = 0; }
+	if (ty1 == 0 && ty == 0){ tyf[0] = 0; }
+	if (tz1 == 0 && tz == 0){ tzf[0] = 0; }
+	if (tox1 == 0 && tox == 0){ toxf[0] = 0; }
+	if (toy1 == 0 && toy == 0){ toyf[0] = 0; }
+	if (toz1 == 0 && toz == 0){ tozf[0] = 0; }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	velocity << "<rigid_body mat = " << '"' << "1" << '"' << ">" << endl;
 	velocity << "<initial_velocity>" << fxf[0] * 1000 << "," << fyf[0] * 1000 << "," << fzf[0] * 1000 << " </initial_velocity>" << endl;
 	velocity << "<initial_angular_velocity>" << foxf[0] << "," << foyf[0] << "," << fozf[0] << " </initial_angular_velocity>" << endl;

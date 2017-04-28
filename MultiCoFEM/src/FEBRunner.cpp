@@ -1,6 +1,7 @@
 
 #include "FEBRunner.h"
-
+#include <string>
+#include <stdio.h>
 
 FEBRunner::FEBRunner(void)
 {
@@ -75,14 +76,17 @@ void FEBRunner::Run(int num)
 void FEBRunner::CopyFEBFile(int number){
 	INIReader ini = INIReader(INI_FILE);
 	string modelPath = BASE_DIR + ini.Get("PATH", "MODELFeb", "");
-	string model = BASE_DIR + ini.Get("PATH", "MODELF", "");
-
+	string modd = BASE_DIR + ini.Get("PATH", "MODELFeb", "");
+	modd.erase(modd.end() - 4, modd.end());
+	string mod = modd;
+	//string model = BASE_DIR + ini.Get("PATH", "MODELF", "");
 	for (int countt = 0; countt < number; ++countt){
 		char numbereach = countt + '0';
-		
-		string mod = model + numbereach + ".feb";
 
-		ofstream febnew(mod);
+
+		//cout << mod << endl;
+		string modf = mod + numbereach + ".feb";
+		ofstream febnew(modf);
 		ifstream febFile(modelPath);
 
 
@@ -119,14 +123,14 @@ void FEBRunner::CopyFEBFile(int number){
 			//}
 			if (step1.is_open()){
 				// static step
-				if (line1.compare("POINT1=1") == 0)
+				if (line1.compare("[PATH]") == 0)
 				{
 					for (int numbereach = 0; numbereach < number; ++numbereach){
 						
-						st << "MODELF" << numbereach << '=' << model << numbereach << endl;
+						st << "MODELF" << numbereach << '=' << mod << numbereach << endl;
 						
 
-						++except;
+						//++except;
 
 					}
 
@@ -149,7 +153,9 @@ void FEBRunner::CopyFEBFile(int number){
 }
 
 void FEBRunner::clearsetup(){
-	string residul = "C:/Users/ece/Desktop/Co_SiM_withFEBiocoding/data/";
+	INIReader ini = INIReader(INI_FILE);
+	//string residul = "C:/Users/ece/Desktop/Co_SiM_withFEBiocoding/data/";
+	string residul = BASE_DIR;
 	ifstream step1(residul + "setup2.ini");
 	ofstream st(residul + "setup.ini");
 	ofstream st2(residul + "setup1.ini");
@@ -162,11 +168,16 @@ void FEBRunner::clearsetup(){
 		st << line1 << endl;
 		st2 << line1 << endl;
 	}
+	
+		remove("C:/Users/ece/Desktop/Co_SiM_withFEBiocoding/data/setup2.ini");
+		remove("C:/Users/ece/Desktop/Co_SiM_withFEBiocoding/data/setup1.ini");
+		remove("C:/Users/ece/Desktop/Co_SiM_withFEBiocoding/data/setup3.ini");
+	
 }
 
 
 
-void FEBRunner::WriteFEBFile(int itteration,char mode)
+void FEBRunner::WriteFEBFile(int itteration, char mode)
 {
 	cout << " " << endl;
 	cout << " " << endl;
@@ -180,124 +191,127 @@ void FEBRunner::WriteFEBFile(int itteration,char mode)
 
 	string bn1 = ini.Get("BODYFORCES", "BDNAME1", "");
 	string bn2 = ini.Get("BODYFORCES", "BDNAME2", "");
-	
-	
+
+
 	/////////////////////////////add all the degrees files in one///////////
 	//cout << "xaxaxaxax" << endl;
 	ofstream dof(resultDir2 + "/FEBdatapositionsdynamic" + itter + ".txt");
-	
+
 	ifstream dof1(resultDir2 + "/dof1.txt");
 	string line1;
 	while (!dof1.eof()){
-		
+
 		getline(dof1, line1);
 		//if (except >= number){
 		dof << line1 << endl;
 	}
-		ifstream dof2(resultDir2 + "/dof2.txt");
-		string line2;
-		while (!dof2.eof()){
-			
-				getline(dof2, line2);
-				//if (except >= number){
-				dof << line2 << endl;
-			}
-			ifstream dof3(resultDir2 + "/dof3.txt");
-			string line3;
-			while (!dof3.eof()){
-				
-					getline(dof3, line3);
-					//if (except >= number){
-					dof << line3 << endl;
-				}
-				ifstream dof4(resultDir2 + "/dof4.txt");
-				string line4;
-				while (!dof4.eof()){
-					
-						getline(dof4, line4);
-						//if (except >= number){
-						dof << line4 << endl;
-					}
-					ifstream dof5(resultDir2 + "/dof5.txt");
-					string line5;
-					while (!dof5.eof()){
-						
-							getline(dof5, line5);
-							//if (except >= number){
-							dof << line5 << endl;
-						}
-						ifstream dof6(resultDir2 + "/dof6.txt");
-						string line6;
-						while (!dof6.eof()){
-							
-								getline(dof6, line6);
-								//if (except >= number){
-								dof << line6 << endl;
-							}
-							ifstream dof7(resultDir2 + "/dof7.txt");
-							string line7;
-							while (!dof7.eof()){
-								
-									getline(dof7, line7);
-									//if (except >= number){
-									dof << line7 << endl;
-								}
-								ifstream dof8(resultDir2 + "/dof8.txt");
-								string line8;
-								while (!dof8.eof()){
-									
-										getline(dof8, line8);
-										//if (except >= number){
-										dof << line8 << endl;
-									}
-									ifstream dof9(resultDir2 + "/dof9.txt");
-									string line9;
-									while (!dof9.eof()){
-										
-											getline(dof9, line9);
-											//if (except >= number){
-											dof << line9 << endl;
-										}
-										ifstream dof10(resultDir2 + "/dof10.txt");
-										string line10;
-										while (!dof10.eof()){
-											
-												getline(dof10, line10);
-												//if (except >= number){
-												dof << line10 << endl;
-											}
-											ifstream dof11(resultDir2 + "/dof11.txt");
-											string line11;
-											while (!dof11.eof()){
-												
-													getline(dof11, line11);
-													//if (except >= number){
-													dof << line11 << endl;
-												}
-												ifstream dof12(resultDir2 + "/dof12.txt");
-												string line12;
-												while (!dof12.eof()){
-													
-														getline(dof12, line12);
-														//if (except >= number){
-														dof << line12 << endl;
-													}
+	ifstream dof2(resultDir2 + "/dof2.txt");
+	string line2;
+	while (!dof2.eof()){
+
+		getline(dof2, line2);
+		//if (except >= number){
+		dof << line2 << endl;
+	}
+	ifstream dof3(resultDir2 + "/dof3.txt");
+	string line3;
+	while (!dof3.eof()){
+
+		getline(dof3, line3);
+		//if (except >= number){
+		dof << line3 << endl;
+	}
+	ifstream dof4(resultDir2 + "/dof4.txt");
+	string line4;
+	while (!dof4.eof()){
+
+		getline(dof4, line4);
+		//if (except >= number){
+		dof << line4 << endl;
+	}
+	ifstream dof5(resultDir2 + "/dof5.txt");
+	string line5;
+	while (!dof5.eof()){
+
+		getline(dof5, line5);
+		//if (except >= number){
+		dof << line5 << endl;
+	}
+	ifstream dof6(resultDir2 + "/dof6.txt");
+	string line6;
+	while (!dof6.eof()){
+
+		getline(dof6, line6);
+		//if (except >= number){
+		dof << line6 << endl;
+	}
+	ifstream dof7(resultDir2 + "/dof7.txt");
+	string line7;
+	while (!dof7.eof()){
+
+		getline(dof7, line7);
+		//if (except >= number){
+		dof << line7 << endl;
+	}
+	ifstream dof8(resultDir2 + "/dof8.txt");
+	string line8;
+	while (!dof8.eof()){
+
+		getline(dof8, line8);
+		//if (except >= number){
+		dof << line8 << endl;
+	}
+	ifstream dof9(resultDir2 + "/dof9.txt");
+	string line9;
+	while (!dof9.eof()){
+
+		getline(dof9, line9);
+		//if (except >= number){
+		dof << line9 << endl;
+	}
+	ifstream dof10(resultDir2 + "/dof10.txt");
+	string line10;
+	while (!dof10.eof()){
+
+		getline(dof10, line10);
+		//if (except >= number){
+		dof << line10 << endl;
+	}
+	ifstream dof11(resultDir2 + "/dof11.txt");
+	string line11;
+	while (!dof11.eof()){
+
+		getline(dof11, line11);
+		//if (except >= number){
+		dof << line11 << endl;
+	}
+	ifstream dof12(resultDir2 + "/dof12.txt");
+	string line12;
+	while (!dof12.eof()){
+
+		getline(dof12, line12);
+		//if (except >= number){
+		dof << line12 << endl;
+	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
-		ifstream stepdynamicpositions(resultDir2 + "/FEBstepdynamic_position" + itter + ".txt");
+	ifstream stepdynamicpositions(resultDir2 + "/FEBstepdynamic_position" + itter + ".txt");
 
 	ifstream stepstaticpositions(resultDir2 + "/FEBstepstatic_position" + itter + ".txt");
 	ifstream lcdynamicpositions(resultDir2 + "/FEBdatapositionsdynamic" + itter + ".txt");
 	ifstream lcstaticpositions(resultDir2 + "/FEBdatapositionsstatic" + itter + ".txt");
 
-	ifstream stepdynamicforces(resultDir2 + "/FEBstepdynamic_forces"+ itter + ".txt");
+	ifstream stepdynamicforces(resultDir2 + "/FEBstepdynamic_forces" + itter + ".txt");
 	ifstream stepstaticforces(resultDir2 + "/FEBstepstatic_forces" + itter + ".txt");
-	ifstream lcdynamicforces(resultDir2 + "/FEBdataforcesdynamic"+ itter + ".txt");
-		ifstream lcstaticforces(resultDir2 + "/FEBdataforcestatic"+ itter + ".txt");
+	ifstream lcdynamicforces(resultDir2 + "/FEBdataforcesdynamic" + itter + ".txt");
+	ifstream lcstaticforces(resultDir2 + "/FEBdataforcestatic" + itter + ".txt");
 
 
 	string modelPath = BASE_DIR + ini.Get("PATH", "MODELFeb", "");
-	string modelPathcopy = BASE_DIR + ini.Get("PATH", "MODELF" , "");
+	string modd = BASE_DIR + ini.Get("PATH", "MODELFeb", "");
+	modd.erase(modd.end() - 4, modd.end());
+	string mod = modd;
+	string modelPathcopy = mod;
 	//string resultDir = BASE_DIR + ini.Get("PATH", "RESULT_DIR", "");
 	int numThreads = ini.GetReal("FEBIOSTEP", "NUMTHREADS", 1);
 	///STEP ONE///
@@ -365,7 +379,7 @@ void FEBRunner::WriteFEBFile(int itteration,char mode)
 	/////////////start building//////////////////////////
 
 	stepone << "<Step name = " << '"' << "Step01" << '"' << ">" << endl;
-	stepone << " <Module type = " <<'"'<< type1<<'"' << "/>" << endl;
+	stepone << " <Module type = " << '"' << type1 << '"' << "/>" << endl;
 	stepone << " <Control>" << endl;
 	stepone << " <title>tf_joint</title>" << endl;
 	stepone << " <time_steps>" << ts1 << "</time_steps>" << endl;
@@ -451,7 +465,7 @@ void FEBRunner::WriteFEBFile(int itteration,char mode)
 
 
 	steptwo << "<Step name = " << '"' << "Step02" << '"' << ">" << endl;
-	steptwo << " <Module type = " <<'"'<<type2<<'"'<< "/>" << endl;
+	steptwo << " <Module type = " << '"' << type2 << '"' << "/>" << endl;
 	steptwo << " <Control>" << endl;
 	steptwo << " <title>tf_joint</title>" << endl;
 	steptwo << " <time_steps>" << ts2 << "</time_steps>" << endl;
@@ -471,10 +485,10 @@ void FEBRunner::WriteFEBFile(int itteration,char mode)
 	if (ps2 != "NAN"){
 		steptwo << " <pressure_stiffness>" << ps2 << "</pressure_stiffness>" << endl;
 	}
-	
-		steptwo << " <time_stepper>" << endl;
-	
-		if (dtm2 != "NAN"){
+
+	steptwo << " <time_stepper>" << endl;
+
+	if (dtm2 != "NAN"){
 		steptwo << "  <dtmin>" << dtm2 << "</dtmin>" << endl;
 	}
 	if (dtma2 != "NAN"){
@@ -508,34 +522,34 @@ void FEBRunner::WriteFEBFile(int itteration,char mode)
 	if (cm2 != "NAN"){
 		steptwo << " <cmax>" << cm2 << "</cmax>" << endl;
 	}
-	
-		steptwo << " <analysis type =" << '"' << analysis2 << '"' << "/>" << endl;
-		if (alpha2 != 0){
-			steptwo << " <alpha>" << alpha2 << "</alpha>" << endl;
 
-		}
-		if (beta2 != 0){
-			steptwo << " <beta>" << beta2 << "</beta>" << endl;
+	steptwo << " <analysis type =" << '"' << analysis2 << '"' << "/>" << endl;
+	if (alpha2 != 0){
+		steptwo << " <alpha>" << alpha2 << "</alpha>" << endl;
 
-		}
-		if (gamma2 != 0){
-			steptwo << " <gamma>" << gamma2 << "</gamma>" << endl;
+	}
+	if (beta2 != 0){
+		steptwo << " <beta>" << beta2 << "</beta>" << endl;
 
-		}
-		
+	}
+	if (gamma2 != 0){
+		steptwo << " <gamma>" << gamma2 << "</gamma>" << endl;
+
+	}
+
 	if (prl2 != "NAN"){
 		steptwo << " <print_level>" << prl2 << "</print_level>" << endl;
 	}
 	if (mres2 != "NAN"){
 		steptwo << " <min_residual>" << mres2 << "</min_residual>" << endl;
 	}
-		if (out2 != "NAN"){
+	if (out2 != "NAN"){
 		steptwo << "<output_level>" << out2 << "</output_level> " << endl;
 	}
 	steptwo << " </Control>" << endl;
-	
-	
-/////////////////////////Output section////////////////////////////////////////////////////////////
+
+
+	/////////////////////////Output section////////////////////////////////////////////////////////////
 
 	output << "<Output>" << endl;
 	output << "	<logfile>" << endl;
@@ -547,11 +561,11 @@ void FEBRunner::WriteFEBFile(int itteration,char mode)
 	//output << "	<plotfile type = "<<'"'<<"febio"<<'"'<<"/>" << endl;
 	output << "	<plotfile type = " << '"' << "febio" << '"' << ">" << endl;
 	output << "<var type = " << '"' << "strain energy density" << '"' << "/>" << endl;
-	output << "<var type = " << '"' <<"stress" << '"' << "/>" << endl;
+	output << "<var type = " << '"' << "stress" << '"' << "/>" << endl;
 	output << "<var type = " << '"' << "contact force" << '"' << "/>" << endl;
 	output << "<var type = " << '"' << "contact pressure" << '"' << "/>" << endl;
 	output << "<var type = " << '"' << "reaction forces" << '"' << "/>" << endl;
-	
+
 	//output << "<var type = " << '"' << "rigid torque" << '"' << "/>" << endl;
 	//output << "<var type = " << '"' << "rigid position" << '"' << "/>" << endl;
 	output << "<var type = " << '"' << "rigid velocity" << '"' << "/>" << endl;
@@ -560,7 +574,7 @@ void FEBRunner::WriteFEBFile(int itteration,char mode)
 	output << "<var type = " << '"' << "rigid angular velocity" << '"' << "/>" << endl;
 	output << "<var type = " << '"' << "rigid angular acceleration" << '"' << "/>" << endl;
 	output << "<var type = " << '"' << "displacement" << '"' << "/>" << endl;
-	
+
 
 	output << "</plotfile>" << endl;
 	output << "</Output>" << endl;
@@ -568,15 +582,42 @@ void FEBRunner::WriteFEBFile(int itteration,char mode)
 	steptwo.close();
 	stepone.close();
 	output.close();
-//////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////////
+	/////////////CASE of prescribed motion rotation///////////////
 
+	string presc1f = ini.Get("BASICSETUP", "Prescribed_DOF_1", "");
+	string presc2f = ini.Get("BASICSETUP", "Prescribed_DOF_2", "");
+	string jointfree = ini.Get("BASICSETUP", "Joint_free", "");
+	if (jointfree == "y"){
+		if (presc1f[1] == '_' || presc1f[2] == '_' || presc1f[3] == '_' || presc1f[0] == 'r' || presc1f[0] == 'N'){
+
+			jointwrite(itteration, 1);
+		}
+	}
+	if(jointfree == "y"){
+	if (presc2f[1] == '_' || presc2f[2] == '_' || presc2f[3] == '_' || presc2f[0] == 'r' || presc2f[0] == 'N'){
+
+		jointwrite(itteration, 2);
+	}
+
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+	
 	ifstream steptwo1(resultDir2 + "/steptwo" + itter + ".txt");
 	ifstream stepone1(resultDir2 + "/stepone" + itter + ".txt");
 	ifstream outputfir(resultDir2 + "/output" + itter + ".txt");
 	ifstream velocity(resultDir2 + "/initialvel" + itter + ".txt");
-	
+	ifstream jointf1(resultDir2 + "/joints1" + itter + ".txt");
+	ifstream jointfo1(resultDir2 + "/jointd1" + itter + ".txt");
+	ifstream jointf2(resultDir2 + "/joints2" + itter + ".txt");
+	ifstream jointfo2(resultDir2 + "/jointd2" + itter + ".txt");
+
 	//create a file for contact surfaces data from user
-	
+	/*
 	ifstream febFile0(modelPath);
 	ofstream contact(resultDir2 + "/contactsurfacesdata" + itter + ".txt");
 	string lines;
@@ -605,6 +646,7 @@ void FEBRunner::WriteFEBFile(int itteration,char mode)
 	contact.close();
 	ifstream contact1(resultDir2 + "/contactsurfacesdata" + itter + ".txt");
 	ifstream contact2(resultDir2 + "/contactsurfacesdata" + itter + ".txt");
+	*/
 	///////////////////////////////////////////////////////////////
 
 	//read feb file line by line
@@ -760,6 +802,33 @@ void FEBRunner::WriteFEBFile(int itteration,char mode)
 				cout << "a.txt couldn't be opened. Creat and write something in a.txt, and try again." << endl;
 
 			}
+///////////////////////////joint/////////////////////////////////////
+			if (jointfree == "y"){
+				char line7f[100];
+				if (jointf1.is_open()){
+					while (!jointf1.eof()){
+						jointf1.getline(line7f, 100, '\n');
+						feb << line7f << endl;
+						//i++;
+						//cout << i << endl;
+					}cout << " 62.5%" << endl;
+					jointf1.close();
+				}
+			}
+
+			if (jointfree == "y"){
+				char line7f2[100];
+				if (jointf2.is_open()){
+					while (!jointf2.eof()){
+						jointf2.getline(line7f2, 100, '\n');
+						feb << line7f2 << endl;
+						//i++;
+						//cout << i << endl;
+					}cout << " 65%" << endl;
+					jointf2.close();
+				}
+			}
+/////////////////////////////////////////////////////////////////////
 			char line7[100];
 			if (stepstaticpositions.is_open()){
 				while (!stepstaticpositions.eof()){
@@ -810,6 +879,34 @@ void FEBRunner::WriteFEBFile(int itteration,char mode)
 				cout << "a.txt couldn't be opened. Creat and write something in a.txt, and try again." << endl;
 
 			}
+///////////////////////////joint/////////////////////////////////////
+			if (jointfree == "y"){
+				char line7sf[100];
+				if (jointfo1.is_open()){
+					while (!jointfo1.eof()){
+						jointfo1.getline(line7sf, 100, '\n');
+						feb << line7sf << endl;
+						//i++;
+						//cout << i << endl;
+					}
+					cout << " 92.5%" << endl;
+					jointfo1.close();
+				}
+			}
+			if (jointfree == "y"){
+				char line7sf22[100];
+				if (jointfo2.is_open()){
+					while (!jointfo2.eof()){
+						jointfo2.getline(line7sf22, 100, '\n');
+						feb << line7sf22 << endl;
+						//i++;
+						//cout << i << endl;
+					}
+					cout << " 95%" << endl;
+					jointfo2.close();
+				}
+			}
+/////////////////////////////////////////////////////////////////////////////////////
 			if (mode == 'F' || mode == 'R'){
 				char line612[100];
 				if (velocity.is_open()){
@@ -818,7 +915,7 @@ void FEBRunner::WriteFEBFile(int itteration,char mode)
 						feb << line612 << endl;
 						//i++;
 						//cout << i << endl;
-					}cout << " 95%" << endl;
+					}cout << " 97.5%" << endl;
 					velocity.close();
 				}
 				else{
@@ -848,6 +945,1497 @@ void FEBRunner::WriteFEBFile(int itteration,char mode)
 
 }//void
 
+void FEBRunner::jointwrite(int itteration,int bodynum){
+	/////////////CASE of prescribed motion rotation///////////////
+	INIReader ini = INIReader(INI_FILE);
+	string resultDir1 = BASE_DIR + ini.Get("PATH", "RESULT_DIR2", "");
+	char itter = itteration + '0';
+	string newfolder = resultDir1 + itter;
+	string resultDir2 = newfolder;
+
+	string bn1 = ini.Get("BODYFORCES", "BDNAME1", "");
+	string bn2 = ini.Get("BODYFORCES", "BDNAME2", "");
+
+	ofstream dof(resultDir2 + "/FEBdatapositionsdynamic" + itter + ".txt");
+
+	string presc1f = ini.Get("BASICSETUP", "Prescribed_DOF_1", "");
+	string presc2f = ini.Get("BASICSETUP", "Prescribed_DOF_2", "");
+	string fix1f = ini.Get("BASICSETUP", "Fixed_DOF_1", "");
+	string fix2f = ini.Get("BASICSETUP", "Fixed_DOF_2", "");
+
+////detect how many dof is prescribed one or two  and which and how many are fixed...
+	////set the kind of free dof in axis and axis2...
+	
+	char axis='n';
+	char axis2='n';
+	char axis0 = 'n';
+	int number=0;
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	if (bodynum == 1){
+		if (presc1f[0] == 'N'){
+			if (fix1f[1] == '_' || fix1f[2] == '_' || fix1f[3] == '_'){
+				if (fix1f[3] != 'z' && fix1f[4] != 'z'&& fix1f[5] != 'z' && fix1f[6] != 'z'&& fix1f[7] != 'z'&& fix1f[8] != 'z'&& fix1f[9] != 'z'&& fix1f[10] != 'z'&& fix1f[11] != 'z'){ axis = 'z'; }
+				if (fix1f[3] != 'y' && fix1f[4] != 'y'&& fix1f[5] != 'y' && fix1f[6] != 'y'&& fix1f[7] != 'y'&& fix1f[8] != 'y'&& fix1f[9] != 'y'&& fix1f[10] != 'y'&& fix1f[11] != 'y'){ axis2 = 'y'; }
+				if (fix1f[3] != 'x' && fix1f[4] != 'x'&& fix1f[5] != 'x' && fix1f[6] != 'x'&& fix1f[7] != 'x'&& fix1f[8] != 'x'&& fix1f[9] != 'x'&& fix1f[10] != 'x'&& fix1f[11] != 'x'){ axis0 = 'x'; }
+
+			}
+			if (fix1f[0] == 'r'){
+				if (fix1f[1] != 'z' && fix1f[3] != 'z'&& fix1f[5] != 'z'){ axis = 'z'; }
+				if (fix1f[1] != 'y' && fix1f[3] != 'y'&& fix1f[5] != 'y'){ axis2 = 'y'; }
+				if (fix1f[1] != 'x' && fix1f[3] != 'x'&& fix1f[5] != 'x'){ axis0 = 'x'; }
+
+			}
+			if (fix1f[0] != 'r' && fix1f[1] != '_' && fix1f[2] != '_' && fix1f[3] != '_'){
+				axis = 'z';
+				axis2 = 'y';
+				axis0 = 'x';
+			}
+			
+
+		}
+		if (presc1f[1] == '_' || presc1f[2] == '_' || presc1f[3] == '_'){
+			number = 1;
+			if (presc1f[4] == 'r' || presc1f[5] == 'r' || presc1f[6] == 'r'){
+				number = 2;
+			}
+		}
+		if (presc1f[0] == 'r'){
+			number = 1;
+			if (presc1f[2] == 'r'){
+				number = 2;
+			}
+		}
+		//////////////////
+		if (number == 2){
+			
+
+			if (presc1f[0] == 'r'){
+				if (presc1f[1] == 'x' || presc1f[3] == 'x' || presc1f[5] == 'x'){
+					if (presc1f[1] == 'y' || presc1f[3] == 'y' || presc1f[5] == 'y'){
+						if (fix1f[1] == '_' || fix1f[2] == '_' || fix1f[3] == '_'){
+							if (fix1f[3] != 'z' && fix1f[4] != 'z'&& fix1f[5] != 'z' && fix1f[6] != 'z'&& fix1f[7] != 'z'&& fix1f[8] != 'z'&& fix1f[9] != 'z'&& fix1f[10] != 'z'&& fix1f[11] != 'z'){ axis = 'z'; }
+						}
+						if (fix1f[0] == 'r'){
+							if (fix1f[1] != 'z' && fix1f[3] != 'z'&& fix1f[5] != 'z'){ axis = 'z'; }
+						}
+						if (fix1f[0] != 'r' && fix1f[1] != '_' && fix1f[2] != '_' && fix1f[3] != '_'){
+							axis = 'z';
+						}
+					}
+				}
+
+				if (presc1f[1] == 'x' || presc1f[3] == 'x' || presc1f[5] == 'x'){
+					if (presc1f[1] == 'z' || presc1f[3] == 'z' || presc1f[5] == 'z'){
+						if (fix1f[1] == '_' || fix1f[2] == '_' || fix1f[3] == '_'){
+							if (fix1f[3] != 'y' && fix1f[4] != 'y'&& fix1f[5] != 'y' && fix1f[6] != 'y'&& fix1f[7] != 'y'&& fix1f[8] != 'y'&& fix1f[9] != 'y'&& fix1f[10] != 'y'&& fix1f[11] != 'y'){ axis = 'y'; }
+						}
+						if (fix1f[0] == 'r'){
+							if (fix1f[1] != 'y' && fix1f[3] != 'y'&& fix1f[5] != 'y'){ axis = 'y'; }
+
+						}
+						if (fix1f[0] != 'r' && fix1f[1] != '_' && fix1f[2] != '_' && fix1f[3] != '_'){
+							axis = 'y';
+						}
+
+					}
+				}
+
+
+				if (presc1f[1] == 'y' || presc1f[3] == 'y' || presc1f[5] == 'y'){
+					if (presc1f[1] == 'z' || presc1f[3] == 'z' || presc1f[5] == 'z'){
+						if (fix1f[1] == '_' || fix1f[2] == '_' || fix1f[3] == '_'){
+							if (fix1f[3] != 'x' && fix1f[4] != 'x'&& fix1f[5] != 'x' && fix1f[6] != 'x'&& fix1f[7] != 'x'&& fix1f[8] != 'x'&& fix1f[9] != 'x'&& fix1f[10] != 'x'&& fix1f[11] != 'x'){ axis = 'x'; }
+						}
+						if (fix1f[0] == 'r'){
+							if (fix1f[1] != 'x' && fix1f[3] != 'x'&& fix1f[5] != 'x'){ axis = 'x'; }
+						}
+						if (fix1f[0] != 'r' && fix1f[1] != '_' && fix1f[2] != '_' && fix1f[3] != '_'){
+							axis = 'x';
+						}
+					}
+				}
+			}
+			///////////////////
+			if (presc1f[1] == '_' || presc1f[2] == '_' || presc1f[3] == '_'){
+				if (presc1f[3] == 'x' || presc1f[4] == 'x' || presc1f[5] == 'x' || presc1f[6] == 'x' || presc1f[7] == 'x' || presc1f[8] == 'x' || presc1f[9] == 'x' || presc1f[10] == 'x' || presc1f[11] == 'x'){
+					if (presc1f[3] == 'y' || presc1f[4] == 'y' || presc1f[5] == 'y' || presc1f[6] == 'y' || presc1f[7] == 'y' || presc1f[8] == 'y' || presc1f[9] == 'y' || presc1f[10] == 'y' || presc1f[11] == 'y'){
+						if (presc1f[3] != 'z' || presc1f[4] != 'z' || presc1f[5] != 'z' || presc1f[6] != 'z' || presc1f[7] != 'z' || presc1f[8] != 'z' || presc1f[9] != 'z' || presc1f[10] != 'z' || presc1f[11] != 'z'){
+							if (fix1f[1] == '_' || fix1f[2] == '_' || fix1f[3] == '_'){
+								if (fix1f[3] != 'z' && fix1f[4] != 'z'&& fix1f[5] != 'z' && fix1f[6] != 'z'&& fix1f[7] != 'z'&& fix1f[8] != 'z'&& fix1f[9] != 'z'&& fix1f[10] != 'z'&& fix1f[11] != 'z'){ axis = 'z'; }
+							}
+							if (fix1f[0] == 'r'){
+								if (fix1f[1] != 'z' && fix1f[3] != 'z'&& fix1f[5] != 'z'){ axis = 'z'; }
+							}
+							if (fix1f[0] != 'r' && fix1f[1] != '_' && fix1f[2] != '_' && fix1f[3] != '_'){
+								axis = 'z';
+							}
+						}
+					}
+				}
+
+				if (presc1f[3] == 'z' || presc1f[4] == 'z' || presc1f[5] == 'z' || presc1f[6] == 'z' || presc1f[7] == 'z' || presc1f[8] == 'z' || presc1f[9] == 'z' || presc1f[10] == 'z' || presc1f[11] == 'z'){
+					if (presc1f[3] == 'y' || presc1f[4] == 'y' || presc1f[5] == 'y' || presc1f[6] == 'y' || presc1f[7] == 'y' || presc1f[8] == 'y' || presc1f[9] == 'y' || presc1f[10] == 'y' || presc1f[11] == 'y'){
+						if (presc1f[3] != 'x' || presc1f[4] != 'x' || presc1f[5] != 'x' || presc1f[6] != 'x' || presc1f[7] != 'x' || presc1f[8] != 'x' || presc1f[9] != 'x' || presc1f[10] != 'x' || presc1f[11] != 'x'){
+							if (fix1f[1] == '_' || fix1f[2] == '_' || fix1f[3] == '_'){
+								if (fix1f[3] != 'x' && fix1f[4] != 'x'&& fix1f[5] != 'x' && fix1f[6] != 'x'&& fix1f[7] != 'x'&& fix1f[8] != 'x'&& fix1f[9] != 'x'&& fix1f[10] != 'x'&& fix1f[11] != 'x'){ axis = 'x'; }
+							}
+							if (fix1f[0] == 'r'){
+								if (fix1f[1] != 'x' && fix1f[3] != 'x'&& fix1f[5] != 'x'){ axis = 'x'; }
+							}
+							if (fix1f[0] != 'r' && fix1f[1] != '_' && fix1f[2] != '_' && fix1f[3] != '_'){
+								axis = 'x';
+							}
+						}
+					}
+				}
+				if (presc1f[3] == 'x' || presc1f[4] == 'x' || presc1f[5] == 'x' || presc1f[6] == 'x' || presc1f[7] == 'x' || presc1f[8] == 'x' || presc1f[9] == 'x' || presc1f[10] == 'x' || presc1f[11] == 'x'){
+					if (presc1f[3] == 'z' || presc1f[4] == 'z' || presc1f[5] == 'z' || presc1f[6] == 'z' || presc1f[7] == 'z' || presc1f[8] == 'z' || presc1f[9] == 'z' || presc1f[10] == 'z' || presc1f[11] == 'z'){
+						if (presc1f[3] != 'y' || presc1f[4] != 'y' || presc1f[5] != 'y' || presc1f[6] != 'y' || presc1f[7] != 'y' || presc1f[8] != 'y' || presc1f[9] != 'y' || presc1f[10] != 'y' || presc1f[11] != 'y'){
+							if (fix1f[1] == '_' || fix1f[2] == '_' || fix1f[3] == '_'){
+								if (fix1f[3] != 'y' && fix1f[4] != 'y'&& fix1f[5] != 'y' && fix1f[6] != 'y'&& fix1f[7] != 'y'&& fix1f[8] != 'y'&& fix1f[9] != 'y'&& fix1f[10] != 'y'&& fix1f[11] != 'y'){ axis = 'y'; }
+							}
+							if (fix1f[0] == 'r'){
+								if (fix1f[1] != 'y' && fix1f[3] != 'y'&& fix1f[5] != 'y'){ axis = 'y'; }
+
+							}
+							if (fix1f[0] != 'r' && fix1f[1] != '_' && fix1f[2] != '_' && fix1f[3] != '_'){
+								axis = 'y';
+							}
+						}
+					}
+
+				}
+			}
+		}
+		////////////////////////////////////////////		
+		if (number == 1){
+
+
+			if (presc1f[0] == 'r'){
+				if (presc1f[1] == 'x' || presc1f[3] == 'x' || presc1f[5] == 'x'){
+					if (fix1f[1] == '_' || fix1f[2] == '_' || fix1f[3] == '_'){
+						if (fix1f[3] != 'z' && fix1f[4] != 'z'&& fix1f[5] != 'z' && fix1f[6] != 'z'&& fix1f[7] != 'z'&& fix1f[8] != 'z'&& fix1f[9] != 'z'&& fix1f[10] != 'z'&& fix1f[11] != 'z'){ axis = 'z'; }
+						if (fix1f[3] != 'y' && fix1f[4] != 'y'&& fix1f[5] != 'y' && fix1f[6] != 'y'&& fix1f[7] != 'y'&& fix1f[8] != 'y'&& fix1f[9] != 'y'&& fix1f[10] != 'y'&& fix1f[11] != 'y'){ axis2 = 'y'; }
+					}
+					if (fix1f[0] == 'r'){ if (fix1f[1] != 'z' && fix1f[3] != 'z'&& fix1f[5] != 'z'){ axis = 'z'; } if (fix1f[1] != 'y' && fix1f[3] != 'y'&& fix1f[5] != 'y'){ axis2 = 'y'; } }
+					if (fix1f[0] != 'r' && fix1f[1] != '_' && fix1f[2] != '_' && fix1f[3] != '_'){
+						axis = 'z'; axis2 = 'y';
+					}
+				}
+
+				if (presc1f[1] == 'y' || presc1f[3] == 'y' || presc1f[5] == 'y'){
+					if (fix1f[1] == '_' || fix1f[2] == '_' || fix1f[3] == '_'){
+						if (fix1f[3] != 'z' && fix1f[4] != 'z'&& fix1f[5] != 'z' && fix1f[6] != 'z'&& fix1f[7] != 'z'&& fix1f[8] != 'z'&& fix1f[9] != 'z'&& fix1f[10] != 'z'&& fix1f[11] != 'z'){ axis = 'z'; }
+						if (fix1f[3] != 'x' && fix1f[4] != 'x'&& fix1f[5] != 'x' && fix1f[6] != 'x'&& fix1f[7] != 'x'&& fix1f[8] != 'x'&& fix1f[9] != 'x'&& fix1f[10] != 'x'&& fix1f[11] != 'x'){ axis2 = 'x'; }
+					}
+					if (fix1f[0] == 'r'){ if (fix1f[1] != 'z' && fix1f[3] != 'z'&& fix1f[5] != 'z'){ axis = 'z'; } if (fix1f[1] != 'x' && fix1f[3] != 'x'&& fix1f[5] != 'x'){ axis2 = 'x'; } }
+
+					if (fix1f[0] != 'r' && fix1f[1] != '_'&& fix1f[2] != '_' && fix1f[3] != '_'){
+						axis = 'z'; axis2 = 'x';
+					}
+				}
+				if (presc1f[1] == 'z' || presc1f[3] == 'z' || presc1f[5] == 'z'){
+					if (fix1f[1] == '_' || fix1f[2] == '_' || fix1f[3] == '_'){
+						if (fix1f[3] != 'x' && fix1f[4] != 'x'&& fix1f[5] != 'x' && fix1f[6] != 'x'&& fix1f[7] != 'x'&& fix1f[8] != 'x'&& fix1f[9] != 'x'&& fix1f[10] != 'x'&& fix1f[11] != 'x'){ axis = 'x'; }
+						if (fix1f[3] != 'y' && fix1f[4] != 'y'&& fix1f[5] != 'y' && fix1f[6] != 'y'&& fix1f[7] != 'y'&& fix1f[8] != 'y'&& fix1f[9] != 'y'&& fix1f[10] != 'y'&& fix1f[11] != 'y'){ axis2 = 'y'; }
+					}
+					if (fix1f[0] == 'r'){ if (fix1f[1] != 'y' && fix1f[3] != 'y'&& fix1f[5] != 'y'){ axis = 'y'; } if (fix1f[1] != 'x' && fix1f[3] != 'x'&& fix1f[5] != 'x'){ axis2 = 'x'; } }
+					if (fix1f[0] != 'r' && fix1f[1] != '_' && fix1f[2] != '_' && fix1f[3] != '_'){
+						axis = 'y'; axis2 = 'x';
+					}
+				}
+
+			}
+
+
+
+
+
+
+
+			////////////////////////////////////////////
+
+			if (presc1f[3] == 'x' || presc1f[4] == 'x' || presc1f[5] == 'x' || presc1f[6] == 'x' || presc1f[7] == 'x' || presc1f[8] == 'x' || presc1f[9] == 'x' || presc1f[10] == 'x' || presc1f[11] == 'x'){
+				if (fix1f[1] == '_' || fix1f[2] == '_' || fix1f[3] == '_'){
+					if (fix1f[3] != 'z' && fix1f[4] != 'z'&& fix1f[5] != 'z' && fix1f[6] != 'z'&& fix1f[7] != 'z'&& fix1f[8] != 'z'&& fix1f[9] != 'z'&& fix1f[10] != 'z'&& fix1f[11] != 'z'){ axis = 'z'; }
+					if (fix1f[3] != 'y' && fix1f[4] != 'y'&& fix1f[5] != 'y' && fix1f[6] != 'y'&& fix1f[7] != 'y'&& fix1f[8] != 'y'&& fix1f[9] != 'y'&& fix1f[10] != 'y'&& fix1f[11] != 'y'){ axis2 = 'y'; }
+				}
+				if (fix1f[0] == 'r'){ if (fix1f[1] != 'z' && fix1f[3] != 'z'&& fix1f[5] != 'z'){ axis = 'z'; } if (fix1f[1] != 'y' && fix1f[3] != 'y'&& fix1f[5] != 'y'){ axis2 = 'y'; } }
+				if (fix1f[0] != 'r' && fix1f[1] != '_' && fix1f[2] != '_' && fix1f[3] != '_'){
+					axis = 'z'; axis2 = 'y';
+				}
+			}
+
+			if (presc1f[3] == 'y' || presc1f[4] == 'y' || presc1f[5] == 'y' || presc1f[6] == 'y' || presc1f[7] == 'y' || presc1f[8] == 'y' || presc1f[9] == 'y' || presc1f[10] == 'y' || presc1f[11] == 'y'){
+				if (fix1f[1] == '_' || fix1f[2] == '_' || fix1f[3] == '_'){
+					if (fix1f[3] != 'z' && fix1f[4] != 'z'&& fix1f[5] != 'z' && fix1f[6] != 'z'&& fix1f[7] != 'z'&& fix1f[8] != 'z'&& fix1f[9] != 'z'&& fix1f[10] != 'z'&& fix1f[11] != 'z'){ axis = 'z'; }
+					if (fix1f[3] != 'x' && fix1f[4] != 'x'&& fix1f[5] != 'x' && fix1f[6] != 'x'&& fix1f[7] != 'x'&& fix1f[8] != 'x'&& fix1f[9] != 'x'&& fix1f[10] != 'x'&& fix1f[11] != 'x'){ axis2 = 'x'; }
+				}
+				if (fix1f[0] == 'r'){ if (fix1f[1] != 'z' && fix1f[3] != 'z'&& fix1f[5] != 'z'){ axis = 'z'; } if (fix1f[1] != 'x' && fix1f[3] != 'x'&& fix1f[5] != 'x'){ axis2 = 'x'; } }
+				if (fix1f[0] != 'r' && fix1f[1] != '_' && fix1f[2] != '_' && fix1f[3] != '_'){
+					axis = 'z'; axis2 = 'x';
+				}
+			}
+
+			if (presc1f[3] == 'z' || presc1f[4] == 'z' || presc1f[5] == 'z' || presc1f[6] == 'z' || presc1f[7] == 'z' || presc1f[8] == 'z' || presc1f[9] == 'z' || presc1f[10] == 'z' || presc1f[11] == 'z'){
+				if (fix1f[1] == '_' || fix1f[2] == '_' || fix1f[3] == '_'){
+					if (fix1f[3] != 'x' && fix1f[4] != 'x'&& fix1f[5] != 'x' && fix1f[6] != 'x'&& fix1f[7] != 'x'&& fix1f[8] != 'x'&& fix1f[9] != 'x'&& fix1f[10] != 'x'&& fix1f[11] != 'x'){ axis = 'x'; }
+					if (fix1f[3] != 'y' && fix1f[4] != 'y'&& fix1f[5] != 'y' && fix1f[6] != 'y'&& fix1f[7] != 'y'&& fix1f[8] != 'y'&& fix1f[9] != 'y'&& fix1f[10] != 'y'&& fix1f[11] != 'y'){ axis2 = 'y'; }
+				}
+				if (fix1f[0] == 'r'){ if (fix1f[1] != 'y' && fix1f[3] != 'y'&& fix1f[5] != 'y'){ axis = 'y'; } if (fix1f[1] != 'x' && fix1f[3] != 'x'&& fix1f[5] != 'x'){ axis2 = 'x'; } }
+				if (fix1f[0] != 'r' && fix1f[1] != '_' && fix1f[2] != '_' && fix1f[3] != '_'){
+					axis = 'y'; axis2 = 'x';
+				}
+			}
+
+		}
+
+
+	}
+/////////////////////////////////////////////////////////////////////////////////////////////////
+				////////////////////////////////////////////////////////////////
+		if (bodynum == 2){
+
+
+			if (presc2f[0] == 'N'){
+				if (fix2f[1] == '_' || fix2f[2] == '_' || fix2f[3] == '_'){
+					if (fix2f[3] != 'z' && fix2f[4] != 'z'&& fix2f[5] != 'z' && fix2f[6] != 'z'&& fix2f[7] != 'z'&& fix2f[8] != 'z'&& fix2f[9] != 'z'&& fix2f[10] != 'z'&& fix2f[11] != 'z'){ axis = 'z'; }
+					if (fix2f[3] != 'y' && fix2f[4] != 'y'&& fix2f[5] != 'y' && fix2f[6] != 'y'&& fix2f[7] != 'y'&& fix2f[8] != 'y'&& fix2f[9] != 'y'&& fix2f[10] != 'y'&& fix2f[11] != 'y'){ axis2 = 'y'; }
+					if (fix2f[3] != 'x' && fix2f[4] != 'x'&& fix2f[5] != 'x' && fix2f[6] != 'x'&& fix2f[7] != 'x'&& fix2f[8] != 'x'&& fix2f[9] != 'x'&& fix2f[10] != 'x'&& fix2f[11] != 'x'){ axis0 = 'x'; }
+
+				}
+				if (fix2f[0] == 'r'){
+					if (fix2f[1] != 'z' && fix2f[3] != 'z'&& fix2f[5] != 'z'){ axis = 'z'; }
+					if (fix2f[1] != 'y' && fix2f[3] != 'y'&& fix2f[5] != 'y'){ axis2 = 'y'; }
+					if (fix2f[1] != 'x' && fix2f[3] != 'x'&& fix2f[5] != 'x'){ axis0 = 'x'; }
+
+				}
+				if (fix2f[0] != 'r' && fix2f[1] != '_' && fix2f[2] != '_' && fix2f[3] != '_'){
+					axis = 'z';
+					axis2 = 'y';
+					axis0 = 'x';
+				}
+			}
+
+					if (presc2f[1] == '_' || presc2f[2] == '_' || presc2f[3] == '_'){
+				number = 1;
+				if (presc2f[4] == 'r' || presc2f[5] == 'r' || presc2f[6] == 'r'){
+					number = 2;
+				}
+			}
+					if (presc2f[0] == 'r'){
+						number = 1;
+						if (presc2f[2] == 'r'){
+							number = 2;
+						}
+					}
+					//////////////////////////////////////
+			if (number == 2){
+
+				if (presc2f[0] == 'r'){
+					if (presc2f[1] == 'x' || presc2f[3] == 'x' || presc2f[5] == 'x'){
+						if (presc2f[1] == 'y' || presc2f[3] == 'y' || presc2f[5] == 'y'){
+							if (fix2f[1] == '_' || fix2f[2] == '_' || fix2f[3] == '_'){
+								if (fix2f[3] != 'z' && fix2f[4] != 'z'&& fix2f[5] != 'z' && fix2f[6] != 'z'&& fix2f[7] != 'z'&& fix2f[8] != 'z'&& fix2f[9] != 'z'&& fix2f[10] != 'z'&& fix2f[11] != 'z'){ axis = 'z'; }
+							}
+							if (fix2f[0] == 'r'){
+								if (fix2f[1] != 'z' && fix2f[3] != 'z'&& fix2f[5] != 'z'){ axis = 'z'; }
+							}
+							if (fix2f[0] != 'r' && fix2f[1] != '_' && fix2f[2] != '_'&& fix2f[3] != '_'){
+								axis = 'z';
+							}
+						}
+					}
+
+					if (presc2f[1] == 'x' || presc2f[3] == 'x' || presc2f[5] == 'x'){
+						if (presc2f[1] == 'z' || presc2f[3] == 'z' || presc2f[5] == 'z'){
+							if (fix2f[1] == '_' || fix2f[2] == '_' || fix2f[3] == '_'){
+								if (fix2f[3] != 'y' && fix2f[4] != 'y'&& fix2f[5] != 'y' && fix2f[6] != 'y'&& fix2f[7] != 'y'&& fix2f[8] != 'y'&& fix2f[9] != 'y'&& fix2f[10] != 'y'&& fix2f[11] != 'y'){ axis = 'y'; }
+							}
+							if (fix2f[0] == 'r'){
+								if (fix2f[1] != 'y' && fix2f[3] != 'y'&& fix2f[5] != 'y'){ axis = 'y'; }
+
+							}
+							if (fix2f[0] != 'r' && fix2f[1] != '_' && fix2f[2] != '_' && fix2f[3] != '_'){
+								axis = 'y';
+							}
+
+						}
+					}
+
+
+					if (presc2f[1] == 'y' || presc2f[3] == 'y' || presc2f[5] == 'y'){
+						if (presc2f[1] == 'z' || presc2f[3] == 'z' || presc2f[5] == 'z'){
+							if (fix2f[1] == '_' || fix2f[2] == '_' || fix2f[3] == '_'){
+								if (fix2f[3] != 'x' && fix2f[4] != 'x'&& fix2f[5] != 'x' && fix2f[6] != 'x'&& fix2f[7] != 'x'&& fix2f[8] != 'x'&& fix2f[9] != 'x'&& fix2f[10] != 'x'&& fix2f[11] != 'x'){ axis = 'x'; }
+							}
+							if (fix2f[0] == 'r'){
+								if (fix2f[1] != 'x' && fix2f[3] != 'x'&& fix2f[5] != 'x'){ axis = 'x'; }
+							}
+							if (fix2f[0] != 'r' && fix2f[1] != '_' && fix2f[2] != '_' && fix2f[3] != '_'){
+								axis = 'x';
+							}
+						}
+					}
+				}
+				/////////////////////////////
+
+				if (presc2f[1] == '_' || presc2f[2] == '_' || presc2f[3] == '_'){
+					if (presc2f[3] == 'x' || presc2f[4] == 'x' || presc2f[5] == 'x' || presc2f[6] == 'x' || presc2f[7] == 'x' || presc2f[8] == 'x' || presc2f[9] == 'x' || presc2f[10] == 'x' || presc2f[11] == 'x'){
+						if (presc2f[3] == 'y' || presc2f[4] == 'y' || presc2f[5] == 'y' || presc2f[6] == 'y' || presc2f[7] == 'y' || presc2f[8] == 'y' || presc2f[9] == 'y' || presc2f[10] == 'y' || presc2f[11] == 'y'){
+							if (presc2f[3] != 'z' || presc2f[4] != 'z' || presc2f[5] != 'z' || presc2f[6] != 'z' || presc2f[7] != 'z' || presc2f[8] != 'z' || presc2f[9] != 'z' || presc2f[10] != 'z' || presc2f[11] != 'z'){
+								if (fix2f[1] == '_' || fix2f[2] == '_' || fix2f[3] == '_'){
+									if (fix2f[3] != 'z' && fix2f[4] != 'z'&& fix2f[5] != 'z' && fix2f[6] != 'z'&& fix2f[7] != 'z'&& fix2f[8] != 'z'&& fix2f[9] != 'z'&& fix2f[10] != 'z'&& fix2f[11] != 'z'){ axis = 'z'; }
+								}
+								if (fix2f[0] == 'r'){
+									if (fix2f[1] != 'z' && fix2f[3] != 'z'&& fix2f[5] != 'z'){ axis = 'z'; }
+								}
+								if (fix2f[0] != 'r' && fix2f[1] != '_' && fix2f[2] != '_' && fix2f[3] != '_'){
+									axis = 'z';
+								}
+							}
+						}
+					}
+				
+				if (presc2f[3] == 'z' || presc2f[4] == 'z' || presc2f[5] == 'z' || presc2f[6] == 'z' || presc2f[7] == 'z' || presc2f[8] == 'z' || presc2f[9] == 'z' || presc2f[10] == 'z' || presc2f[11] == 'z'){
+					if (presc2f[3] == 'y' || presc2f[4] == 'y' || presc2f[5] == 'y' || presc2f[6] == 'y' || presc2f[7] == 'y' || presc2f[8] == 'y' || presc2f[9] == 'y' || presc2f[10] == 'y' || presc2f[11] == 'y'){
+						if (presc2f[3] != 'x' || presc2f[4] != 'x' || presc2f[5] != 'x' || presc2f[6] != 'x' || presc2f[7] != 'x' || presc2f[8] != 'x' || presc2f[9] != 'x' || presc2f[10] != 'x' || presc2f[11] != 'x'){
+							if (fix2f[1] == '_' || fix2f[2] == '_' || fix2f[3] == '_'){
+								if (fix2f[3] != 'x' && fix2f[4] != 'x'&& fix2f[5] != 'x' && fix2f[6] != 'x'&& fix2f[7] != 'x'&& fix2f[8] != 'x'&& fix2f[9] != 'x'&& fix2f[10] != 'x'&& fix2f[11] != 'x'){ axis = 'x'; }
+							}
+							if (fix2f[0] == 'r'){
+								if (fix2f[1] != 'x' && fix2f[3] != 'x'&& fix2f[5] != 'x'){ axis = 'x'; }
+							}
+							if (fix2f[0] != 'r' && fix2f[1] != '_' && fix2f[2] != '_' && fix2f[3] != '_'){
+								axis = 'x';
+							}
+						}
+					}
+				}
+				if (presc2f[3] == 'x' || presc2f[4] == 'x' || presc2f[5] == 'x' || presc2f[6] == 'x' || presc2f[7] == 'x' || presc2f[8] == 'x' || presc2f[9] == 'x' || presc2f[10] == 'x' || presc2f[11] == 'x'){
+					if (presc2f[3] == 'z' || presc2f[4] == 'z' || presc2f[5] == 'z' || presc2f[6] == 'z' || presc2f[7] == 'z' || presc2f[8] == 'z' || presc2f[9] == 'z' || presc2f[10] == 'z' || presc2f[11] == 'z'){
+						if (presc2f[3] != 'y' || presc2f[4] != 'y' || presc2f[5] != 'y' || presc2f[6] != 'y' || presc2f[7] != 'y' || presc2f[8] != 'y' || presc2f[9] != 'y' || presc2f[10] != 'y' || presc2f[11] != 'y'){
+							if (fix2f[1] == '_' || fix2f[2] == '_' || fix2f[3] == '_'){
+								if (fix2f[3] != 'y' && fix2f[4] != 'y'&& fix2f[5] != 'y' && fix2f[6] != 'y'&& fix2f[7] != 'y'&& fix2f[8] != 'y'&& fix2f[9] != 'y'&& fix2f[10] != 'y'&& fix2f[11] != 'y'){ axis = 'y'; }
+							}
+							if (fix2f[0] == 'r'){
+								if (fix2f[1] != 'y' && fix2f[3] != 'y'&& fix2f[5] != 'y'){ axis = 'y'; }
+
+							}
+							if (fix2f[0] != 'r' && fix2f[1] != '_' && fix2f[2] != '_' && fix2f[3] != '_'){
+								axis = 'y';
+							}
+						}
+					}
+				}
+				}
+			}
+////////////////////////////////////////////////////////////////////
+			if (number == 1){
+
+
+
+			if (presc2f[0] == 'r'){ 	
+					if (presc2f[1] == 'x' || presc2f[3] == 'x' || presc2f[5] == 'x'){
+						if (fix2f[1] == '_' || fix2f[2] == '_' || fix2f[3] == '_'){
+							if (fix2f[3] != 'z' && fix2f[4] != 'z'&& fix2f[5] != 'z' && fix2f[6] != 'z'&& fix2f[7] != 'z'&& fix2f[8] != 'z'&& fix2f[9] != 'z'&& fix2f[10] != 'z'&& fix2f[11] != 'z'){ axis = 'z'; }
+							if (fix2f[3] != 'y' && fix2f[4] != 'y'&& fix2f[5] != 'y' && fix2f[6] != 'y'&& fix2f[7] != 'y'&& fix2f[8] != 'y'&& fix2f[9] != 'y'&& fix2f[10] != 'y'&& fix2f[11] != 'y'){ axis2 = 'y'; }
+						}
+						if (fix2f[0] == 'r'){ if (fix2f[1] != 'z' && fix2f[3] != 'z'&& fix2f[5] != 'z'){ axis = 'z'; } if (fix2f[1] != 'y' && fix2f[3] != 'y'&& fix2f[5] != 'y'){ axis2 = 'y'; } }
+						if (fix2f[0] != 'r' && fix2f[1] != '_' && fix2f[2] != '_' && fix2f[3] != '_'){
+							axis = 'z'; axis2 = 'y';
+						}
+					}
+
+					if (presc2f[1] == 'y' || presc2f[3] == 'y' || presc2f[5] == 'y'){
+						if (fix2f[1] == '_' || fix2f[2] == '_' || fix2f[3] == '_'){
+							if (fix2f[3] != 'z' && fix2f[4] != 'z'&& fix2f[5] != 'z' && fix2f[6] != 'z'&& fix2f[7] != 'z'&& fix2f[8] != 'z'&& fix2f[9] != 'z'&& fix2f[10] != 'z'&& fix2f[11] != 'z'){ axis = 'z'; }
+							if (fix2f[3] != 'x' && fix2f[4] != 'x'&& fix2f[5] != 'x' && fix2f[6] != 'x'&& fix2f[7] != 'x'&& fix2f[8] != 'x'&& fix2f[9] != 'x'&& fix2f[10] != 'x'&& fix2f[11] != 'x'){ axis2 = 'x'; }
+						}
+						if (fix2f[0] == 'r'){ if (fix2f[1] != 'z' && fix2f[3] != 'z'&& fix2f[5] != 'z'){ axis = 'z'; } if (fix2f[1] != 'x' && fix2f[3] != 'x'&& fix2f[5] != 'x'){ axis2 = 'x'; } }
+						if (fix2f[0] != 'r' && fix2f[1] != '_' && fix2f[2] != '_' && fix2f[3] != '_'){
+							axis = 'z'; axis2 = 'x';
+						}
+					}
+				if (presc2f[1] == 'z' || presc2f[3] == 'z' || presc2f[5] == 'z'){
+					if (fix2f[1] == '_' || fix2f[2] == '_' || fix2f[3] == '_'){
+						if (fix2f[3] != 'x' && fix2f[4] != 'x'&& fix2f[5] != 'x' && fix2f[6] != 'x'&& fix2f[7] != 'x'&& fix2f[8] != 'x'&& fix2f[9] != 'x'&& fix2f[10] != 'x'&& fix2f[11] != 'x'){ axis = 'x'; }
+						if (fix2f[3] != 'y' && fix2f[4] != 'y'&& fix2f[5] != 'y' && fix2f[6] != 'y'&& fix2f[7] != 'y'&& fix2f[8] != 'y'&& fix2f[9] != 'y'&& fix2f[10] != 'y'&& fix2f[11] != 'y'){ axis2 = 'y'; }
+					}
+					if (fix2f[0] == 'r'){ if (fix2f[1] != 'y' && fix2f[3] != 'y'&& fix2f[5] != 'y'){ axis = 'y'; } if (fix2f[1] != 'x' && fix2f[3] != 'x'&& fix2f[5] != 'x'){ axis2 = 'x'; } }
+					if (fix2f[0] != 'r' && fix2f[1] != '_' && fix2f[2] != '_' && fix2f[3] != '_'){
+						axis = 'y'; axis2 = 'x';
+					}
+				}
+
+
+			}
+///////////////////////////////////////////////////////////////////////
+				if (presc2f[3] == 'x' || presc2f[4] == 'x' || presc2f[5] == 'x' || presc2f[6] == 'x' || presc2f[7] == 'x' || presc2f[8] == 'x' || presc2f[9] == 'x' || presc2f[10] == 'x' || presc2f[11] == 'x'){
+					if (fix2f[1] == '_' || fix2f[2] == '_' || fix2f[3] == '_'){
+						if (fix2f[3] != 'z' && fix2f[4] != 'z'&& fix2f[5] != 'z' && fix2f[6] != 'z'&& fix2f[7] != 'z'&& fix2f[8] != 'z'&& fix2f[9] != 'z'&& fix2f[10] != 'z'&& fix2f[11] != 'z'){ axis = 'z'; }
+						if (fix2f[3] != 'y' && fix2f[4] != 'y'&& fix2f[5] != 'y' && fix2f[6] != 'y'&& fix2f[7] != 'y'&& fix2f[8] != 'y'&& fix2f[9] != 'y'&& fix2f[10] != 'y'&& fix2f[11] != 'y'){ axis2 = 'y'; }
+					}
+					if (fix2f[0] == 'r'){ if (fix2f[1] != 'z' && fix2f[3] != 'z'&& fix2f[5] != 'z'){ axis = 'z'; } if (fix2f[1] != 'y' && fix2f[3] != 'y'&& fix2f[5] != 'y'){ axis2 = 'y'; } }
+					if (fix2f[0] != 'r' && fix2f[1] != '_' && fix2f[2] != '_' && fix2f[3] != '_'){
+						axis = 'z'; axis2 = 'y';
+					}
+				}
+
+				if (presc2f[3] == 'y' || presc2f[4] == 'y' || presc2f[5] == 'y' || presc2f[6] == 'y' || presc2f[7] == 'y' || presc2f[8] == 'y' || presc2f[9] == 'y' || presc2f[10] == 'y' || presc2f[11] == 'y'){
+					if (fix2f[1] == '_' || fix2f[2] == '_' || fix2f[3] == '_'){
+						if (fix2f[3] != 'z' && fix2f[4] != 'z'&& fix2f[5] != 'z' && fix2f[6] != 'z'&& fix2f[7] != 'z'&& fix2f[8] != 'z'&& fix2f[9] != 'z'&& fix2f[10] != 'z'&& fix2f[11] != 'z'){ axis = 'z'; }
+						if (fix2f[3] != 'x' && fix2f[4] != 'x'&& fix2f[5] != 'x' && fix2f[6] != 'x'&& fix2f[7] != 'x'&& fix2f[8] != 'x'&& fix2f[9] != 'x'&& fix2f[10] != 'x'&& fix2f[11] != 'x'){ axis2 = 'x'; }
+					}
+					if (fix2f[0] == 'r'){ if (fix2f[1] != 'z' && fix2f[3] != 'z'&& fix2f[5] != 'z'){ axis = 'z'; } if (fix2f[1] != 'x' && fix2f[3] != 'x'&& fix2f[5] != 'x'){ axis2 = 'x'; } }
+					if (fix2f[0] != 'r' && fix2f[1] != '_' && fix2f[2] != '_' && fix2f[3] != '_'){
+						axis = 'z'; axis2 = 'x';
+					}
+				}
+
+				if (presc2f[3] == 'z' || presc2f[4] == 'z' || presc2f[5] == 'z' || presc2f[6] == 'z' || presc2f[7] == 'z' || presc2f[8] == 'z' || presc2f[9] == 'z' || presc2f[10] == 'z' || presc2f[11] == 'z'){
+					if (fix2f[1] == '_' || fix2f[2] == '_' || fix2f[3] == '_'){
+						if (fix2f[3] != 'x' && fix2f[4] != 'x'&& fix2f[5] != 'x' && fix2f[6] != 'x'&& fix2f[7] != 'x'&& fix2f[8] != 'x'&& fix2f[9] != 'x'&& fix2f[10] != 'x'&& fix2f[11] != 'x'){ axis = 'x'; }
+						if (fix2f[3] != 'y' && fix2f[4] != 'y'&& fix2f[5] != 'y' && fix2f[6] != 'y'&& fix2f[7] != 'y'&& fix2f[8] != 'y'&& fix2f[9] != 'y'&& fix2f[10] != 'y'&& fix2f[11] != 'y'){ axis2 = 'y'; }
+					}
+					if (fix2f[0] == 'r'){ if (fix2f[1] != 'y' && fix2f[3] != 'y'&& fix2f[5] != 'y'){ axis = 'y'; } if (fix2f[1] != 'x' && fix2f[3] != 'x'&& fix2f[5] != 'x'){ axis2 = 'x'; } }
+					if (fix2f[0] != 'r' && fix2f[1] != '_' && fix2f[2] != '_' && fix2f[3] != '_'){
+						axis = 'y'; axis2 = 'x';
+					}
+				}
+
+			}
+		}
+////////////////////////////////////////////////////////////////
+		//scan if there are forced in free component or not...
+		string forc1 = ini.Get("BASICSETUP", "Forced_DOF_1", "");
+		string forc2 = ini.Get("BASICSETUP", "Forced_DOF_2", "");
+		char axis3 = 'n';
+		char axis4 = 'n';
+		char axis5 = 'n';
+		cout << "The detected free joints are:" << endl;
+		cout << axis << endl;
+		cout << axis2 << endl;
+		cout << axis0 << endl;
+		
+		if (forc1[1] == '_' || forc1[2] == '_' || forc1[3] == '_'){
+
+			if (forc1[3] == 'x' || forc1[4] == 'x' || forc1[5] == 'x' || forc1[6] == 'x' || forc1[7] == 'x' || forc1[8] == 'x' || forc1[9] == 'x' || forc1[10] == 'x' || forc1[11] == 'x'){
+				if (axis == 'x'){ axis3 = 'x'; }
+				if (axis2 == 'x'){ axis4 = 'x'; }
+				if (axis0 == 'x'){ axis5 = 'x'; }
+			}
+			if (forc1[3] == 'y' || forc1[4] == 'y' || forc1[5] == 'y' || forc1[6] == 'y' || forc1[7] == 'y' || forc1[8] == 'y' || forc1[9] == 'y' || forc1[10] == 'y' || forc1[11] == 'y'){
+				if (axis == 'y'){ axis3 = 'y'; }
+				if (axis2 == 'y'){ axis4 = 'y'; }
+				if (axis0 == 'y'){ axis5 = 'y'; }
+			}
+			if (forc1[3] == 'z'|| forc1[4] == 'z' || forc1[5] == 'z' || forc1[6] == 'z' || forc1[7] == 'z'|| forc1[8] == 'z'|| forc1[9] == 'z'|| forc1[10] == 'z'|| forc1[11] == 'z'){
+				if (axis == 'z'){ axis3 = 'z'; }
+				if (axis2 == 'z'){ axis4 = 'z'; }
+				if (axis0 == 'z'){ axis5 = 'z'; }
+			}
+		}
+			
+		if (forc1[0] == 'r'){
+			if (forc1[1] == 'x' || forc1[3] == 'x' || forc1[5] == 'x'){
+				if (axis == 'x'){ axis3 = 'x'; }
+				if (axis2 == 'x'){ axis4 = 'x'; }
+				if (axis0 == 'x'){ axis5 = 'x'; }
+			}
+			if (forc1[1] == 'y' || forc1[3] == 'y' || forc1[5] == 'y'){
+				if (axis == 'y'){ axis3 = 'y'; }
+				if (axis2 == 'y'){ axis4 = 'y'; }
+				if (axis0 == 'z'){ axis5 = 'z'; }
+			}
+			if (forc1[1] == 'z' || forc1[3] == 'z' || forc1[5] == 'z'){
+				if (axis == 'z'){ axis3 = 'z'; }
+				if (axis2 == 'z'){ axis4 = 'z'; }
+				if (axis0 == 'z'){ axis5 = 'z'; }
+			}
+			}
+
+		ifstream stepdynamicforces(resultDir2 + "/FEBstepdynamic_forces" + itter + ".txt");
+		ifstream stepstaticforces(resultDir2 + "/FEBstepstatic_forces" + itter + ".txt");
+
+		ofstream stepdynamic2(resultDir2 + "/FEBstepdynamic_forces2" + itter + ".txt");
+		ofstream stepstatic2(resultDir2 + "/FEBstepstatic_forces2" + itter + ".txt");
+
+		string line1,line2;
+		string d1 = "R" + axis3;
+		string d2 = "R" + axis4;
+		string d3 = "R" + axis5;
+		while (!stepdynamicforces.eof()){
+
+			getline(stepdynamicforces, line1);
+			
+			////process every line///////
+			string modd = line1;
+			size_t found1 = modd.find(d1);
+			if (found1 != NAN){ modd.erase(modd.begin(), modd.end()); line1 = modd; cout << line1 << endl; }
+			size_t found21 = modd.find(d2);
+			if (found21 != NAN){ modd.erase(modd.begin(), modd.end()); line1 = modd; cout << line1 << endl; }
+			size_t found211 = modd.find(d3);
+			if (found211 != NAN){ modd.erase(modd.begin(), modd.end()); line1 = modd; cout << line1 << endl; }
+
+			stepdynamic2 << line1 << endl;
+		}
+
+		while (!stepstaticforces.eof()){
+
+			getline(stepstaticforces, line2);
+
+			////process every line///////
+			string modd2 = line2;
+			size_t found = modd2.find(d1);
+			if (found != NAN){ modd2.erase(modd2.begin(), modd2.end()); line2 = modd2; cout << line2 << endl; }
+			size_t found2 = modd2.find(d2);
+			if (found2 != NAN){ modd2.erase(modd2.begin(), modd2.end()); line2 = modd2; cout << line2 << endl; }
+			size_t found212 = modd2.find(d3);
+			if (found212 != NAN){ modd2.erase(modd2.begin(), modd2.end()); line2 = modd2; cout << line2 << endl; }
+
+			stepstatic2 << line2 << endl;
+		}
+
+
+///////////////////////////////////////////////////////////////////
+
+		//////write the  joints in the txt files...
+
+		
+		int numi=0;
+		char bodyn = bodynum + '0';
+		ofstream joint(resultDir2 + "/joints" + bodyn + itter + ".txt", ofstream::out);
+		ofstream jointd(resultDir2 + "/jointd" + bodyn + itter + ".txt", ofstream::out);
+				
+		
+		if (bodynum == 1){
+			if (presc1f[0] == 'N')
+			{
+				if (axis != 'n'){
+					joint << "<constraint type =" << '"' << "rigid revolute joint" << '"' << "name = " << '"' << "Joint 1" << '"' << ">" << endl;
+					if (axis3 == axis){
+						joint << "	<tolerance>0.1</tolerance>" << endl;
+					}
+					if (axis3 != axis){
+						joint << "	<tolerance>0</tolerance>" << endl;
+					}
+					joint << "	<gaptol>1e-4</gaptol>" << endl;
+					joint << "	<angtol>1e-4</angtol>" << endl;
+					joint << "	<force_penalty>1e12</force_penalty>" << endl;
+					joint << "	<moment_penalty>1e12</moment_penalty>" << endl;
+					joint << "	<body_a>2</body_a>" << endl;
+					joint << "	<body_b>1</body_b>" << endl;
+					joint << "	<joint_origin>0, 0, 0</joint_origin>" << endl;
+					if (axis == 'x'){
+						joint << "	<rotation_axis>1, 0, 0</rotation_axis>" << endl;
+					}
+					if (axis == 'y'){
+						joint << "	<rotation_axis>0, 1, 0</rotation_axis>" << endl;
+					}
+					if (axis == 'z'){
+						joint << "	<rotation_axis>0, 0, 1</rotation_axis>" << endl;
+					}
+					joint << "<prescribed_rotation>0</prescribed_rotation>" << endl;
+					if (axis3 == axis){
+						if (axis == 'x'){ numi = 4; }
+						if (axis == 'y'){ numi = 5; }
+						if (axis == 'z'){ numi = 6; }
+						joint << "<moment lc =" << '"' << numi << '"' << ">1</moment>" << endl;
+					}
+					joint << "	</constraint>" << endl;
+					//////////set fixed the free of joint////////
+					joint << "<rigid_body mat = " << '"' << "1" << '"' << ">" << endl;
+					joint << "	<fixed bc= " << '"' << "R" << axis << '"' << "/>" << endl;
+					joint << "	</rigid_body>" << endl;
+				}
+				if (axis2 != 'n'){
+					joint << "<constraint type =" << '"' << "rigid revolute joint" << '"' << "name = " << '"' << "Joint 2" << '"' << ">" << endl;
+					if (axis4 == axis2){
+						joint << "	<tolerance>0.1</tolerance>" << endl;
+					}
+					if (axis4 != axis2){
+						joint << "	<tolerance>0</tolerance>" << endl;
+					}joint << "	<gaptol>1e-4</gaptol>" << endl;
+					joint << "	<angtol>1e-4</angtol>" << endl;
+					joint << "	<force_penalty>1e12</force_penalty>" << endl;
+					joint << "	<moment_penalty>1e12</moment_penalty>" << endl;
+					joint << "	<body_a>2</body_a>" << endl;
+					joint << "	<body_b>1</body_b>" << endl;
+					joint << "	<joint_origin>0, 0, 0</joint_origin>" << endl;
+					if (axis2 == 'x'){
+						joint << "	<rotation_axis>1, 0, 0</rotation_axis>" << endl;
+					}
+					if (axis2 == 'y'){
+						joint << "	<rotation_axis>0, 1, 0</rotation_axis>" << endl;
+					}
+					if (axis2 == 'z'){
+						joint << "	<rotation_axis>0, 0, 1</rotation_axis>" << endl;
+					}
+					joint << "<prescribed_rotation>0</prescribed_rotation>" << endl;
+					if (axis4 == axis2){
+						if (axis2 == 'x'){ numi = 4; }
+						if (axis2 == 'y'){ numi = 5; }
+						if (axis2 == 'z'){ numi = 6; }
+						joint << "<moment lc =" << '"' << numi << '"' << ">1</moment>" << endl;
+					}
+					joint << "	</constraint>" << endl;
+					//////////set fixed the free of joint////////
+					joint << "<rigid_body mat = " << '"' << "1" << '"' << ">" << endl;
+					joint << "	<fixed bc= " << '"' << "R" << axis2 << '"' << "/>" << endl;
+					joint << "	</rigid_body>" << endl;
+				}
+			}
+			if (axis0 != 'n'){
+				joint << "<constraint type =" << '"' << "rigid revolute joint" << '"' << "name = " << '"' << "Joint 3" << '"' << ">" << endl;
+				if (axis5 == axis0){
+					joint << "	<tolerance>0.1</tolerance>" << endl;
+				}
+				if (axis5 != axis0){
+					joint << "	<tolerance>0</tolerance>" << endl;
+				}joint << "	<gaptol>1e-4</gaptol>" << endl;
+				joint << "	<angtol>1e-4</angtol>" << endl;
+				joint << "	<force_penalty>1e12</force_penalty>" << endl;
+				joint << "	<moment_penalty>1e12</moment_penalty>" << endl;
+				joint << "	<body_a>2</body_a>" << endl;
+				joint << "	<body_b>1</body_b>" << endl;
+				joint << "	<joint_origin>0, 0, 0</joint_origin>" << endl;
+				if (axis0 == 'x'){
+					joint << "	<rotation_axis>1, 0, 0</rotation_axis>" << endl;
+				}
+				if (axis0 == 'y'){
+					joint << "	<rotation_axis>0, 1, 0</rotation_axis>" << endl;
+				}
+				if (axis0 == 'z'){
+					joint << "	<rotation_axis>0, 0, 1</rotation_axis>" << endl;
+				}
+				joint << "<prescribed_rotation>0</prescribed_rotation>" << endl;
+				if (axis5 == axis0){
+					if (axis0 == 'x'){ numi = 4; }
+					if (axis0 == 'y'){ numi = 5; }
+					if (axis0 == 'z'){ numi = 6; }
+					joint << "<moment lc =" << '"' << numi << '"' << ">1</moment>" << endl;
+				}
+				joint << "	</constraint>" << endl;
+				//////////set fixed the free of joint////////
+				joint << "<rigid_body mat = " << '"' << "1" << '"' << ">" << endl;
+				joint << "	<fixed bc= " << '"' << "R" << axis0 << '"' << "/>" << endl;
+				joint << "	</rigid_body>" << endl;
+			}
+
+
+			if (number == 2){
+				if (axis != 'n'){
+					joint << "<constraint type =" << '"' << "rigid revolute joint" << '"' << "name = " << '"' << "Joint 1" << '"' << ">" << endl;
+					if (axis3 == axis){
+						joint << "	<tolerance>0.1</tolerance>" << endl;
+					}
+					if (axis3 != axis){
+						joint << "	<tolerance>0</tolerance>" << endl;
+					}
+					joint << "	<gaptol>1e-4</gaptol>" << endl;
+					joint << "	<angtol>1e-4</angtol>" << endl;
+					joint << "	<force_penalty>1e12</force_penalty>" << endl;
+					joint << "	<moment_penalty>1e12</moment_penalty>" << endl;
+					joint << "	<body_a>2</body_a>" << endl;
+					joint << "	<body_b>1</body_b>" << endl;
+					joint << "	<joint_origin>0, 0, 0</joint_origin>" << endl;
+					if (axis == 'x'){
+						joint << "	<rotation_axis>1, 0, 0</rotation_axis>" << endl;
+					}
+					if (axis == 'y'){
+						joint << "	<rotation_axis>0, 1, 0</rotation_axis>" << endl;
+					}
+					if (axis == 'z'){
+						joint << "	<rotation_axis>0, 0, 1</rotation_axis>" << endl;
+					}
+					joint << "<prescribed_rotation>0</prescribed_rotation>" << endl;
+					if (axis3 == axis){
+						if (axis == 'x'){ numi = 4; }
+						if (axis == 'y'){ numi = 5; }
+						if (axis == 'z'){ numi = 6; }
+						joint << "<moment lc =" << '"' << numi << '"' << ">1</moment>" << endl;
+					}
+					joint << "	</constraint>" << endl;
+					//////////set fixed the free of joint////////
+					joint << "<rigid_body mat = " << '"' << "1" << '"' << ">" << endl;
+					joint << "	<fixed bc= " << '"' << "R" << axis << '"' << "/>" << endl;
+					joint << "	</rigid_body>" << endl;
+				}
+			}
+			if (number == 1){
+				if (axis != 'n'){
+					joint << "<constraint type =" << '"' << "rigid revolute joint" << '"' << "name = " << '"' << "Joint 1" << '"' << ">" << endl;
+					if (axis3 == axis){
+						joint << "	<tolerance>0.1</tolerance>" << endl;
+					}
+					if (axis3 != axis){
+						joint << "	<tolerance>0</tolerance>" << endl;
+					}
+					joint << "	<gaptol>1e-4</gaptol>" << endl;
+					joint << "	<angtol>1e-4</angtol>" << endl;
+					joint << "	<force_penalty>1e12</force_penalty>" << endl;
+					joint << "	<moment_penalty>1e12</moment_penalty>" << endl;
+					joint << "	<body_a>2</body_a>" << endl;
+					joint << "	<body_b>1</body_b>" << endl;
+					joint << "	<joint_origin>0, 0, 0</joint_origin>" << endl;
+					if (axis == 'x'){
+						joint << "	<rotation_axis>1, 0, 0</rotation_axis>" << endl;
+					}
+					if (axis == 'y'){
+						joint << "	<rotation_axis>0, 1, 0</rotation_axis>" << endl;
+					}
+					if (axis == 'z'){
+						joint << "	<rotation_axis>0, 0, 1</rotation_axis>" << endl;
+					}
+					joint << "<prescribed_rotation>0</prescribed_rotation>" << endl;
+					if (axis3 == axis){
+						if (axis == 'x'){ numi = 4; }
+						if (axis == 'y'){ numi = 5; }
+						if (axis == 'z'){ numi = 6; }
+						joint << "<moment lc =" << '"' << numi << '"' << ">1</moment>" << endl;
+					}
+					joint << "	</constraint>" << endl;
+					//////////set fixed the free of joint////////
+					joint << "<rigid_body mat = " << '"' << "1" << '"' << ">" << endl;
+					joint << "	<fixed bc= " << '"' << "R" << axis << '"' << "/>" << endl;
+					joint << "	</rigid_body>" << endl;
+				}
+				if (axis2 != 'n'){
+					joint << "<constraint type =" << '"' << "rigid revolute joint" << '"' << "name = " << '"' << "Joint 2" << '"' << ">" << endl;
+					if (axis4 == axis2){
+						joint << "	<tolerance>0.1</tolerance>" << endl;
+					}
+					if (axis4 != axis2){
+						joint << "	<tolerance>0</tolerance>" << endl;
+					}joint << "	<gaptol>1e-4</gaptol>" << endl;
+					joint << "	<angtol>1e-4</angtol>" << endl;
+					joint << "	<force_penalty>1e12</force_penalty>" << endl;
+					joint << "	<moment_penalty>1e12</moment_penalty>" << endl;
+					joint << "	<body_a>2</body_a>" << endl;
+					joint << "	<body_b>1</body_b>" << endl;
+					joint << "	<joint_origin>0, 0, 0</joint_origin>" << endl;
+					if (axis2 == 'x'){
+						joint << "	<rotation_axis>1, 0, 0</rotation_axis>" << endl;
+					}
+					if (axis2 == 'y'){
+						joint << "	<rotation_axis>0, 1, 0</rotation_axis>" << endl;
+					}
+					if (axis2 == 'z'){
+						joint << "	<rotation_axis>0, 0, 1</rotation_axis>" << endl;
+					}
+					joint << "<prescribed_rotation>0</prescribed_rotation>" << endl;
+					if (axis4 == axis2){
+						if (axis2 == 'x'){ numi = 4; }
+						if (axis2 == 'y'){ numi = 5; }
+						if (axis2 == 'z'){ numi = 6; }
+						joint << "<moment lc =" << '"' << numi << '"' << ">1</moment>" << endl;
+					}
+					joint << "	</constraint>" << endl;
+					//////////set fixed the free of joint////////
+					joint << "<rigid_body mat = " << '"' << "1" << '"' << ">" << endl;
+					joint << "	<fixed bc= " << '"' << "R" << axis2 << '"' << "/>" << endl;
+					joint << "	</rigid_body>" << endl;
+				}
+			}
+		}
+				if (bodynum == 2){
+					if (presc2f[0] == 'N')
+					{
+						if (axis != 'n'){
+							joint << "<constraint type =" << '"' << "rigid revolute joint" << '"' << "name = " << '"' << "Joint 4" << '"' << ">" << endl;
+							if (axis3 == axis){
+								joint << "	<tolerance>0.1</tolerance>" << endl;
+							}
+							if (axis3 != axis){
+								joint << "	<tolerance>0</tolerance>" << endl;
+							}
+							joint << "	<gaptol>1e-4</gaptol>" << endl;
+							joint << "	<angtol>1e-4</angtol>" << endl;
+							joint << "	<force_penalty>1e12</force_penalty>" << endl;
+							joint << "	<moment_penalty>1e12</moment_penalty>" << endl;
+							joint << "	<body_a>1</body_a>" << endl;
+							joint << "	<body_b>2</body_b>" << endl;
+							joint << "	<joint_origin>0, 0, 0</joint_origin>" << endl;
+							if (axis == 'x'){
+								joint << "	<rotation_axis>1, 0, 0</rotation_axis>" << endl;
+							}
+							if (axis == 'y'){
+								joint << "	<rotation_axis>0, 1, 0</rotation_axis>" << endl;
+							}
+							if (axis == 'z'){
+								joint << "	<rotation_axis>0, 0, 1</rotation_axis>" << endl;
+							}
+							joint << "<prescribed_rotation>0</prescribed_rotation>" << endl;
+							if (axis3 == axis){
+								if (axis == 'x'){ numi = 10; }
+								if (axis == 'y'){ numi = 11; }
+								if (axis == 'z'){ numi = 12; }
+								joint << "<moment lc =" << '"' << numi << '"' << ">1</moment>" << endl;
+							}
+							joint << "	</constraint>" << endl;
+							//////////set fixed the free of joint////////
+							joint << "<rigid_body mat = " << '"' << "2" << '"' << ">" << endl;
+							joint << "	<fixed bc= " << '"' << "R" << axis << '"' << "/>" << endl;
+							joint << "	</rigid_body>" << endl;
+						}
+						if (axis2 != 'n'){
+							joint << "<constraint type =" << '"' << "rigid revolute joint" << '"' << "name = " << '"' << "Joint 5" << '"' << ">" << endl;
+							if (axis4 == axis2){
+								joint << "	<tolerance>0.1</tolerance>" << endl;
+							}
+							if (axis4 != axis2){
+								joint << "	<tolerance>0</tolerance>" << endl;
+							}joint << "	<gaptol>1e-4</gaptol>" << endl;
+							joint << "	<angtol>1e-4</angtol>" << endl;
+							joint << "	<force_penalty>1e12</force_penalty>" << endl;
+							joint << "	<moment_penalty>1e12</moment_penalty>" << endl;
+							joint << "	<body_a>1</body_a>" << endl;
+							joint << "	<body_b>2</body_b>" << endl;
+							joint << "	<joint_origin>0, 0, 0</joint_origin>" << endl;
+							if (axis2 == 'x'){
+								joint << "	<rotation_axis>1, 0, 0</rotation_axis>" << endl;
+							}
+							if (axis2 == 'y'){
+								joint << "	<rotation_axis>0, 1, 0</rotation_axis>" << endl;
+							}
+							if (axis2 == 'z'){
+								joint << "	<rotation_axis>0, 0, 1</rotation_axis>" << endl;
+							}
+							joint << "<prescribed_rotation>0</prescribed_rotation>" << endl;
+							if (axis4 == axis2){
+								if (axis2 == 'x'){ numi = 10; }
+								if (axis2 == 'y'){ numi = 11; }
+								if (axis2 == 'z'){ numi = 12; }
+								joint << "<moment lc =" << '"' << numi << '"' << ">1</moment>" << endl;
+							}
+							joint << "	</constraint>" << endl;
+							//////////set fixed the free of joint////////
+							joint << "<rigid_body mat = " << '"' << "2" << '"' << ">" << endl;
+							joint << "	<fixed bc= " << '"' << "R" << axis2 << '"' << "/>" << endl;
+							joint << "	</rigid_body>" << endl;
+						}
+					}
+					if (axis0 != 'n'){
+						joint << "<constraint type =" << '"' << "rigid revolute joint" << '"' << "name = " << '"' << "Joint 6" << '"' << ">" << endl;
+						if (axis5 == axis0){
+							joint << "	<tolerance>0.1</tolerance>" << endl;
+						}
+						if (axis5 != axis0){
+							joint << "	<tolerance>0</tolerance>" << endl;
+						}joint << "	<gaptol>1e-4</gaptol>" << endl;
+						joint << "	<angtol>1e-4</angtol>" << endl;
+						joint << "	<force_penalty>1e12</force_penalty>" << endl;
+						joint << "	<moment_penalty>1e12</moment_penalty>" << endl;
+						joint << "	<body_a>1</body_a>" << endl;
+						joint << "	<body_b>2</body_b>" << endl;
+						joint << "	<joint_origin>0, 0, 0</joint_origin>" << endl;
+						if (axis0 == 'x'){
+							joint << "	<rotation_axis>1, 0, 0</rotation_axis>" << endl;
+						}
+						if (axis0 == 'y'){
+							joint << "	<rotation_axis>0, 1, 0</rotation_axis>" << endl;
+						}
+						if (axis0 == 'z'){
+							joint << "	<rotation_axis>0, 0, 1</rotation_axis>" << endl;
+						}
+						joint << "<prescribed_rotation>0</prescribed_rotation>" << endl;
+						if (axis5 == axis0){
+							if (axis0 == 'x'){ numi = 10; }
+							if (axis0 == 'y'){ numi = 11; }
+							if (axis0 == 'z'){ numi = 12; }
+							joint << "<moment lc =" << '"' << numi << '"' << ">1</moment>" << endl;
+						}
+						joint << "	</constraint>" << endl;
+						//////////set fixed the free of joint////////
+						joint << "<rigid_body mat = " << '"' << "2" << '"' << ">" << endl;
+						joint << "	<fixed bc= " << '"' << "R" << axis0 << '"' << "/>" << endl;
+						joint << "	</rigid_body>" << endl;
+					}
+					if (number == 2){
+						if (axis != 'n'){
+							joint << "<constraint type =" << '"' << "rigid revolute joint" << '"' << "name = " << '"' << "Joint 4" << '"' << ">" << endl;
+							if (axis3 == axis){
+								joint << "	<tolerance>0.1</tolerance>" << endl;
+							}
+							if (axis3 != axis){
+								joint << "	<tolerance>0</tolerance>" << endl;
+							}
+							joint << "	<gaptol>1e-4</gaptol>" << endl;
+							joint << "	<angtol>1e-4</angtol>" << endl;
+							joint << "	<force_penalty>1e12</force_penalty>" << endl;
+							joint << "	<moment_penalty>1e12</moment_penalty>" << endl;
+							joint << "	<body_a>1</body_a>" << endl;
+							joint << "	<body_b>2</body_b>" << endl;
+							joint << "	<joint_origin>0, 0, 0</joint_origin>" << endl;
+							if (axis == 'x'){
+								joint << "	<rotation_axis>1, 0, 0</rotation_axis>" << endl;
+							}
+							if (axis == 'y'){
+								joint << "	<rotation_axis>0, 1, 0</rotation_axis>" << endl;
+							}
+							if (axis == 'z'){
+								joint << "	<rotation_axis>0, 0, 1</rotation_axis>" << endl;
+							}
+							joint << "<prescribed_rotation>0</prescribed_rotation>" << endl;
+							if (axis3 == axis){
+								if (axis == 'x'){ numi = 10; }
+								if (axis == 'y'){ numi = 11; }
+								if (axis == 'z'){ numi = 12; }
+								joint << "<moment lc =" << '"' << numi << '"' << ">1</moment>" << endl;
+							}
+							joint << "	</constraint>" << endl;
+							//////////set fixed the free of joint////////
+							joint << "<rigid_body mat = " << '"' << "2" << '"' << ">" << endl;
+							joint << "	<fixed bc= " << '"' << "R" << axis << '"' << "/>" << endl;
+							joint << "	</rigid_body>" << endl;
+						}
+					}
+					if (number == 1){
+						if (axis != 'n'){
+							joint << "<constraint type =" << '"' << "rigid revolute joint" << '"' << "name = " << '"' << "Joint 4" << '"' << ">" << endl;
+							if (axis3 == axis){
+								joint << "	<tolerance>0.1</tolerance>" << endl;
+							}
+							if (axis3 != axis){
+								joint << "	<tolerance>0</tolerance>" << endl;
+							}
+							joint << "	<gaptol>1e-4</gaptol>" << endl;
+							joint << "	<angtol>1e-4</angtol>" << endl;
+							joint << "	<force_penalty>1e12</force_penalty>" << endl;
+							joint << "	<moment_penalty>1e12</moment_penalty>" << endl;
+							joint << "	<body_a>1</body_a>" << endl;
+							joint << "	<body_b>2</body_b>" << endl;
+							joint << "	<joint_origin>0, 0, 0</joint_origin>" << endl;
+							if (axis == 'x'){
+								joint << "	<rotation_axis>1, 0, 0</rotation_axis>" << endl;
+							}
+							if (axis == 'y'){
+								joint << "	<rotation_axis>0, 1, 0</rotation_axis>" << endl;
+							}
+							if (axis == 'z'){
+								joint << "	<rotation_axis>0, 0, 1</rotation_axis>" << endl;
+							}
+							joint << "<prescribed_rotation>0</prescribed_rotation>" << endl;
+							if (axis3 == axis){
+								if (axis == 'x'){ numi = 10; }
+								if (axis == 'y'){ numi = 11; }
+								if (axis == 'z'){ numi = 12; }
+								joint << "<moment lc =" << '"' << numi << '"' << ">1</moment>" << endl;
+							}
+							joint << "	</constraint>" << endl;
+							//////////set fixed the free of joint////////
+							joint << "<rigid_body mat = " << '"' << "2" << '"' << ">" << endl;
+							joint << "	<fixed bc= " << '"' << "R" << axis << '"' << "/>" << endl;
+							joint << "	</rigid_body>" << endl;
+						}
+						if (axis2 != 'n'){
+							joint << "<constraint type =" << '"' << "rigid revolute joint" << '"' << "name = " << '"' << "Joint 5" << '"' << ">" << endl;
+							if (axis4 == axis2){
+								joint << "	<tolerance>0.1</tolerance>" << endl;
+							}
+							if (axis4 != axis2){
+								joint << "	<tolerance>0</tolerance>" << endl;
+							}
+							joint << "	<gaptol>1e-4</gaptol>" << endl;
+							joint << "	<angtol>1e-4</angtol>" << endl;
+							joint << "	<force_penalty>1e12</force_penalty>" << endl;
+							joint << "	<moment_penalty>1e12</moment_penalty>" << endl;
+							joint << "	<body_a>1</body_a>" << endl;
+							joint << "	<body_b>2</body_b>" << endl;
+							joint << "	<joint_origin>0, 0, 0</joint_origin>" << endl;
+							if (axis2 == 'x'){
+								joint << "	<rotation_axis>1, 0, 0</rotation_axis>" << endl;
+							}
+							if (axis2 == 'y'){
+								joint << "	<rotation_axis>0, 1, 0</rotation_axis>" << endl;
+							}
+							if (axis2 == 'z'){
+								joint << "	<rotation_axis>0, 0, 1</rotation_axis>" << endl;
+							}
+							joint << "<prescribed_rotation>0</prescribed_rotation>" << endl;
+							if (axis4 == axis2){
+								if (axis2 == 'x'){ numi = 10; }
+								if (axis2 == 'y'){ numi = 11; }
+								if (axis2 == 'z'){ numi = 12; } 
+								joint << "<moment lc =" << '"' << numi << '"' << ">1</moment>" << endl;
+							}
+							joint << "	</constraint>" << endl;
+							//////////set fixed the free of joint////////
+							joint << "<rigid_body mat = " << '"' << "2" << '"' << ">" << endl;
+							joint << "	<fixed bc= " << '"' << "R" << axis2 << '"' << "/>" << endl;
+							joint << "	</rigid_body>" << endl;
+						}
+					}
+				}
+
+
+				///////////////////////DYNAMIC STEP///////////////////////////////////////
+				int numii = 0;
+				if (bodynum == 1){
+					if (presc1f[0] == 'N')
+					{
+						if (axis != 'n'){
+							jointd << "<constraint type =" << '"' << "rigid revolute joint" << '"' << "name = " << '"' << "Joint 1" << '"' << ">" << endl;
+							if (axis3 == axis){
+								jointd << "	<tolerance>0.1</tolerance>" << endl;
+							}
+							if (axis3 != axis){
+								jointd << "	<tolerance>0</tolerance>" << endl;
+							}
+							jointd << "	<gaptol>1e-4</gaptol>" << endl;
+							jointd << "	<angtol>1e-4</angtol>" << endl;
+							jointd << "	<force_penalty>1e12</force_penalty>" << endl;
+							jointd << "	<moment_penalty>1e12</moment_penalty>" << endl;
+							jointd << "	<body_a>2</body_a>" << endl;
+							jointd << "	<body_b>1</body_b>" << endl;
+							jointd << "	<joint_origin>0, 0, 0</joint_origin>" << endl;
+							if (axis == 'x'){
+								jointd << "	<rotation_axis>1, 0, 0</rotation_axis>" << endl;
+							}
+							if (axis == 'y'){
+								jointd << "	<rotation_axis>0, 1, 0</rotation_axis>" << endl;
+							}
+							if (axis == 'z'){
+								jointd << "	<rotation_axis>0, 0, 1</rotation_axis>" << endl;
+							}
+							jointd << "<prescribed_rotation>0</prescribed_rotation>" << endl;
+							if (axis3 == axis){
+								if (axis == 'x'){ numii = 16; }
+								if (axis == 'y'){ numii = 17; }
+								if (axis == 'z'){ numii = 18; }
+								jointd << "<moment lc =" << '"' << numii << '"' << ">1</moment>" << endl;
+							}
+							jointd << "	</constraint>" << endl;
+							//////////set fixed the free of joint////////
+							jointd << "<rigid_body mat = " << '"' << "1" << '"' << ">" << endl;
+							jointd << "	<fixed bc= " << '"' << "R" << axis << '"' << "/>" << endl;
+							jointd << "	</rigid_body>" << endl;
+						}
+						if (axis2 != 'n'){
+							jointd << "<constraint type =" << '"' << "rigid revolute joint" << '"' << "name = " << '"' << "Joint 2" << '"' << ">" << endl;
+							if (axis4 == axis2){
+								jointd << "	<tolerance>0.1</tolerance>" << endl;
+							}
+							if (axis4 != axis2){
+								jointd << "	<tolerance>0</tolerance>" << endl;
+							}jointd << "	<gaptol>1e-4</gaptol>" << endl;
+							jointd << "	<angtol>1e-4</angtol>" << endl;
+							jointd << "	<force_penalty>1e12</force_penalty>" << endl;
+							jointd << "	<moment_penalty>1e12</moment_penalty>" << endl;
+							jointd << "	<body_a>2</body_a>" << endl;
+							jointd << "	<body_b>1</body_b>" << endl;
+							jointd << "	<joint_origin>0, 0, 0</joint_origin>" << endl;
+							if (axis2 == 'x'){
+								jointd << "	<rotation_axis>1, 0, 0</rotation_axis>" << endl;
+							}
+							if (axis2 == 'y'){
+								jointd << "	<rotation_axis>0, 1, 0</rotation_axis>" << endl;
+							}
+							if (axis2 == 'z'){
+								jointd << "	<rotation_axis>0, 0, 1</rotation_axis>" << endl;
+							}
+							jointd << "<prescribed_rotation>0</prescribed_rotation>" << endl;
+							if (axis4 == axis2){
+								if (axis2 == 'x'){ numii = 16; }
+								if (axis2 == 'y'){ numii = 17; }
+								if (axis2 == 'z'){ numii = 18; }
+								jointd << "<moment lc =" << '"' << numii << '"' << ">1</moment>" << endl;
+							}
+							jointd << "	</constraint>" << endl;
+							//////////set fixed the free of joint////////
+							jointd << "<rigid_body mat = " << '"' << "1" << '"' << ">" << endl;
+							jointd << "	<fixed bc= " << '"' << "R" << axis2 << '"' << "/>" << endl;
+							jointd << "	</rigid_body>" << endl;
+						}
+					}
+					if (axis0 != 'n'){
+						jointd << "<constraint type =" << '"' << "rigid revolute joint" << '"' << "name = " << '"' << "Joint 3" << '"' << ">" << endl;
+						if (axis5 == axis0){
+							jointd << "	<tolerance>0.1</tolerance>" << endl;
+						}
+						if (axis5 != axis0){
+							jointd << "	<tolerance>0</tolerance>" << endl;
+						}jointd << "	<gaptol>1e-4</gaptol>" << endl;
+						jointd << "	<angtol>1e-4</angtol>" << endl;
+						jointd << "	<force_penalty>1e12</force_penalty>" << endl;
+						jointd << "	<moment_penalty>1e12</moment_penalty>" << endl;
+						jointd << "	<body_a>2</body_a>" << endl;
+						jointd << "	<body_b>1</body_b>" << endl;
+						jointd << "	<joint_origin>0, 0, 0</joint_origin>" << endl;
+						if (axis0 == 'x'){
+							jointd << "	<rotation_axis>1, 0, 0</rotation_axis>" << endl;
+						}
+						if (axis0 == 'y'){
+							jointd << "	<rotation_axis>0, 1, 0</rotation_axis>" << endl;
+						}
+						if (axis0 == 'z'){
+							jointd << "	<rotation_axis>0, 0, 1</rotation_axis>" << endl;
+						}
+						jointd << "<prescribed_rotation>0</prescribed_rotation>" << endl;
+						if (axis5 == axis0){
+							if (axis0 == 'x'){ numii = 16; }
+							if (axis0 == 'y'){ numii = 17; }
+							if (axis0 == 'z'){ numii = 18; }
+							jointd << "<moment lc =" << '"' << numii << '"' << ">1</moment>" << endl;
+						}
+						jointd << "	</constraint>" << endl;
+						//////////set fixed the free of joint////////
+						jointd << "<rigid_body mat = " << '"' << "1" << '"' << ">" << endl;
+						jointd << "	<fixed bc= " << '"' << "R" << axis0 << '"' << "/>" << endl;
+						jointd << "	</rigid_body>" << endl;
+					}
+					if (number == 2){
+						if (axis != 'n'){
+							jointd << "<constraint type =" << '"' << "rigid revolute joint" << '"' << "name = " << '"' << "Joint 1" << '"' << ">" << endl;
+							if (axis3 == axis){
+								jointd << "	<tolerance>0.1</tolerance>" << endl;
+							}
+							if (axis3 != axis){
+								jointd << "	<tolerance>0</tolerance>" << endl;
+							}
+							jointd << "	<gaptol>1e-4</gaptol>" << endl;
+							jointd << "	<angtol>1e-4</angtol>" << endl;
+							jointd << "	<force_penalty>1e12</force_penalty>" << endl;
+							jointd << "	<moment_penalty>1e12</moment_penalty>" << endl;
+							jointd << "	<body_a>2</body_a>" << endl;
+							jointd << "	<body_b>1</body_b>" << endl;
+							jointd << "	<joint_origin>0, 0, 0</joint_origin>" << endl;
+							if (axis == 'x'){
+								jointd << "	<rotation_axis>1, 0, 0</rotation_axis>" << endl;
+							}
+							if (axis == 'y'){
+								jointd << "	<rotation_axis>0, 1, 0</rotation_axis>" << endl;
+							}
+							if (axis == 'z'){
+								jointd << "	<rotation_axis>0, 0, 1</rotation_axis>" << endl;
+							}
+							jointd << "<prescribed_rotation>0</prescribed_rotation>" << endl;
+							if (axis3 == axis){
+								if (axis == 'x'){  numii = 16;  }
+								if (axis == 'y'){  numii = 17;  }
+								if (axis == 'z'){ numii = 18;}
+								jointd << "<moment lc =" << '"' << numii << '"' << ">1</moment>" << endl;
+							}
+							jointd << "	</constraint>" << endl;
+							//////////set fixed the free of joint////////
+							jointd << "<rigid_body mat = " << '"' << "1" << '"' << ">" << endl;
+							jointd << "	<fixed bc= " << '"' << "R" << axis << '"' << "/>" << endl;
+							jointd << "	</rigid_body>" << endl;
+						}
+					}
+					if (number == 1){
+						if (axis != 'n'){
+							jointd << "<constraint type =" << '"' << "rigid revolute joint" << '"' << "name = " << '"' << "Joint 1" << '"' << ">" << endl;
+							if (axis3 == axis){
+								jointd << "	<tolerance>0.1</tolerance>" << endl;
+							}
+							if (axis3 != axis){
+								jointd << "	<tolerance>0</tolerance>" << endl;
+							}
+							jointd << "	<gaptol>1e-4</gaptol>" << endl;
+							jointd << "	<angtol>1e-4</angtol>" << endl;
+							jointd << "	<force_penalty>1e12</force_penalty>" << endl;
+							jointd << "	<moment_penalty>1e12</moment_penalty>" << endl;
+							jointd << "	<body_a>2</body_a>" << endl;
+							jointd << "	<body_b>1</body_b>" << endl;
+							jointd << "	<joint_origin>0, 0, 0</joint_origin>" << endl;
+							if (axis == 'x'){
+								jointd << "	<rotation_axis>1, 0, 0</rotation_axis>" << endl;
+							}
+							if (axis == 'y'){
+								jointd << "	<rotation_axis>0, 1, 0</rotation_axis>" << endl;
+							}
+							if (axis == 'z'){
+								jointd << "	<rotation_axis>0, 0, 1</rotation_axis>" << endl;
+							}
+							jointd << "<prescribed_rotation>0</prescribed_rotation>" << endl;
+							if (axis3 == axis){
+								if (axis == 'x'){ numii = 16; }
+								if (axis == 'y'){ numii = 17; }
+								if (axis == 'z'){ numii = 18; }
+								jointd << "<moment lc =" << '"' << numii << '"' << ">1</moment>" << endl;
+							}
+							jointd << "	</constraint>" << endl;
+							//////////set fixed the free of joint////////
+							jointd << "<rigid_body mat = " << '"' << "1" << '"' << ">" << endl;
+							jointd << "	<fixed bc= " << '"' << "R" << axis << '"' << "/>" << endl;
+							jointd << "	</rigid_body>" << endl;
+						}
+						if (axis2 != 'n'){
+							jointd << "<constraint type =" << '"' << "rigid revolute joint" << '"' << "name = " << '"' << "Joint 2" << '"' << ">" << endl;
+							if (axis4 == axis2){
+								jointd << "	<tolerance>0.1</tolerance>" << endl;
+							}
+							if (axis4 != axis2){
+								jointd << "	<tolerance>0</tolerance>" << endl;
+							}jointd << "	<gaptol>1e-4</gaptol>" << endl;
+							jointd << "	<angtol>1e-4</angtol>" << endl;
+							jointd << "	<force_penalty>1e12</force_penalty>" << endl;
+							jointd << "	<moment_penalty>1e12</moment_penalty>" << endl;
+							jointd << "	<body_a>2</body_a>" << endl;
+							jointd << "	<body_b>1</body_b>" << endl;
+							jointd << "	<joint_origin>0, 0, 0</joint_origin>" << endl;
+							if (axis2 == 'x'){
+								jointd << "	<rotation_axis>1, 0, 0</rotation_axis>" << endl;
+							}
+							if (axis2 == 'y'){
+								jointd << "	<rotation_axis>0, 1, 0</rotation_axis>" << endl;
+							}
+							if (axis2 == 'z'){
+								jointd << "	<rotation_axis>0, 0, 1</rotation_axis>" << endl;
+							}
+							jointd << "<prescribed_rotation>0</prescribed_rotation>" << endl;
+							if (axis4 == axis2){
+								if (axis2 == 'x'){ numii = 16; }
+								if (axis2 == 'y'){ numii = 17; }
+								if (axis2 == 'z'){ numii = 18; }
+								jointd << "<moment lc =" << '"' << numii << '"' << ">1</moment>" << endl;
+							}
+							jointd << "	</constraint>" << endl;
+							//////////set fixed the free of joint////////
+							jointd << "<rigid_body mat = " << '"' << "1" << '"' << ">" << endl;
+							jointd << "	<fixed bc= " << '"' << "R" << axis2 << '"' << "/>" << endl;
+							jointd << "	</rigid_body>" << endl;
+						}
+					}
+				}
+				if (bodynum == 2){
+					if (presc2f[0] == 'N')
+					{
+						if (axis != 'n'){
+							jointd << "<constraint type =" << '"' << "rigid revolute joint" << '"' << "name = " << '"' << "Joint 4" << '"' << ">" << endl;
+							if (axis3 == axis){
+								jointd << "	<tolerance>0.1</tolerance>" << endl;
+							}
+							if (axis3 != axis){
+								jointd << "	<tolerance>0</tolerance>" << endl;
+							}
+							jointd << "	<gaptol>1e-4</gaptol>" << endl;
+							jointd << "	<angtol>1e-4</angtol>" << endl;
+							jointd << "	<force_penalty>1e12</force_penalty>" << endl;
+							jointd << "	<moment_penalty>1e12</moment_penalty>" << endl;
+							jointd << "	<body_a>1</body_a>" << endl;
+							jointd << "	<body_b>2</body_b>" << endl;
+							jointd << "	<joint_origin>0, 0, 0</joint_origin>" << endl;
+							if (axis == 'x'){
+								jointd << "	<rotation_axis>1, 0, 0</rotation_axis>" << endl;
+							}
+							if (axis == 'y'){
+								jointd << "	<rotation_axis>0, 1, 0</rotation_axis>" << endl;
+							}
+							if (axis == 'z'){
+								jointd << "	<rotation_axis>0, 0, 1</rotation_axis>" << endl;
+							}
+							jointd << "<prescribed_rotation>0</prescribed_rotation>" << endl;
+							if (axis3 == axis){
+								if (axis == 'x'){ numii = 22; }
+								if (axis == 'y'){ numii = 23; }
+								if (axis == 'z'){ numii = 24; }
+								jointd << "<moment lc =" << '"' << numii << '"' << ">1</moment>" << endl;
+							}
+							jointd << "	</constraint>" << endl;
+							//////////set fixed the free of joint////////
+							jointd << "<rigid_body mat = " << '"' << "2" << '"' << ">" << endl;
+							jointd << "	<fixed bc= " << '"' << "R" << axis << '"' << "/>" << endl;
+							jointd << "	</rigid_body>" << endl;
+						}
+						if (axis2 != 'n'){
+							jointd << "<constraint type =" << '"' << "rigid revolute joint" << '"' << "name = " << '"' << "Joint 5" << '"' << ">" << endl;
+							if (axis4 == axis2){
+								jointd << "	<tolerance>0.1</tolerance>" << endl;
+							}
+							if (axis4 != axis2){
+								jointd << "	<tolerance>0</tolerance>" << endl;
+							}jointd << "	<gaptol>1e-4</gaptol>" << endl;
+							jointd << "	<angtol>1e-4</angtol>" << endl;
+							jointd << "	<force_penalty>1e12</force_penalty>" << endl;
+							jointd << "	<moment_penalty>1e12</moment_penalty>" << endl;
+							jointd << "	<body_a>1</body_a>" << endl;
+							jointd << "	<body_b>2</body_b>" << endl;
+							jointd << "	<joint_origin>0, 0, 0</joint_origin>" << endl;
+							if (axis2 == 'x'){
+								jointd << "	<rotation_axis>1, 0, 0</rotation_axis>" << endl;
+							}
+							if (axis2 == 'y'){
+								jointd << "	<rotation_axis>0, 1, 0</rotation_axis>" << endl;
+							}
+							if (axis2 == 'z'){
+								jointd << "	<rotation_axis>0, 0, 1</rotation_axis>" << endl;
+							}
+							jointd << "<prescribed_rotation>0</prescribed_rotation>" << endl;
+							if (axis4 == axis2){
+								if (axis2 == 'x'){ numii = 22; }
+								if (axis2 == 'y'){ numii = 23; }
+								if (axis2 == 'z'){ numii = 24; }
+								jointd << "<moment lc =" << '"' << numii << '"' << ">1</moment>" << endl;
+							}
+							jointd << "	</constraint>" << endl;
+							//////////set fixed the free of joint////////
+							jointd << "<rigid_body mat = " << '"' << "2" << '"' << ">" << endl;
+							jointd << "	<fixed bc= " << '"' << "R" << axis2 << '"' << "/>" << endl;
+							jointd << "	</rigid_body>" << endl;
+						}
+					}
+					if (axis0 != 'n'){
+						jointd << "<constraint type =" << '"' << "rigid revolute joint" << '"' << "name = " << '"' << "Joint 6" << '"' << ">" << endl;
+						if (axis5 == axis0){
+							jointd << "	<tolerance>0.1</tolerance>" << endl;
+						}
+						if (axis5 != axis0){
+							jointd << "	<tolerance>0</tolerance>" << endl;
+						}jointd << "	<gaptol>1e-4</gaptol>" << endl;
+						jointd << "	<angtol>1e-4</angtol>" << endl;
+						jointd << "	<force_penalty>1e12</force_penalty>" << endl;
+						jointd << "	<moment_penalty>1e12</moment_penalty>" << endl;
+						jointd << "	<body_a>1</body_a>" << endl;
+						jointd << "	<body_b>2</body_b>" << endl;
+						jointd << "	<joint_origin>0, 0, 0</joint_origin>" << endl;
+						if (axis0 == 'x'){
+							jointd << "	<rotation_axis>1, 0, 0</rotation_axis>" << endl;
+						}
+						if (axis0 == 'y'){
+							jointd << "	<rotation_axis>0, 1, 0</rotation_axis>" << endl;
+						}
+						if (axis0 == 'z'){
+							jointd << "	<rotation_axis>0, 0, 1</rotation_axis>" << endl;
+						}
+						jointd << "<prescribed_rotation>0</prescribed_rotation>" << endl;
+						if (axis5 == axis0){
+							if (axis0 == 'x'){ numii = 22; }
+							if (axis0 == 'y'){ numii = 23; }
+							if (axis0 == 'z'){ numii = 24; }
+							jointd << "<moment lc =" << '"' << numii << '"' << ">1</moment>" << endl;
+						}
+						jointd << "	</constraint>" << endl;
+						//////////set fixed the free of joint////////
+						jointd << "<rigid_body mat = " << '"' << "2" << '"' << ">" << endl;
+						jointd << "	<fixed bc= " << '"' << "R" << axis0 << '"' << "/>" << endl;
+						jointd << "	</rigid_body>" << endl;
+					}
+					if (number == 2){
+						if (axis != 'n'){
+							jointd << "<constraint type =" << '"' << "rigid revolute joint" << '"' << "name = " << '"' << "Joint 4" << '"' << ">" << endl;
+							if (axis3 == axis){
+								jointd << "	<tolerance>0.1</tolerance>" << endl;
+							}
+							if (axis3 != axis){
+								jointd << "	<tolerance>0</tolerance>" << endl;
+							}
+							jointd << "	<gaptol>1e-4</gaptol>" << endl;
+							jointd << "	<angtol>1e-4</angtol>" << endl;
+							jointd << "	<force_penalty>1e12</force_penalty>" << endl;
+							jointd << "	<moment_penalty>1e12</moment_penalty>" << endl;
+							jointd << "	<body_a>1</body_a>" << endl;
+							jointd << "	<body_b>2</body_b>" << endl;
+							jointd << "	<joint_origin>0, 0, 0</joint_origin>" << endl;
+							if (axis == 'x'){
+								jointd << "	<rotation_axis>1, 0, 0</rotation_axis>" << endl;
+							}
+							if (axis == 'y'){
+								jointd << "	<rotation_axis>0, 1, 0</rotation_axis>" << endl;
+							}
+							if (axis == 'z'){
+								jointd << "	<rotation_axis>0, 0, 1</rotation_axis>" << endl;
+							}
+							jointd << "<prescribed_rotation>0</prescribed_rotation>" << endl;
+							if (axis3 == axis){
+								if (axis == 'x'){ numii = 22; }
+								if (axis == 'y'){ numii = 23; }
+								if (axis == 'z'){ numii = 24; }
+								jointd << "<moment lc =" << '"' << numii << '"' << ">1</moment>" << endl;
+							}
+							jointd << "	</constraint>" << endl;
+							//////////set fixed the free of joint////////
+							jointd << "<rigid_body mat = " << '"' << "2" << '"' << ">" << endl;
+							jointd << "	<fixed bc= " << '"' << "R" << axis << '"' << "/>" << endl;
+							jointd << "	</rigid_body>" << endl;
+						}
+					}
+					if (number == 1){
+						if (axis != 'n'){
+							jointd << "<constraint type =" << '"' << "rigid revolute joint" << '"' << "name = " << '"' << "Joint 4" << '"' << ">" << endl;
+							if (axis3 == axis){
+								jointd << "	<tolerance>0.1</tolerance>" << endl;
+							}
+							if (axis3 != axis){
+								jointd << "	<tolerance>0</tolerance>" << endl;
+							}
+							jointd << "	<gaptol>1e-4</gaptol>" << endl;
+							jointd << "	<angtol>1e-4</angtol>" << endl;
+							jointd << "	<force_penalty>1e12</force_penalty>" << endl;
+							jointd << "	<moment_penalty>1e12</moment_penalty>" << endl;
+							jointd << "	<body_a>1</body_a>" << endl;
+							jointd << "	<body_b>2</body_b>" << endl;
+							jointd << "	<joint_origin>0, 0, 0</joint_origin>" << endl;
+							if (axis == 'x'){
+								jointd << "	<rotation_axis>1, 0, 0</rotation_axis>" << endl;
+							}
+							if (axis == 'y'){
+								jointd << "	<rotation_axis>0, 1, 0</rotation_axis>" << endl;
+							}
+							if (axis == 'z'){
+								jointd << "	<rotation_axis>0, 0, 1</rotation_axis>" << endl;
+							}
+							jointd << "<prescribed_rotation>0</prescribed_rotation>" << endl;
+							if (axis3 == axis){
+								if (axis == 'x'){ numii = 22; }
+								if (axis == 'y'){ numii = 23; }
+								if (axis == 'z'){ numii = 24; }
+								jointd << "<moment lc =" << '"' << numii << '"' << ">1</moment>" << endl;
+							}
+							jointd << "	</constraint>" << endl;
+							//////////set fixed the free of joint////////
+							jointd << "<rigid_body mat = " << '"' << "2" << '"' << ">" << endl;
+							jointd << "	<fixed bc= " << '"' << "R" << axis << '"' << "/>" << endl;
+							jointd << "	</rigid_body>" << endl;
+						}
+						if (axis2 != 'n'){
+							jointd << "<constraint type =" << '"' << "rigid revolute joint" << '"' << "name = " << '"' << "Joint 5" << '"' << ">" << endl;
+							if (axis4 == axis2){
+								jointd << "	<tolerance>0.1</tolerance>" << endl;
+							}
+							if (axis4 != axis2){
+								jointd << "	<tolerance>0</tolerance>" << endl;
+							}
+							jointd << "	<gaptol>1e-4</gaptol>" << endl;
+							jointd << "	<angtol>1e-4</angtol>" << endl;
+							jointd << "	<force_penalty>1e12</force_penalty>" << endl;
+							jointd << "	<moment_penalty>1e12</moment_penalty>" << endl;
+							jointd << "	<body_a>1</body_a>" << endl;
+							jointd << "	<body_b>2</body_b>" << endl;
+							jointd << "	<joint_origin>0, 0, 0</joint_origin>" << endl;
+							if (axis2 == 'x'){
+								jointd << "	<rotation_axis>1, 0, 0</rotation_axis>" << endl;
+							}
+							if (axis2 == 'y'){
+								jointd << "	<rotation_axis>0, 1, 0</rotation_axis>" << endl;
+							}
+							if (axis2 == 'z'){
+								jointd << "	<rotation_axis>0, 0, 1</rotation_axis>" << endl;
+							}
+							jointd << "<prescribed_rotation>0</prescribed_rotation>" << endl;
+							if (axis4 == axis2){
+								if (axis2 == 'x'){ numii = 22; } 
+								if (axis2 == 'y'){ numii = 23; } 
+								if (axis2 == 'z'){ numii = 24; } 
+								jointd << "<moment lc =" << '"' << numii << '"' << ">1</moment>" << endl;
+							}
+							jointd << "	</constraint>" << endl;
+							//////////set fixed the free of joint////////
+							jointd << "<rigid_body mat = " << '"' << "2" << '"' << ">" << endl;
+							jointd << "	<fixed bc= " << '"' << "R" << axis2 << '"' << "/>" << endl;
+							jointd << "	</rigid_body>" << endl;
+						}
+					}
+				}
+			
+		
+		//////////////////////////////////////////////////////////////////////////////
+				joint.close();
+				jointd.close();
+		}
+	
 
 
 HANDLE FEBRunner::ShellExecuteHandler(string program, string args,string name)

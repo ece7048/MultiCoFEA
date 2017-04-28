@@ -29,7 +29,7 @@ public:
 	~TSC(void);
 
 	void run(Vector fpx, Vector fpy, Vector fpz, Vector fox, Vector foy, Vector foz, Vector spx, Vector spy, Vector spz, Vector sox, Vector soy, Vector soz, Vector time);
-	void stepswriter();
+	void stepswriter(Vector time);
 	HANDLE ShellExecute( string name);
 	
 private:

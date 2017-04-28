@@ -47,7 +47,7 @@ try{
 	cout << "///////////////////////////////////////////////////////////////////////////////////////////////////////////////////" << endl;
 	cout << "///////////////////////////ooooo///////////////////////////////////////////////////ooooo///////////////////////////" << endl;
 	cout << "///////////////////////////ooooo///////////////////////////////////////////////////ooooo///////////////////////////" << endl;
-	cout << "///////////////////////////oo/ OpenSource C++ Program writting from Michail Mamalakis/oo///////////////////////////" << endl;
+	cout << "///////////////////////////oo/ OpenSource C++ Program coding from Michail Mamalakis/oo///////////////////////////" << endl;
 	cout << "///////////////////////////ooooo/////////////oo//////////////////oo////////////////ooooo///////////////////////////" << endl;
 	cout << "///////////////////////////ooooo/////////////oo/////////////////oo/////////////////ooooo///////////////////////////" << endl;
 	cout << "/////////////////////////////////////////////oo//////oooo//////oo//////////////////////////////////////////////////" << endl;
@@ -74,6 +74,10 @@ try{
 	cout << "Copyright (c) all rights reserved/////////////////////oooo///oooo/////////////ooooo/////o/////o/////o/////////////" << endl;
 	cout << "///////////////////////////////////////////////////////////////////////////////////////////////////////////////////" << endl;
 	//cout << "" << endl;
+
+cout << "" << endl;
+cout << "MultiCoFEA  Copyright(C) 2017  Michail Mamalakis" << endl;
+cout << "" << endl;
 
 	cout << "INITIALIZE MODE...please wait..." << endl;
 
@@ -103,24 +107,24 @@ try{
 	cout<< kind << endl;
 	if (kind == "n"){
 		cout << "The analysis you have to do are:  " << endl;
-		cout << "Inverse Kinematics (IK) Inverse Dynamic (ID) Reduce Residual Actuator (RRA) Compute Muscle Control (CMC) " << endl;
+		cout << "Static Inverse Kinematics (SIK) Inverse Kinematics (IK) Reduce Residual Actuator (RRA) Compute Muscle Control (CMC) " << endl;
 		cout << "In setup.ini you have to set ALL the variables of these analysis in IK in variable GRFNAME you have to set " << endl;
 		cout << "the name before the _grf.trc file because it used as output in RRA and CMC and need it for these program..." << endl;
 		OpenSimRunner open;
 		open.runST();
 		open.~OpenSimRunner();
 
-//OpenSimRunner open3;
-//open3.runIK();
-//open3.~OpenSimRunner();
+		OpenSimRunner open3;
+		open3.runIK();
+		open3.~OpenSimRunner();
 
-	//	OpenSimRunner open1;
-	//	open1.runRRA();
-	//	open1.~OpenSimRunner();
+		OpenSimRunner open1;
+		open1.runRRA();
+		open1.~OpenSimRunner();
 
-//		OpenSimRunner open2;
-//		open2.runCMC();
-//		open2.~OpenSimRunner();
+		OpenSimRunner open2;
+		open2.runCMC();
+		open2.~OpenSimRunner();
 		string modelPath1 = BASE_DIR + ini.Get("PATH", "MODELS", "");
 		string residul5 =  ini.Get("RRA", "RESULT_DIR", "") + "/rramodel2.osim";
 
@@ -197,7 +201,7 @@ try{
 			system("pause");
 	}
 	cout << "#####################################################################################################################################################################" << endl;
-	cout << "SAME BASIC INITIAL OPTIONS FOR THE ANALYSIS:" << endl;
+	cout << "SAME BASIC INITIAL OPTIONS FOR THE ANALYSIS " << endl;
 	cout << "1. Before run the exe file be sure that the Center Of Mass (COM) of the two bodies in FEBio are in (0,0,0) point" << endl;
 	cout << "2. In the [BODYFORCES] section of setup.ini and setup1.ini you have to set the Joints from 1-6 with first rotations dof and then translations with axis order x-y-z" << endl;
 	cout << "3. If a DoF of joint is fixed set it as 0!!!" << endl;
@@ -210,9 +214,15 @@ try{
 	cout << "   then the other rotation dof have to be prescribed or fixed not free, same with the forced case (forced or fixed)." << endl;
 	cout << "   Set first the traslation dof with xyz (no space) and then the rotation with rxryrz (no space) seperate by _" << endl;
 	cout << "   If you want nan dof set forced fixed or prescribed set it with NAN." << endl; 
-	cout << "   The DOFs you want to be free, without acting force or prescribed motion or be fixed, just do not entry them in the variables." << endl;
+	cout << "   The DOFs you want to be free (translation or all the rotation), without acting force or prescribed motion or be fixed, just do not entry them in the variables." << endl;
 	cout << "   Finaly, if you are not sure for the stragety wait and set the DOF at the end of the program and leave the variables " << endl;
 	cout << "   which already mention with no character, empty (Forced_DOF, Prescribed_DOF,Fixed_DOF). " << endl;
+	cout << "   SOS: If you want to set a rotation dof prescribed and you want to set another rotation dof free set in setup.ini file the variable: Joint_free = y ." << endl;
+	cout << "   The free dof you want just not set it in prescribed or fixed variabel. If you want the free dof to set a force lc then set it in Forced_DOF varible. " << endl;
+	cout << "7. You have to set the two Rigid bodies as material 1 and 2, specially if you set the Joint_free = y. " << endl;
+	cout << "8. You have to set in model path the FEBio model. This model has to have the Globals,Material,Geometry,Boundary,Contact,Costraints,Discrete sections" << endl;
+	cout << "   These section are not modified by this program so you have to set them by your self before start the analysis in MODELFeb variable in PATH section (setup.ini)" << endl;
+	cout << "THANKS FOR YOUR PATIENCE!!" << endl;
 
 
 	cout << "#####################################################################################################################################################################" << endl;
@@ -227,6 +237,10 @@ try{
 	cout << "The analysis in FEBio would be dynamic" << endl;
 	
 	string mode = ini.Get("BASICSETUP", "MODEanalysis", "");
+	if (mode == ""){
+		cout << " PLEASE,Select one of the above analysis!" << endl;
+		cin >> mode;
+	}
 	cout << mode << endl;
 
 	if (mode == "T"|| mode=="F"){
@@ -234,13 +248,21 @@ try{
 		cout << "How many inderval time partitions at most, do you want to build for this analysis?" << endl;
 		cout << "P.S. If you want to run the simulation with out partition time intervals analysis just set 1 interval..." << endl;
 		
-		double number = ini.GetReal("BASICSETUP", "PartitionIntervals", 0);
+		double number = ini.GetReal("BASICSETUP", "PartitionIntervals", NAN);
+		if (number == NAN){
+			cout << " PLEASE,answer the question!" << endl;
+			cin >> number;
+		}
 		cout << number<<endl;
 		FEBRunner feb0;
 		feb0.CopyFEBFile(number);
 
 		cout << "Do you want to give the intervals of the analysis by your self? (y/n)" << endl;
 		string process = ini.Get("BASICSETUP", "MANUALinterval", "");
+		if (process == ""){
+			cout << " PLEASE,answer the question!" << endl;
+			cin >> process;
+		}
 		cout << process<<endl;
 		////////////////////////////////////////////////
 		Num_Of_Partition nop;
@@ -305,13 +327,22 @@ try{
 	if (mode == "R"){
 		cout << "How many inderval time partitions at most, do you want to build for this analysis?" << endl;
 		cout << "P.S. If you want to run the simulation with out partition time intervals analysis just set 1 interval..." << endl;
-		double number = ini.GetReal("BASICSETUP", "PartitionIntervals", 0);
+		double number = ini.GetReal("BASICSETUP", "PartitionIntervals", NAN);
+		if (number == NAN){
+			cout << " PLEASE,answer the question!" << endl;
+			cin >> number;
+		}
+		
 		cout << number << endl;
 		FEBRunner feb0;
 		feb0.CopyFEBFile(number);
 
 		cout << "Do you want to give the intervals of the analysis by your self? (y/n)" << endl;
 		string process = ini.Get("BASICSETUP", "MANUALinterval", "");
+		if (process == ""){
+			cout << " PLEASE,answer the question!" << endl;
+			cin >> process;
+		}
 		cout << process << endl;
 		////////////////////////////////////////////////
 		Num_Of_Partition nop;

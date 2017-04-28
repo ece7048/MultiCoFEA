@@ -111,7 +111,7 @@ void JR_starter::started(int number, int itteration)
 	tool2.setResultsDir(path);
 	tool2.setLowpassCutoffFrequency(6);
 	tool2.setStatesFileName(stateFile);
-	//cout << stateFile << endl;
+	cout << stateFile << endl;
 	tool2.setStatesStorage(set);
 
 	tool2.run();
@@ -132,7 +132,7 @@ void JR_starter::started(int number, int itteration)
 
 	Storage  forces(path + "/_Un-named analysis._ReactionLoads.sto");
 	forces.getTimeColumn(tim);
-	system("pause");
+	//system("pause");
 
 	Array<double> jfx;
 	Array<double> jfy;
@@ -339,7 +339,7 @@ void JR_starter::started(int number, int itteration)
 		////////////////
 
 	if (joint4 == "0"){
-		fPx[i] = -fempx[i];
+		fPx[i] = fempx[i];
 
 
 	}
@@ -348,7 +348,7 @@ void JR_starter::started(int number, int itteration)
 	}
 
 	if (joint5 == "0"){
-		fPy[i] = -fempy[i];
+		fPy[i] = fempy[i];
 
 	}
 	if (joint5 != "0"){
@@ -356,7 +356,7 @@ void JR_starter::started(int number, int itteration)
 	}
 
 	if (joint6 == "0"){
-		fPz[i] = -fempz[i];
+		fPz[i] = fempz[i];
 
 	}
 	if (joint6 != "0"){
@@ -365,7 +365,7 @@ void JR_starter::started(int number, int itteration)
 
 
 	if (joint1 == "0"){
-		fOx[i] = -femox[i];
+		fOx[i] = femox[i];
 
 	}
 	if (joint1 != "0"){
@@ -373,7 +373,7 @@ void JR_starter::started(int number, int itteration)
 	}
 
 	if (joint2 == "0"){
-		fOy[i] = -femoy[i];
+		fOy[i] = femoy[i];
 
 	}
 	if (joint2 != "0"){
@@ -381,7 +381,7 @@ void JR_starter::started(int number, int itteration)
 	}
 
 	if (joint3 == "0"){
-		fOz[i] = -femoz[i];
+		fOz[i] = femoz[i];
 
 	}
 	if (joint3 != "0"){
@@ -638,7 +638,7 @@ for (int i = 0; i < endend; ++i){
 	if (dicession1 == "n"){
 
 		TSC t;
-		t.stepswriter();
+		t.stepswriter(timefinal);
 		t.~TSC();
 		char which;
 		
@@ -659,6 +659,9 @@ for (int i = 0; i < endend; ++i){
 
 			cout << "Do you want a visualizer of pre motion of the FEBio geometry? (y/n)" << endl;
 			string f = ini.Get("BASICSETUP", "Visualizer_premotion", "");
+			if (f == ""){ cout << "Please,answer the question!" << endl;
+			cin >> f;
+			}
 			cout << f << endl;
 			if (f == "y"){
 
@@ -2261,7 +2264,7 @@ for (int i = 0; i < endend; ++i){
 			/////////////////////////////////////
 
 	
-		cout << "FEBWRITTER1" << endl;
+		//cout << "FEBWRITTER1" << endl;
 
 		//dynamic memory allocate...
 		//free;
@@ -2270,7 +2273,7 @@ for (int i = 0; i < endend; ++i){
 
 
 
-	cout << "FEBWRITTER" << endl;
+	//cout << "FEBWRITTER" << endl;
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	FEBRunner feb;
 	feb.WriteFEBFile(itteration,'R');
