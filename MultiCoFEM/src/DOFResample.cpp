@@ -4861,7 +4861,7 @@ if (behavior == 2){
 				opengeostate << "" << endl;
 				opengeostate << "endheader" << endl;
 
-				opengeostate << "  time  " << bd1 << "_tilt  " << bd1 << "_list  " << bd1 << "_rotation  " << bd1 << "_tx  " << bd1 << "_ty  " << bd1 << "_tz  " << bd2 << "_tilt  " << bd2 << "_list  " << bd2 << "_rotation  " << bd2 << "_tx  " << bd2 << "_ty  " << bd2 << "_tz  " << endl;
+				opengeostate << "  time  " << bd1 << "_tilt  " << bd1 << "_list  " << bd1 << "_rotation  " << bd1 << "_tz  " << bd1 << "_tx  " << bd1 << "_ty  " << bd2 << "_tilt  " << bd2 << "_list  " << bd2 << "_rotation  " << bd2 << "_tz  " << bd2 << "_tx  " << bd2 << "_ty  " << endl;
 				for (int i = 0; i < sizer; ++i){
 					opengeostate << "  " << time1[i] << "  " << foz1[i] << "  " << fox1[i] << "  " << foy1[i] << "  " << fz1[i] << "  " << fx1[i] << "  " << fy1[i] << "  " << toz1[i] << "  " << tox1[i] << "  " << toy1[i] << "  " << tz1[i] << "  " << tx1[i] << "  " << ty1[i] << endl;
 
@@ -5441,7 +5441,7 @@ if (behavior == 2){
 							opengeostate << "" << endl;
 							opengeostate << "endheader" << endl;
 
-							opengeostate << "  time  " << bd1 << "_tilt  " << bd1 << "_list  " << bd1 << "_rotation  " << bd1 << "_tx  " << bd1 << "_ty  " << bd1 << "_tz  " << bd2 << "_tilt  " << bd2 << "_list  " << bd2 << "_rotation  " << bd2 << "_tx  " << bd2 << "_ty  " << bd2 << "_tz  " << endl;
+							opengeostate << "  time  " << bd1 << "_tilt  " << bd1 << "_list  " << bd1 << "_rotation  " << bd1 << "_tz  " << bd1 << "_tx  " << bd1 << "_ty  " << bd2 << "_tilt  " << bd2 << "_list  " << bd2 << "_rotation  " << bd2 << "_tz  " << bd2 << "_tx  " << bd2 << "_ty  " << endl;
 							for (int i = 0; i < sizer; ++i){
 								opengeostate << "  " << time1[i] << "  " << foz1[i] << "  " << fox1[i] << "  " << foy1[i] << "  " << fz1[i] << "  " << fx1[i] << "  " << fy1[i] << "  " << toz1[i] << "  " << tox1[i] << "  " << toy1[i] << "  " << tz1[i] << "  " << tx1[i] << "  " << ty1[i] << endl;
 

@@ -63,8 +63,11 @@ void JR_starter::started(int number, int itteration)
 	string joint4 = ini.Get("BODYFORCES", "JOINT4", "");
 	string joint5 = ini.Get("BODYFORCES", "JOINT5", "");
 	string joint6 = ini.Get("BODYFORCES", "JOINT6", "");
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+
+	
 
 	//ofstream valueno;
 	Model model2(modelPath);
@@ -73,7 +76,7 @@ void JR_starter::started(int number, int itteration)
 	String newfolder = resultDir1 + itter;
 	mkdir(newfolder);
 	string resultDir2 = newfolder;
-
+	//cout << "psol" << endl;
 	//////////////////////////////////////END//////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////
 
@@ -160,31 +163,31 @@ void JR_starter::started(int number, int itteration)
 
 	Storage  motion(stateFile);
 	if (joint1 != "0"){
-		motion.getDataColumn(joint1, jox);
+		motion.getDataColumn(joint1, jpx);
 	}
 
 	if (joint2 != "0"){
-		motion.getDataColumn(joint2, joy);
+		motion.getDataColumn(joint2, jpy);
 	}
 
 
 	if (joint3 != "0"){
-		motion.getDataColumn(joint3, joz);
+		motion.getDataColumn(joint3, jpz);
 	}
 
 	if (joint4 != "0"){
-		motion.getDataColumn(joint4, jpx);
+		motion.getDataColumn(joint4, jox);
 
 	}
 
 	if (joint5 != "0"){
-		motion.getDataColumn(joint5, jpy);
+		motion.getDataColumn(joint5, joy);
 
 
 	}
 
 	if (joint6 != "0"){
-		motion.getDataColumn(joint6, jpz);
+		motion.getDataColumn(joint6, joz);
 
 	}
 
@@ -338,54 +341,54 @@ void JR_starter::started(int number, int itteration)
 		/////////////////////
 		////////////////
 
-	if (joint4 == "0"){
-		fPx[i] = fempx[i];
-
-
-	}
-	if (joint4 != "0"){
-		fPx[i] = tibpx[i];
-	}
-
-	if (joint5 == "0"){
-		fPy[i] = fempy[i];
-
-	}
-	if (joint5 != "0"){
-		fPy[i] = tibpy[i];
-	}
-
-	if (joint6 == "0"){
-		fPz[i] = fempz[i];
-
-	}
-	if (joint6 != "0"){
-		fPz[i] = tibpz[i];
-	}
-
-
 	if (joint1 == "0"){
-		fOx[i] = femox[i];
+		fPx[i] = fempx[i] - tibpx[i];
+
 
 	}
 	if (joint1 != "0"){
-		fOx[i] = tibox[i];
+		fPx[i] = -jpx[i];
 	}
 
 	if (joint2 == "0"){
-		fOy[i] = femoy[i];
+		fPy[i] = fempy[i] - tibpy[i];
 
 	}
 	if (joint2 != "0"){
-		fOy[i] = tiboy[i];
+		fPy[i] = -jpy[i];
 	}
 
 	if (joint3 == "0"){
-		fOz[i] = femoz[i];
+		fPz[i] = fempz[i] - tibpz[i];
 
 	}
 	if (joint3 != "0"){
-		fOz[i] = tiboz[i];
+		fPz[i] = -jpz[i];
+	}
+
+
+	if (joint4 == "0"){
+		fOx[i] = femox[i] - tibox[i];
+
+	}
+	if (joint4 != "0"){
+		fOx[i] = -jox[i];
+	}
+
+	if (joint5 == "0"){
+		fOy[i] = femoy[i] - tiboy[i];
+
+	}
+	if (joint5 != "0"){
+		fOy[i] = -joy[i];
+	}
+
+	if (joint6 == "0"){
+		fOz[i] = femoz[i] - tiboz[i];
+
+	}
+	if (joint6 != "0"){
+		fOz[i] = -joz[i];
 	}
 
 
@@ -443,37 +446,60 @@ void JR_starter::started(int number, int itteration)
 	fMx = dresl2q.return_vect(18);
 
 	dresl2q.~DOFResample();
-
+	
 for (int i = 0; i < endend; ++i){
 
 		// the translation dof not need to compute we want to resample the rotational dof ony so we set them zero///
 		//because expressed in the femur frame
-			fPx[i] = 0;
-			fPy[i] = 0;
-			fPz[i] = 0;
+		
+			if (joint1 == "0"){
+				fPx[i] = 0;
 
-		if (joint3 == "0"){
-			fOx[i] = 0;
+			}
+			if (joint1 != "0"){
 
-		}
-		if (joint3 != "0"){
-		fOx[i] = joz[i];
-		}
+				fPx[i] = -jpx[i];
+			}
 
-		if (joint1 == "0"){
-			fOy[i] = 0;
+			if (joint2 == "0"){
+				fPy[i] = 0;
 
-		}
-		if (joint1 != "0"){
-			fOy[i] = jox[i];
-		}
+			}
+			if (joint2 != "0"){
+				fPy[i] = -jpy[i];
+			}
 
-		if (joint2 == "0"){
+			if (joint3 == "0"){
+				fPz[i] = 0;
+
+			}
+			if (joint3 != "0"){
+				fPz[i] = -jpz[i];
+			}
+
+
+		if (joint6 == "0"){
 			fOz[i] = 0;
 
 		}
-		if (joint2 != "0"){
-			fOz[i] = joy[i];
+		if (joint6 != "0"){
+		fOz[i] = -joz[i];
+		}
+
+		if (joint4 == "0"){
+			fOx[i] = 0;
+
+		}
+		if (joint4 != "0"){
+			fOx[i] = -jox[i];
+		}
+
+		if (joint5 == "0"){
+			fOy[i] = 0;
+
+		}
+		if (joint5 != "0"){
+			fOy[i] = -joy[i];
 		}
 
 		
@@ -485,6 +511,52 @@ for (int i = 0; i < endend; ++i){
 //cout << fFz << endl;
 //cout << fMx << endl;
 	//DC offset of position filter!
+double posx = 0;
+double posy = 0;
+double posz = 0;
+/*
+for (int i = 0; i < endend; ++i){
+
+	posx = posx + fPx[i];
+	posy = posy + fPy[i];
+	posz = posz + fPz[i];
+
+
+}
+*/
+//Array< std::string > co;
+CoordinateSet  co;
+ co=model2.getCoordinateSet();
+
+ for (int i = 0; i < 20; ++i){
+	 if (co[i].getName() == joint3){
+		 Coordinate coo;
+		 posz = co[i].getDefaultValue();
+	 }
+	 if (co[i].getName() == joint2){
+		 Coordinate coo;
+		 posy = co[i].getDefaultValue();
+	 }
+			if (co[i].getName() == joint1){
+				Coordinate coo;
+				posx = co[i].getDefaultValue();
+
+	 }
+ }
+
+
+
+for (int i = 0; i < endend; ++i){
+
+	fPx[i] = fPx[i] -abs(posx);
+	
+	fPy[i] = fPy[i] -abs(posy);
+
+	fPz[i] = fPz[i] -abs(posz);
+	
+}
+
+
 
 	for (int i = 0; i < endend; ++i){
 
@@ -520,15 +592,19 @@ for (int i = 0; i < endend; ++i){
 	//send the sums for fixed the tibia body
 	if (dicession == "n"){
 		cout << "Do you want to the interpolation be smooth 's' or linear 'l' for the DoF? (s/l)" << endl;
-		cin >> kin;
-		if (kin == 'l'){
+		string kin = ini.Get("BASICSETUP", "Interpolation_kind", "");
+		if (kin == ""){
+			cout << "give the kind of interpolation function:" << endl;
+			cin >> kin;
+		}
+		if (kin == "l"){
 			int co = 0;
 			while (co < 24){
 				kind[co] = "linear";
 				++co;
 			}
 		}
-		if (kin == 's'){
+		if (kin == "s"){
 			int co = 0;
 			while (co < 24){
 				kind[co] = "smooth";
@@ -689,7 +765,7 @@ for (int i = 0; i < endend; ++i){
 				opengeostate << "" << endl;
 				opengeostate << "endheader" << endl;
 
-				opengeostate << "  time  " << bd1 << "_tilt  " << bd1 << "_list  " << bd1 << "_rotation  " << bd1 << "_tx  " << bd1 << "_ty  " << bd1 << "_tz  " << bd2 << "_tilt  " << bd2 << "_list  " << bd2 << "_rotation  " << bd2 << "_tx  " << bd2 << "_ty  " << bd2 << "_tz  " << endl;
+				opengeostate << "  time  " << bd1 << "_tilt  " << bd1 << "_list  " << bd1 << "_rotation  " << bd1 << "_tz  " << bd1 << "_tx  " << bd1 << "_ty  " << bd2 << "_tilt  " << bd2 << "_list  " << bd2 << "_rotation  " << bd2 << "_tz  " << bd2 << "_tx  " << bd2 << "_ty  " << endl;
 				for (int i = 0; i < sizer; ++i){
 					opengeostate << "  " << timefinal[i] << "  " << fOz[i] << "  " << fOx[i] << "  " << fOy[i] << "  " << fPz[i] << "  " << fPx[i] << "  " << fPy[i] << "  " << tOz[i] << "  " << tOx[i] << "  " << tOy[i] << "  " << tPz[i] << "  " << tPx[i] << "  " << tPy[i] << endl;
 
@@ -1268,7 +1344,7 @@ for (int i = 0; i < endend; ++i){
 							opengeostate << "" << endl;
 							opengeostate << "endheader" << endl;
 
-							opengeostate << "  time  " << bd1 << "_tilt  " << bd1 << "_list  " << bd1 << "_rotation  " << bd1 << "_tx  " << bd1 << "_ty  " << bd1 << "_tz  " << bd2 << "_tilt  " << bd2 << "_list  " << bd2 << "_rotation  " << bd2 << "_tx  " << bd2 << "_ty  " << bd2 << "_tz  " << endl;
+							opengeostate << "  time  " << bd1 << "_tilt  " << bd1 << "_list  " << bd1 << "_rotation  " << bd1 << "_tz  " << bd1 << "_tx  " << bd1 << "_ty  " << bd2 << "_tilt  " << bd2 << "_list  " << bd2 << "_rotation  " << bd2 << "_tz  " << bd2 << "_tx  " << bd2 << "_ty  " << endl;
 							for (int i = 0; i < sizer; ++i){
 								opengeostate << "  " << timefinal[i] << "  " << fOz[i] << "  " << fOx[i] << "  " << fOy[i] << "  " << fPz[i] << "  " << fPx[i] << "  " << fPy[i] << "  " << tOz[i] << "  " << tOx[i] << "  " << tOy[i] << "  " << tPz[i] << "  " << tPx[i] << "  " << tPy[i] << endl;
 
@@ -1574,7 +1650,7 @@ for (int i = 0; i < endend; ++i){
 				opengeostate << "" << endl;
 				opengeostate << "endheader" << endl;
 
-				opengeostate << "  time  " << bd1 << "_tilt  " << bd1 << "_list  " << bd1 << "_rotation  " << bd1 << "_tx  " << bd1 << "_ty  " << bd1 << "_tz  " << bd2 << "_tilt  " << bd2 << "_list  " << bd2 << "_rotation  " << bd2 << "_tx  " << bd2 << "_ty  " << bd2 << "_tz  " << endl;
+				opengeostate << "  time  " << bd1 << "_tilt  " << bd1 << "_list  " << bd1 << "_rotation  " << bd1 << "_tz  " << bd1 << "_tx  " << bd1 << "_ty  " << bd2 << "_tilt  " << bd2 << "_list  " << bd2 << "_rotation  " << bd2 << "_tz  " << bd2 << "_tx  " << bd2 << "_ty  " << endl;
 				for (int i = 0; i < sizer; ++i){
 					opengeostate << "  " << timenew[i] << "  " << fOzf[i] << "  " << fOxf[i] << "  " << fOyf[i] << "  " << fPzf[i] << "  " << fPxf[i] << "  " << fPyf[i] << "  " << tOzf[i] << "  " << tOxf[i] << "  " << tOyf[i] << "  " << tPzf[i] << "  " << tPxf[i] << "  " << tPyf[i] << endl;
 
@@ -2152,7 +2228,7 @@ for (int i = 0; i < endend; ++i){
 							opengeostate << "" << endl;
 							opengeostate << "endheader" << endl;
 
-							opengeostate << "  time  " << bd1 << "_tilt  " << bd1 << "_list  " << bd1 << "_rotation  " << bd1 << "_tx  " << bd1 << "_ty  " << bd1 << "_tz  " << bd2 << "_tilt  " << bd2 << "_list  " << bd2 << "_rotation  " << bd2 << "_tx  " << bd2 << "_ty  " << bd2 << "_tz  " << endl;
+							opengeostate << "  time  " << bd1 << "_tilt  " << bd1 << "_list  " << bd1 << "_rotation  " << bd1 << "_tz  " << bd1 << "_tx  " << bd1 << "_ty  " << bd2 << "_tilt  " << bd2 << "_list  " << bd2 << "_rotation  " << bd2 << "_tz  " << bd2 << "_tx  " << bd2 << "_ty  " << endl;
 							for (int i = 0; i < sizer; ++i){
 								opengeostate << "  " << timenew[i] << "  " << fOzf[i] << "  " << fOxf[i] << "  " << fOyf[i] << "  " << fPzf[i] << "  " << fPxf[i] << "  " << fPyf[i] << "  " << tOzf[i] << "  " << tOxf[i] << "  " << tOyf[i] << "  " << tPzf[i] << "  " << tPxf[i] << "  " << tPyf[i] << endl;
 

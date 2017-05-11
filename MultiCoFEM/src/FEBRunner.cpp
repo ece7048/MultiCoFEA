@@ -1413,10 +1413,10 @@ void FEBRunner::jointwrite(int itteration,int bodynum){
 		char axis3 = 'n';
 		char axis4 = 'n';
 		char axis5 = 'n';
-		cout << "The detected free joints are:" << endl;
-		cout << axis << endl;
-		cout << axis2 << endl;
-		cout << axis0 << endl;
+		//cout << "The detected free joints are:" << endl;
+		//cout << axis << endl;
+		//cout << axis2 << endl;
+		//cout << axis0 << endl;
 		
 		if (forc1[1] == '_' || forc1[2] == '_' || forc1[3] == '_'){
 
@@ -1472,11 +1472,11 @@ void FEBRunner::jointwrite(int itteration,int bodynum){
 			////process every line///////
 			string modd = line1;
 			size_t found1 = modd.find(d1);
-			if (found1 != NAN){ modd.erase(modd.begin(), modd.end()); line1 = modd; cout << line1 << endl; }
+			if (found1 != NAN){ line1 = ""; }
 			size_t found21 = modd.find(d2);
-			if (found21 != NAN){ modd.erase(modd.begin(), modd.end()); line1 = modd; cout << line1 << endl; }
+			if (found21 != NAN){ line1 = ""; }
 			size_t found211 = modd.find(d3);
-			if (found211 != NAN){ modd.erase(modd.begin(), modd.end()); line1 = modd; cout << line1 << endl; }
+			if (found211 != NAN){ line1 = ""; }
 
 			stepdynamic2 << line1 << endl;
 		}
@@ -1488,11 +1488,11 @@ void FEBRunner::jointwrite(int itteration,int bodynum){
 			////process every line///////
 			string modd2 = line2;
 			size_t found = modd2.find(d1);
-			if (found != NAN){ modd2.erase(modd2.begin(), modd2.end()); line2 = modd2; cout << line2 << endl; }
+			if (found != NAN){ line2 = ""; }
 			size_t found2 = modd2.find(d2);
-			if (found2 != NAN){ modd2.erase(modd2.begin(), modd2.end()); line2 = modd2; cout << line2 << endl; }
+			if (found2 != NAN){ line2 = ""; }
 			size_t found212 = modd2.find(d3);
-			if (found212 != NAN){ modd2.erase(modd2.begin(), modd2.end()); line2 = modd2; cout << line2 << endl; }
+			if (found212 != NAN){ line2 = ""; }
 
 			stepstatic2 << line2 << endl;
 		}

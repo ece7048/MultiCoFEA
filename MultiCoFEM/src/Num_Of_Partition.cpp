@@ -375,9 +375,14 @@ Vector Num_Of_Partition::start(int number){
 	}
 	if (stddd != 0 && stdd != 0){
 		cout << "Do you want the sampling became based the rotation or the translation DoFs of the joint? (r/t)" << endl;
-		char kindd;
-		if (kindd == 'r'){ return starttg; }
-		if (kindd == 't'){ return start2tg; }
+		string kindd = ini.Get("BASICSETUP", "MOD_of_interval", "");
+		if (kindd == ""){
+			cout << " PLEASE,answer the question!" << endl;
+			cin >> kindd;
+		}
+		cout << kindd << endl;
+		if (kindd == "r"){ return starttg; }
+		if (kindd == "t"){ return start2tg; }
 	}
 	if (stddd == 0 && stdd != 0){
 		 return starttg; }

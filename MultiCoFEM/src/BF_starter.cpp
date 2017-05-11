@@ -644,37 +644,37 @@ void BF_starter::started(int number, int itteration,char mode){
 			//for (int i = 0; i < endend; ++i){
 
 
-				if (joint6 == "0"){
+				if (joint1 == "0"){
 					fPx = 0;
 					tPx = 0;
 				}
 
 
-				if (joint4 == "0"){
+				if (joint2 == "0"){
 					fPy = 0;
 					tPy = 0;
 				}
 
 
-				if (joint5 == "0"){
+				if (joint3 == "0"){
 					fPz = 0;
 					tPz = 0;
 				}
 
 
-				if (joint3 == "0"){
+				if (joint4 == "0"){
 					fOx = 0;
 					tOx = 0;
 				}
 
 
-				if (joint1 == "0"){
+				if (joint5 == "0"){
 					fOy = 0;
 					tOy = 0;
 				}
 
 
-				if (joint2 == "0"){
+				if (joint6 == "0"){
 					fOz = 0;
 					tOz = 0;
 				}

@@ -365,7 +365,7 @@ void CASE_ONE::run(int itteration, string kind[24], int endend, string resultDir
 				opengeostate << "" << endl;
 				opengeostate << "endheader" << endl;
 
-				opengeostate << "  time  " << bd1 << "_tilt  " << bd1 << "_list  " << bd1 << "_rotation  " << bd1 << "_tx  " << bd1 << "_ty  " << bd1 << "_tz  " << bd2 << "_tilt  " << bd2 << "_list  " << bd2 << "_rotation  " << bd2 << "_tx  " << bd2 << "_ty  " << bd2 << "_tz  " << endl;
+				opengeostate << "  time  " << bd1 << "_tilt  " << bd1 << "_list  " << bd1 << "_rotation  " << bd1 << "_tz  " << bd1 << "_tx  " << bd1 << "_ty  " << bd2 << "_tilt  " << bd2 << "_list  " << bd2 << "_rotation  " << bd2 << "_tz  " << bd2 << "_tx  " << bd2 << "_ty  " << endl;
 				for (int i = 0; i < sizer; ++i){
 					opengeostate << "  " << timefinal[i] << "  " << fOz[i] << "  " << fOx[i] << "  " << fOy[i] << "  " << fPz[i] << "  " << fPx[i] << "  " << fPy[i] << "  " << tOz[i] << "  " << tOx[i] << "  " << tOy[i] << "  " << tPz[i] << "  " << tPx[i] << "  " << tPy[i] << endl;
 
@@ -944,7 +944,7 @@ void CASE_ONE::run(int itteration, string kind[24], int endend, string resultDir
 							opengeostate << "" << endl;
 							opengeostate << "endheader" << endl;
 
-							opengeostate << "  time  " << bd1 << "_tilt  " << bd1 << "_list  " << bd1 << "_rotation  " << bd1 << "_tx  " << bd1 << "_ty  " << bd1 << "_tz  " << bd2 << "_tilt  " << bd2 << "_list  " << bd2 << "_rotation  " << bd2 << "_tx  " << bd2 << "_ty  " << bd2 << "_tz  " << endl;
+							opengeostate << "  time  " << bd1 << "_tilt  " << bd1 << "_list  " << bd1 << "_rotation  " << bd1 << "_tz  " << bd1 << "_tx  " << bd1 << "_ty  " << bd2 << "_tilt  " << bd2 << "_list  " << bd2 << "_rotation  " << bd2 << "_tz  " << bd2 << "_tx  " << bd2 << "_ty  " << endl;
 							for (int i = 0; i < sizer; ++i){
 								opengeostate << "  " << timefinal[i] << "  " << fOz[i] << "  " << fOx[i] << "  " << fOy[i] << "  " << fPz[i] << "  " << fPx[i] << "  " << fPy[i] << "  " << tOz[i] << "  " << tOx[i] << "  " << tOy[i] << "  " << tPz[i] << "  " << tPx[i] << "  " << tPy[i] << endl;
 

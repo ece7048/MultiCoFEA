@@ -77,7 +77,7 @@ void OpenSimRunner::runST(){
 }
 void OpenSimRunner::runRRA(){
 	cout << "" << endl;
-	cout << " Start the RRA of firt body..." << endl;
+	cout << " Start the RRA ..." << endl;
 	cout << "" << endl;
 	INIReader ini = INIReader(INI_FILE);
 	ofstream valuenon;
@@ -104,6 +104,7 @@ void OpenSimRunner::runRRA(){
 	//double t0 = detecter_time(0, motionfile);
 	//double tf = detecter_time(1, motionfile);
 	if (setup != BASE_DIR){
+		cout << "1" << endl;
 		RRATool tool1(setup);
 		//if (modelPath != BASE_DIR){
 			//tool1.setModel(model1);
@@ -112,6 +113,7 @@ void OpenSimRunner::runRRA(){
 		tool1.setAdjustCOMToReduceResiduals(true);
 		//
 		if (actuator != BASE_DIR){
+			cout << "2" << endl;
 			tool1.setReplaceForceSet(true);
 		tool1.setForceSetFiles(actuator);
 	}
@@ -125,7 +127,7 @@ void OpenSimRunner::runRRA(){
 		}
 		//
 		tool1.setDesiredKinematicsFileName(motionfile);
-		
+		cout << "3" << endl;
 		if (control != BASE_DIR){
 
 			tool1.setConstraintsFileName(control);
@@ -147,9 +149,10 @@ void OpenSimRunner::runRRA(){
 
 			tool1.setExternalLoadsFileName(force);
 		}
-		
+		cout << "4" << endl;
 		tool1.run();
 	}
+
 	else if (setup == BASE_DIR){
 	//TODO solve without setupfile need modification to run...
 		
@@ -166,7 +169,7 @@ void OpenSimRunner::runRRA(){
 
 		tool1.setSolveForEquilibrium(true);
 
-		tool1.setExternalLoadsFileName(force);
+ 	tool1.setExternalLoadsFileName(force);
 		tool1.setDesiredKinematicsFileName(motionfile);
 		tool1.setTaskSetFileName(task);
 		tool1.setConstraintsFileName(control);
