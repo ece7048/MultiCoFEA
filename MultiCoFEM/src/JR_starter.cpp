@@ -548,11 +548,11 @@ CoordinateSet  co;
 
 for (int i = 0; i < endend; ++i){
 
-	fPx[i] = fPx[i] -abs(posx);
+	fPx[i] = abs(fPx[i]) -abs(posx);
 	
-	fPy[i] = fPy[i] -abs(posy);
+	fPy[i] = abs(fPy[i]) -abs(posy);
 
-	fPz[i] = fPz[i] -abs(posz);
+	fPz[i] = abs(fPz[i]) -abs(posz);
 	
 }
 
@@ -563,13 +563,13 @@ for (int i = 0; i < endend; ++i){
 
 		fPx[i] = fPx[i] * 10000;
 		int parast1 = (int)fPx[i];
-		fPx[i] = parast1 * 0.0001;
+		fPx[i] = -parast1 * 0.0001;
 		fPy[i] = fPy[i] * 10000;
 		int parasty1 = (int)fPy[i];
-		fPy[i] = parasty1 * 0.0001;
+		fPy[i] = -parasty1 * 0.0001;
 		fPz[i] = fPz[i] * 10000;
 		int parastz1 = (int)fPz[i];
-		fPz[i] = parastz1 * 0.0001;
+		fPz[i] = -parastz1 * 0.0001;
 
 
 	}

@@ -41,7 +41,7 @@ BF_starter::BF_starter(void)
 BF_starter::~BF_starter(void)
 {
 }
-void BF_starter::started(int number, int itteration,char mode){
+void BF_starter::started(int number, int itteration, char mode){
 
 
 	// if the analysis is one number=1 itteration=1....
@@ -75,11 +75,11 @@ void BF_starter::started(int number, int itteration,char mode){
 	Model model2(modelPath);
 	char itter = itteration + '0';
 	////create a new folder for the analysis/////////
-	 String newfolder = resultDir1 + itter;
-	 mkdir(newfolder);
+	String newfolder = resultDir1 + itter;
+	mkdir(newfolder);
 	string resultDir2 = newfolder;
-	
-//////////////////////////////////////END//////////////////////////////////////////
+
+	//////////////////////////////////////END//////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////
 
 	//////////STATIC CALIBRATION OF THE POINT OF INTEREST/////////////
@@ -91,7 +91,7 @@ void BF_starter::started(int number, int itteration,char mode){
 			cout << " PLEASE, GIVE THE POINT OF INTEREST OF CHILD BODY : " << bodyname2 << "(x/y/z of OpenSim orientation)" << endl;
 			cin >> setcase;
 		}
-		cout<< setcase <<endl;
+		cout << setcase << endl;
 		double xval;
 		double yval;
 		double zval;
@@ -99,13 +99,13 @@ void BF_starter::started(int number, int itteration,char mode){
 		if (setcase == "nd"){
 			cout << "x-axis value" << endl;
 			double  xval = ini.GetReal("BASICSETUP", "xvalue", 0);
-			cout<< xval<<endl;
+			cout << xval << endl;
 			cout << "y-axis value" << endl;
 			double  yval = ini.GetReal("BASICSETUP", "yvalue", 0);
-			cout<< yval<<endl;
+			cout << yval << endl;
 			cout << "z-axis value" << endl;
 			double  zval = ini.GetReal("BASICSETUP", "zvalue", 0);
-			cout<< zval<<endl;
+			cout << zval << endl;
 		}
 		char num = itteration + '0';
 
@@ -169,8 +169,8 @@ void BF_starter::started(int number, int itteration,char mode){
 
 		for (int i = 0; i < 200; i++)
 		{
-			getline(step21, line3);
-			st21 << line3 << endl;
+		getline(step21, line3);
+		st21 << line3 << endl;
 
 		}
 		step21.close();
@@ -239,32 +239,32 @@ void BF_starter::started(int number, int itteration,char mode){
 		Vector or1(3, 1);
 		Vector or2(3, 1);
 		for (int i = 0; i < 7; ++i){
-			point1[i] = pppx[i];
-			point1[i + 1] = pppy[i];
-			point1[i + 2] = pppz[i];
+		point1[i] = pppx[i];
+		point1[i + 1] = pppy[i];
+		point1[i + 2] = pppz[i];
 
-			point2[i] = ppx[i];
-			point2[i + 1] = ppy[i];
-			point2[i + 2] = ppz[i];
-
-
-			pointofapplication21[i] = pppgx[i];
-			pointofapplication21[i + 1] = pppgy[i];
-			pointofapplication21[i + 2] = pppgz[i];
-
-			pointofapplication2[i] = ppgx[i];
-			pointofapplication2[i + 1] = ppgy[i];
-			pointofapplication2[i + 2] = ppgz[i];
+		point2[i] = ppx[i];
+		point2[i + 1] = ppy[i];
+		point2[i + 2] = ppz[i];
 
 
+		pointofapplication21[i] = pppgx[i];
+		pointofapplication21[i + 1] = pppgy[i];
+		pointofapplication21[i + 2] = pppgz[i];
 
-			or1[i] = ooox[i];
-			or1[i + 1] = oooy[i];
-			or1[i + 2] = oooz[i];
+		pointofapplication2[i] = ppgx[i];
+		pointofapplication2[i + 1] = ppgy[i];
+		pointofapplication2[i + 2] = ppgz[i];
 
-			or2[i] = oox[i];
-			or2[i + 1] = ooy[i];
-			or2[i + 2] = ooz[i];
+
+
+		or1[i] = ooox[i];
+		or1[i + 1] = oooy[i];
+		or1[i + 2] = oooz[i];
+
+		or2[i] = oox[i];
+		or2[i + 1] = ooy[i];
+		or2[i + 2] = ooz[i];
 
 		}
 		cout << tim << endl;
@@ -319,7 +319,7 @@ void BF_starter::started(int number, int itteration,char mode){
 		model2.addAnalysis(&staticposition);
 		model2.buildSystem();
 		State& sis = model2.initializeState();
-		
+
 		AnalyzeTool tool2s(model2);
 		tool2s.setStartTime(t0s);
 		tool2s.setFinalTime(tfs);
@@ -343,53 +343,53 @@ void BF_starter::started(int number, int itteration,char mode){
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////body forces//////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////
-	
-	
-	
+
+
+
 	if (mode == 'F'){
-			BodyForceAnalysis bodyForce(&model2);
-			model2.addAnalysis(&bodyForce);
-			model2.buildSystem();
-			State& si = model2.initializeState();
-			char num = itteration + '0';
-			Storage set = stateFile;
-			String path = resultDir + "/_BodyForceAnalysis" + num;
+		BodyForceAnalysis bodyForce(&model2);
+		model2.addAnalysis(&bodyForce);
+		model2.buildSystem();
+		State& si = model2.initializeState();
+		char num = itteration + '0';
+		Storage set = stateFile;
+		String path = resultDir + "/_BodyForceAnalysis" + num;
 
-			AnalyzeTool tool2(model2);
-			tool2.setStartTime(t0);
-			tool2.setFinalTime(tf);
-			tool2.setResultsDir(path);
-			tool2.setLowpassCutoffFrequency(6);
-			tool2.setStatesFileName(stateFile);
-			//cout << stateFile << endl;
-			tool2.setStatesStorage(set);
+		AnalyzeTool tool2(model2);
+		tool2.setStartTime(t0);
+		tool2.setFinalTime(tf);
+		tool2.setResultsDir(path);
+		tool2.setLowpassCutoffFrequency(6);
+		tool2.setStatesFileName(stateFile);
+		//cout << stateFile << endl;
+		tool2.setStatesStorage(set);
 
-			tool2.run();
-			
+		tool2.run();
+
 	}
 
 	if (mode == 'T'){
-			BodyForceAnalysis2 bodyForce(&model2);
-			model2.addAnalysis(&bodyForce);
-			model2.buildSystem();
-			State& si = model2.initializeState();
-			char num = itteration + '0';
-			Storage set = stateFile;
-			String path = resultDir + "/_BodyForceAnalysis" + num;
+		BodyForceAnalysis2 bodyForce(&model2);
+		model2.addAnalysis(&bodyForce);
+		model2.buildSystem();
+		State& si = model2.initializeState();
+		char num = itteration + '0';
+		Storage set = stateFile;
+		String path = resultDir + "/_BodyForceAnalysis" + num;
 
-			AnalyzeTool tool2(model2);
-			tool2.setStartTime(t0);
-			tool2.setFinalTime(tf);
-			tool2.setResultsDir(path);
-			tool2.setLowpassCutoffFrequency(6);
-			tool2.setStatesFileName(stateFile);
-			//cout << stateFile << endl;
-			tool2.setStatesStorage(set);
+		AnalyzeTool tool2(model2);
+		tool2.setStartTime(t0);
+		tool2.setFinalTime(tf);
+		tool2.setResultsDir(path);
+		tool2.setLowpassCutoffFrequency(6);
+		tool2.setStatesFileName(stateFile);
+		//cout << stateFile << endl;
+		tool2.setStatesStorage(set);
 
-			tool2.run();
-		}
-	
-	
+		tool2.run();
+	}
+
+
 
 
 	////////////
@@ -429,201 +429,356 @@ void BF_starter::started(int number, int itteration,char mode){
 	forces.getTimeColumn(tim);
 	system("pause");
 
-	
 
-		
-		forces.getDataColumn(bodyname1+"_fx", femfx);
-		forces.getDataColumn(bodyname2 + "_fx", tibfx);
-		forces.getDataColumn(bodyname1 + "_fy", femfy);
-		forces.getDataColumn(bodyname2 + "_fy", tibfy);
-		forces.getDataColumn(bodyname1 + "_fz", femfz);
-		forces.getDataColumn(bodyname2 + "_fz", tibfz);
-		forces.getDataColumn(bodyname1 + "_mx", femmx);
-		forces.getDataColumn(bodyname2 + "_mx", tibmx);
-		forces.getDataColumn(bodyname1 + "_my", femmy);
-		forces.getDataColumn(bodyname2 + "_my", tibmy);
-		forces.getDataColumn(bodyname1 + "_mz", femmz);
-		forces.getDataColumn(bodyname2 + "_mz", tibmz);
-		forces.getDataColumn(bodyname3 + "_px", fempx);
-		forces.getDataColumn(bodyname4 + "_px", tibpx);
-		forces.getDataColumn(bodyname3 + "_py", fempy);
-		forces.getDataColumn(bodyname4 + "_py", tibpy);
-		forces.getDataColumn(bodyname3 + "_pz", fempz);
-		forces.getDataColumn(bodyname4 + "_pz", tibpz);
-		forces.getDataColumn(bodyname3 + "_ox", femox);
-		forces.getDataColumn(bodyname4 + "_ox", tibox);
-		forces.getDataColumn(bodyname3 + "_oy", femoy);
-		forces.getDataColumn(bodyname4 + "_oy", tiboy);
-		forces.getDataColumn(bodyname3 + "_oz", femoz);
-		forces.getDataColumn(bodyname4 + "_oz", tiboz);
 
-		
-		int endend = tim.size();
-		//Vector time(endend, tim[endend]);
-		Vector timefinal(endend, tim[endend]);
 
-		cout << "Which is the initial time you want to reach the model for the initial prescribed motions and forces of the model?" << endl;
-		cout << "Set the end time of the Initial step one analysis (THE STEP FOR REACH the initial contitions)" << endl;
-		cout << " in the .ini file (setup) set it in variable Initialtime...if is empty will ask to you here to set it..." << endl;
-		
-		double intim = ini.GetReal("BASICSETUP", "Initialtime", NAN );
-		if (intim == NAN){
-			cout << "Please answer: Set the end time of Initial step analysis" << endl;
-			cin >> intim;
+	forces.getDataColumn(bodyname1 + "_fx", femfx);
+	forces.getDataColumn(bodyname2 + "_fx", tibfx);
+	forces.getDataColumn(bodyname1 + "_fy", femfy);
+	forces.getDataColumn(bodyname2 + "_fy", tibfy);
+	forces.getDataColumn(bodyname1 + "_fz", femfz);
+	forces.getDataColumn(bodyname2 + "_fz", tibfz);
+	forces.getDataColumn(bodyname1 + "_mx", femmx);
+	forces.getDataColumn(bodyname2 + "_mx", tibmx);
+	forces.getDataColumn(bodyname1 + "_my", femmy);
+	forces.getDataColumn(bodyname2 + "_my", tibmy);
+	forces.getDataColumn(bodyname1 + "_mz", femmz);
+	forces.getDataColumn(bodyname2 + "_mz", tibmz);
+	forces.getDataColumn(bodyname3 + "_px", fempx);
+	forces.getDataColumn(bodyname4 + "_px", tibpx);
+	forces.getDataColumn(bodyname3 + "_py", fempy);
+	forces.getDataColumn(bodyname4 + "_py", tibpy);
+	forces.getDataColumn(bodyname3 + "_pz", fempz);
+	forces.getDataColumn(bodyname4 + "_pz", tibpz);
+	forces.getDataColumn(bodyname3 + "_ox", femox);
+	forces.getDataColumn(bodyname4 + "_ox", tibox);
+	forces.getDataColumn(bodyname3 + "_oy", femoy);
+	forces.getDataColumn(bodyname4 + "_oy", tiboy);
+	forces.getDataColumn(bodyname3 + "_oz", femoz);
+	forces.getDataColumn(bodyname4 + "_oz", tiboz);
+
+
+	int endend = tim.size();
+	//Vector time(endend, tim[endend]);
+	Vector timefinal(endend, tim[endend]);
+
+	cout << "Which is the initial time you want to reach the model for the initial prescribed motions and forces of the model?" << endl;
+	cout << "Set the end time of the Initial step one analysis (THE STEP FOR REACH the initial contitions)" << endl;
+	cout << " in the .ini file (setup) set it in variable Initialtime...if is empty will ask to you here to set it..." << endl;
+
+	double intim = ini.GetReal("BASICSETUP", "Initialtime", NAN);
+	if (intim == NAN){
+		cout << "Please answer: Set the end time of Initial step analysis" << endl;
+		cin >> intim;
+	}
+	if (intim != 0){
+		cout << intim << endl;
+	}
+	if (intim == 0){
+		cout << "Give the initialtime end here..." << endl;
+		cin >> intim;
+	}
+
+	for (int i = 0; i < endend; ++i){
+		timefinal[i] = tim[i] - tim[0];//+0.01;//calibration step until 0.01 of two models
+		timefinal[i] = timefinal[i] * 100000;
+		int pat = (int)timefinal[i];
+		timefinal[i] = pat * 0.00001;
+		timefinal[i] = timefinal[i] + intim;
+	}
+	timefinal[0] = 0;
+
+	///TRANSFORM MATRIX FOR COPERATION/////////////////////////////////////////////////
+	Vector fFx(endend, 1);
+	Vector tFx(endend, 1);
+	Vector fFy(endend, 1);
+	Vector tFy(endend, 1);
+	Vector fFz(endend, 1);
+	Vector tFz(endend, 1);
+	Vector fMx(endend, 1);
+	Vector tMx(endend, 1);
+	Vector fMy(endend, 1);
+	Vector tMy(endend, 1);
+	Vector fMz(endend, 1);
+	Vector tMz(endend, 1);
+	Vector fPx(endend, 1);
+	Vector tPx(endend, 1);
+	Vector fPy(endend, 1);
+	Vector tPy(endend, 1);
+	Vector fPz(endend, 1);
+	Vector tPz(endend, 1);
+	Vector fOx(endend, 1);
+	Vector tOx(endend, 1);
+	Vector fOy(endend, 1);
+	Vector tOy(endend, 1);
+	Vector fOz(endend, 1);
+	Vector tOz(endend, 1);
+
+	for (int i = 0; i < endend; ++i){
+		fFx[i] = femfz[i];
+		tFx[i] = tibfz[i];
+		fFy[i] = femfx[i];
+		tFy[i] = tibfx[i];
+		fFz[i] = femfy[i];
+		tFz[i] = tibfy[i];
+		fMx[i] = femmz[i];
+		tMx[i] = tibmz[i];
+		fMy[i] = femmx[i];
+		tMy[i] = tibmx[i];
+		fMz[i] = femmy[i];
+		tMz[i] = tibmy[i];
+		fPx[i] = fempz[i];
+		tPx[i] = tibpz[i];
+		fPy[i] = fempx[i];
+		tPy[i] = tibpx[i];
+		fPz[i] = fempy[i];
+		tPz[i] = tibpy[i];
+		fOx[i] = femoz[i];
+		tOx[i] = tiboz[i];
+		fOy[i] = femox[i];
+		tOy[i] = tibox[i];
+		fOz[i] = -femoy[i];
+		tOz[i] = -tiboy[i];
+	}
+
+	//DC offset of position filter!
+	double mean1 = 0;
+	double mean2 = 0;
+	double mean3 = 0;
+	double mean4 = 0;
+	double mean5 = 0;
+	double mean6 = 0;
+	for (int i = 0; i < endend; ++i){
+
+
+		fPx[i] = fPx[i] * 10000;
+		int parast1 = (int)fPx[i];
+		fPx[i] = parast1 * 0.0001;
+		fPy[i] = fPy[i] * 10000;
+		int parasty1 = (int)fPy[i];
+		fPy[i] = parasty1 * 0.0001;
+		fPz[i] = fPz[i] * 10000;
+		int parastz1 = (int)fPz[i];
+		fPz[i] = parastz1 * 0.0001;
+
+		tPx[i] = tPx[i] * 10000;
+		int parast11 = (int)tPx[i];
+		tPx[i] = parast11 * 0.0001;
+		tPy[i] = tPy[i] * 10000;
+		int parasty11 = (int)tPy[i];
+		tPy[i] = parasty11 * 0.0001;
+		tPz[i] = tPz[i] * 10000;
+		int parastz11 = (int)tPz[i];
+		tPz[i] = parastz11 * 0.0001;
+
+
+		mean1 = fPz[i] + mean1;
+
+		mean2 = fPy[i] + mean2;
+
+		mean3 = fPx[i] + mean3;
+
+		mean4 = tPz[i] + mean4;
+
+		mean5 = tPx[i] + mean5;
+
+		mean6 = tPy[i] + mean6;
+
+	}
+	int mean11 = (mean1 / endend) * 10000;
+	int mean21 = (mean2 / endend) * 10000;
+	int mean31 = (mean3 / endend) * 10000;
+	int mean41 = (mean4 / endend) * 10000;
+	int mean51 = (mean5 / endend) * 10000;
+	int mean61 = (mean6 / endend) * 10000;
+
+	double mean12 = mean11 * 0.0001;
+	double mean22 = mean21 * 0.0001;
+	double mean32 = mean31 * 0.0001;
+	double mean42 = mean41 * 0.0001;
+	double mean52 = mean51 * 0.0001;
+	double mean62 = mean61 * 0.0001;
+	cout << "The DC filter mean values respectively are:  " << endl;
+	cout << "BD1x = " << mean32 << endl;
+	cout << "BD1y = " << mean22 << endl;
+	cout << "BD1z = " << mean12 << endl;
+	cout << "BD2x = " << mean52 << endl;
+	cout << "BD2y = " << mean62 << endl;
+	cout << "BD2z = " << mean42 << endl;
+
+	for (int i = 0; i < endend; ++i){
+
+		fPz[i] = fPz[i] - (mean12);
+
+		fPy[i] = fPy[i] - (mean22);
+
+		fPx[i] = fPx[i] - (mean32);
+
+		tPz[i] = tPz[i] - (mean42);
+
+		tPx[i] = tPx[i] - (mean52);
+
+		tPy[i] = tPy[i] - (mean62);
+
+	}
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////
+	//	SET SAME POSITION FROM JOINT CAPTURE
+
+	cout << "Do you want to set the prescribed translation DOF you allready set in stragety setup in femur from Joint capture?" << endl;
+	cout << "end set the tibia fixed only in translation dof (y/n)" << endl;
+	cout << "We saggest yes!!" << endl;
+	string done = ini.Get("BASICSETUP", "Translation_from_JR", "");
+	if (done != "y"){
+		cout << done << endl;
+	}
+	if (done == "y"){
+		cout << "Give the initialtime end here..." << endl;
+		cin >> done;
+	}
+
+	if (done == "y"){
+		JointReaction reactForce(&model2);
+		// set the frame of parent to solve
+
+		//void SimTK::SimbodyMatterSubsystem::calcMobilizerReactionForcesUsingFreebodyMethod(const State &  	state,
+		//Vector_< SpatialVec > &  	forcesAtMInG
+		//https://simtk.org/api_docs/simbody/latest/classSimTK_1_1SimbodyMatterSubsystem.html#a98b55fad58c0968702ae7c1d92238bcc
+		int jointw = model2.getNumJoints();
+
+		Array <string> inFrame("parent", jointw);
+		reactForce.setInFrame(inFrame);
+		//cout << inFrame<< endl;
+
+		model2.addAnalysis(&reactForce);
+		model2.buildSystem();
+		State& si = model2.initializeState();
+		char num = itteration + '0';
+		Storage set = stateFile;
+		string path = resultDir + "/_JointReactionForces" + num;
+
+		AnalyzeTool tool2(model2);
+		tool2.setStartTime(t0);
+		tool2.setFinalTime(tf);
+		tool2.setResultsDir(path);
+		tool2.setLowpassCutoffFrequency(6);
+		tool2.setStatesFileName(stateFile);
+		cout << stateFile << endl;
+		tool2.setStatesStorage(set);
+
+		tool2.run();
+
+
+
+		////////////
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/// The Forces vectors DATA
+
+		Array<double> tim;
+
+
+
+
+		Array<double> g;
+		Array<string> f;
+
+		Storage  forces(path + "/_Un-named analysis._ReactionLoads.sto");
+		forces.getTimeColumn(tim);
+		//system("pause");
+
+		Array<double> jfx;
+		Array<double> jfy;
+		Array<double> jfz;
+		Array<double> jmx;
+		Array<double> jmy;
+		Array<double> jmz;
+
+		Array<double> jpx;
+		Array<double> jpy;
+		Array<double> jpz;
+		Array<double> jox;
+		Array<double> joy;
+		Array<double> joz;
+
+
+		forces.getDataColumn(joint + "_on_" + bodyname2 + "_in_" + bodyname1 + "_fx", jfx);
+		forces.getDataColumn(joint + "_on_" + bodyname2 + "_in_" + bodyname1 + "_fy", jfy);
+		forces.getDataColumn(joint + "_on_" + bodyname2 + "_in_" + bodyname1 + "_fz", jfz);
+		forces.getDataColumn(joint + "_on_" + bodyname2 + "_in_" + bodyname1 + "_mx", jmx);
+		forces.getDataColumn(joint + "_on_" + bodyname2 + "_in_" + bodyname1 + "_my", jmy);
+		forces.getDataColumn(joint + "_on_" + bodyname2 + "_in_" + bodyname1 + "_mz", jmz);
+
+		//////////I have to take them from other file... the state file .sto has this but we have to set the joints dof../////// do them as vector and the velocities has...
+
+		Storage  motion(stateFile);
+		if (joint1 != "0"){
+			motion.getDataColumn(joint1, jpx);
 		}
-		if (intim != 0){
-			cout << intim << endl;
-		}
-		if (intim == 0){
-			cout << "Give the initialtime end here..." << endl;
-			cin >> intim;
-		}
 
-		for (int i = 0; i < endend; ++i){
-			timefinal[i] = tim[i] - tim[0];//+0.01;//calibration step until 0.01 of two models
-			timefinal[i] = timefinal[i] * 100000;
-			int pat = (int)timefinal[i];
-			timefinal[i] = pat * 0.00001;
-			timefinal[i] = timefinal[i] + intim;
-		}
-		timefinal[0] = 0;
-		
-		///TRANSFORM MATRIX FOR COPERATION/////////////////////////////////////////////////
-		Vector fFx(endend, 1);
-		Vector tFx(endend, 1);
-		Vector fFy(endend, 1);
-		Vector tFy(endend, 1);
-		Vector fFz(endend, 1);
-		Vector tFz(endend, 1);
-		Vector fMx(endend, 1);
-		Vector tMx(endend, 1);
-		Vector fMy(endend, 1);
-		Vector tMy(endend, 1);
-		Vector fMz(endend, 1);
-		Vector tMz(endend, 1);
-		Vector fPx(endend, 1);
-		Vector tPx(endend, 1);
-		Vector fPy(endend, 1);
-		Vector tPy(endend, 1);
-		Vector fPz(endend, 1);
-		Vector tPz(endend, 1);
-		Vector fOx(endend, 1);
-		Vector tOx(endend, 1);
-		Vector fOy(endend, 1);
-		Vector tOy(endend, 1);
-		Vector fOz(endend, 1);
-		Vector tOz(endend, 1);
-
-		for (int i = 0; i < endend; ++i){
-			fFx[i] = femfz[i];
-			tFx[i] = tibfz[i];
-			fFy[i] = femfx[i];
-			tFy[i] = tibfx[i];
-			fFz[i] = femfy[i];
-			tFz[i] = tibfy[i];
-			fMx[i] = femmz[i];
-			tMx[i] = tibmz[i];
-			fMy[i] = femmx[i];
-			tMy[i] = tibmx[i];
-			fMz[i] = femmy[i];
-			tMz[i] = tibmy[i];
-			fPx[i] = fempz[i];
-			tPx[i] = tibpz[i];
-			fPy[i] = fempx[i];
-			tPy[i] = tibpx[i];
-			fPz[i] = fempy[i];
-			tPz[i] = tibpy[i];
-			fOx[i] = femoz[i];
-			tOx[i] = tiboz[i];
-			fOy[i] = femox[i];
-			tOy[i] = tibox[i];
-			fOz[i] = femoy[i];
-			tOz[i] = tiboy[i];
-		}
-
-		//DC offset of position filter!
-		double mean1 = 0;
-		double mean2 = 0;
-		double mean3 = 0;
-		double mean4 = 0;
-		double mean5 = 0;
-		double mean6 = 0;
-		for (int i = 0; i < endend; ++i){
-		        
-			
-			fPx[i] = fPx[i] * 10000;
-			int parast1 = (int)fPx[i];
-			fPx[i] = parast1 * 0.0001;
-			fPy[i] = fPy[i] * 10000;
-			int parasty1 = (int)fPy[i];
-			fPy[i] = parasty1 * 0.0001;
-			fPz[i] = fPz[i] * 10000;
-			int parastz1 = (int)fPz[i];
-			fPz[i] = parastz1 * 0.0001;
-
-			tPx[i] = tPx[i] * 10000;
-			int parast11 = (int)tPx[i];
-			tPx[i] = parast11 * 0.0001;
-			tPy[i] = tPy[i] * 10000;
-			int parasty11 = (int)tPy[i];
-			tPy[i] = parasty11 * 0.0001;
-			tPz[i] = tPz[i] * 10000;
-			int parastz11 = (int)tPz[i];
-			tPz[i] = parastz11 * 0.0001;
-			
-
-				 mean1 = fPz[i] +mean1;
-	
-				 mean2 = fPy[i] + mean2;
-		
-				 mean3 = fPx[i] + mean3;
-		
-				 mean4 = tPz[i] + mean4;
-			
-				 mean5 = tPx[i] + mean5;
-			
-				 mean6 = tPy[i] + mean6;
-			
-		}
-		int mean11 = (mean1 / endend) * 10000;
-		int mean21 = (mean2 / endend) * 10000;
-		int mean31 = (mean3 / endend) * 10000;
-		int mean41 = (mean4 / endend) * 10000;
-		int mean51 = (mean5 / endend) * 10000;
-		int mean61 = (mean6 / endend) * 10000;
-
-		double mean12 = mean11 * 0.0001;
-		double mean22 = mean21 * 0.0001;
-		double mean32 = mean31 * 0.0001;
-		double mean42 = mean41 * 0.0001;
-		double mean52 = mean51 * 0.0001;
-		double mean62 = mean61 * 0.0001;
-		cout << "The DC filter mean values respectively are:  " << endl;
-		cout << "BD1x = " << mean32 << endl;
-		cout << "BD1y = " << mean22 << endl;
-		cout << "BD1z = " << mean12 << endl;
-		cout << "BD2x = " << mean52 << endl;
-		cout << "BD2y = " << mean62 << endl;
-		cout << "BD2z = " << mean42 << endl;
-			
-		for (int i = 0; i < endend; ++i){
-
-			fPz[i] = fPz[i] - (mean12);
-
-			fPy[i] = fPy[i] - (mean22);
-
-			fPx[i] = fPx[i] - (mean32);
-
-			tPz[i] = tPz[i] - (mean42);
-
-			tPx[i] = tPx[i] - (mean52);
-
-			tPy[i] = tPy[i] - (mean62);
-
+		if (joint2 != "0"){
+			motion.getDataColumn(joint2, jpy);
 		}
 
 
-		
+		if (joint3 != "0"){
+			motion.getDataColumn(joint3, jpz);
+		}
+
+		if (joint4 != "0"){
+			motion.getDataColumn(joint4, jox);
+
+		}
+
+		if (joint5 != "0"){
+			motion.getDataColumn(joint5, joy);
+
+
+		}
+
+		if (joint6 != "0"){
+			motion.getDataColumn(joint6, joz);
+
+		}
+for (int i = 0; i < endend; ++i){
+
+		if (joint1 == "0"){
+			fPx[i] = fempx[i] - tibpx[i];
+
+		}
+		if (joint1 != "0"){
+			fPx[i] = -jpx[i];
+		}
+
+		if (joint2 == "0"){
+			fPy[i] = fempy[i] - tibpy[i];
+
+		}
+		if (joint2 != "0"){
+			fPy[i] = -jpy[i];
+		}
+
+		if (joint3 == "0"){
+			fPz[i] = fempz[i] - tibpz[i];
+
+		}
+		if (joint3 != "0"){
+			fPz[i] = -jpz[i];
+		}
+
+
+
+	}
+
+
+	tPx = 0;
+
+	tPy = 0;
+
+	tPz = 0;
+
+
+
+}
 
 		//////////////////////////////////////////////////////////////////////////////
 		////////////////////////////////////ASK IF WANT MOTION DETECTION BASED THE POINT OR BASED THE DOF OF JOINTS//////////////////////////
