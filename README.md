@@ -11,3 +11,6 @@ It is based on FEBio 2.5 The user must define the FEBio variable and to add FEBi
 Run CMake in the root directory.
 # Running
 You can configure your simulation through data/setup.ini, where the path configured by CMake through src/Setting.h. 
+
+# Note 
+If someone needs a manual of software just send me an email and ask it please (mixalis.mamalakis@gmail.com).
