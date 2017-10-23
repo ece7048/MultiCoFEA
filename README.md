@@ -1,8 +1,11 @@
 # MultiCoFEA
 
   A co-operation software between a muskuloskeletal multibody (OpenSim) and finite element (FEBio) analysis software.
+  
   Initial step: set the OpenSim model (.osim) and the FEBio model in setup.ini file in .../data/setup.ini.
+  
   Main step: the user have to set the other variables of the setup.ini file (like the CMC states of motion for the OpenSim model under  observation).
+  
   Final step: build and run the .exe
   
 # Dependency
