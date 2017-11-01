@@ -6,12 +6,8 @@ The MultiCoFEA is implemented  in C++ and it is an opensource code.There are two
 ![Alt Text](hhttps://github.com/ece7048/MultiCoFEA/blob/master/MultiCoFEM/models/knee.gif)
   
  Inline-style: 
-![alt text](hhttps://github.com/ece7048/MultiCoFEA/blob/master/MultiCoFEM/models/knee.gif "Logo Title Text 1")
+![alt text](https://github.com/ece7048/MultiCoFEA/blob/master/MultiCoFEM/models/knee.gif "Logo Title Text 1")
 
-Reference-style: 
-![alt text][logo]
-
-[logo]: https://github.com/ece7048/MultiCoFEA/blob/master/MultiCoFEM/models/knee.gif"Logo Title Text 2"
 
   Initial step: set the OpenSim model (.osim) and the FEBio model in setup.ini file in .../data/setup.ini.
   
