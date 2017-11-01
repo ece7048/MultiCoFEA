@@ -3,7 +3,7 @@
   A co-operation software between a muskuloskeletal multibody (OpenSim) and finite element (FEBio) analysis software.
 The MultiCoFEA is implemented  in C++ and it is an opensource code.There are two choices concerning the musculoskeletal analysis. In both analysis, the trajectory motion of joint’s coordinates are applied as input data. The velocities and forces-moment vectors of joint are computed in first analysis as output data,  contrary to second analysis where the velocities and forces-moment vectors of bones are computed. The user has the choice to regulate some basic characteristics of the musculoskeletal and finite element analysis. Moreover, there is the potentiality for the user to implement a resample of output vector with respect to time so the complexity of the input data of finite element analysis can be reduced, to apply the displacement boundaries of rigid bodies in finite element model manualy or automatically, to tract an efficient time step for the finite element analysis and to have a vision of the motion which the finite element analysis will be reproduced before it solves the geometry. In addition, there is the option by the user to set the finite element analysis be partitioned and solved parallel. These setup file has a .txt format. Lastly, the opensource code creates the XML file of finite element solver and starts the simulation.
 
-<a href="/home/mamalakis/Desktop/knee"><img src="/home/mamalakis/Desktop/knee.gif"/></a>
+![Alt Text](/home/mamalakis/Desktop/knee.gif)
   
 
   Initial step: set the OpenSim model (.osim) and the FEBio model in setup.ini file in .../data/setup.ini.
