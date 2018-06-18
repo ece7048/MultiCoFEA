@@ -15,7 +15,7 @@ The MultiCoFEA is implemented  in C++ and it is an opensource code.There are two
 It is based on OpenSim 3.3. The user must define the OPENSIM_HOME variable and to add OPENSIM_HOME/bin to path.
 It is based on FEBio 2.5 The user must define the FEBio variable and to add FEBio/bin to path.
 #  Building
-Run CMake in the root directory.
+Run CMake in the root directory. In VS2012 build with RelWithDebInfo, set the Co_SiM solution as "Set as StartUp Project"
 # Running
 You can configure your simulation through data/setup.ini, where the path configured by CMake through src/Setting.h. 
 
