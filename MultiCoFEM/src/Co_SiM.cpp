@@ -81,7 +81,7 @@ cout << "" << endl;
 
 	cout << "INITIALIZE MODE...please wait..." << endl;
 
-	string residul = "C:/Users/ece/Desktop/Co_SiM_withFEBiocoding/data/";
+	string residul = "C:/Users/ece/Desktop/MultiCoFEA-master/MultiCoFEM/data/";
 	ifstream std(residul + "setup1.ini");
 	ifstream std2(residul + "setup2.ini");
 	std2.close();
