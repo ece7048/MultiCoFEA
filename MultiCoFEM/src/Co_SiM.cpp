@@ -81,14 +81,14 @@ cout << "" << endl;
 
 	cout << "INITIALIZE MODE...please wait..." << endl;
 
-	string residul = "C:/Users/ece/Desktop/MultiCoFEA-master/MultiCoFEM/data/";
-	ifstream std(residul + "setup1.ini");
-	ifstream std2(residul + "setup2.ini");
+	string residul = BASE_DIR;
+	ifstream std(residul + "/data/setup1.ini");
+	ifstream std2(residul + "/data/setup2.ini");
 	std2.close();
 	std.close();
-	ifstream step1(residul + "setup.ini");
-	ofstream st(residul + "setup1.ini");
-	ofstream st2(residul + "setup2.ini");
+	ifstream step1(residul + "/data/setup.ini");
+	ofstream st(residul + "/data/setup1.ini");
+	ofstream st2(residul + "/data/setup2.ini");
 	string line1;
 
 	for (int i = 0; i < 300; i++)
@@ -130,12 +130,12 @@ cout << "" << endl;
 
 		string grfname = ini.Get("INVERSEKINEMATICS", "GRFNAME", "");
 		string residul6 =  ini.Get("CMC", "RESULT_DIR", "") + "/" + grfname + "_states.sto";
-		ifstream step123(residul + "setup3.ini");
+		ifstream step123(residul + "/data/setup3.ini");
 		step123.close();
 
 
-		ifstream step12(residul + "setup.ini");
-		ofstream step12w(residul + "setup3.ini");
+		ifstream step12(residul + "/data/setup.ini");
+		ofstream step12w(residul + "/data/setup3.ini");
 		string line1;
 		int write = 0;
 		for (int i = 0; i < 300; i++)
@@ -164,17 +164,17 @@ cout << "" << endl;
 
 		step12w.close();
 		step12.close();
-		ifstream stqi(residul + "setup1.ini");
-		ifstream st2qi(residul + "setup2.ini");
-		ifstream st2qwi(residul + "setup.ini");
+		ifstream stqi(residul + "/data/setup1.ini");
+		ifstream st2qi(residul + "/data/setup2.ini");
+		ifstream st2qwi(residul + "/data/setup.ini");
 		stqi.close();
 		st2qi.close();
 		st2qwi.close();
 
-		ifstream step1q(residul + "setup3.ini");
-		ofstream stq(residul + "setup1.ini");
-		ofstream st2q(residul + "setup2.ini");
-		ofstream st2qw(residul + "setup.ini");
+		ifstream step1q(residul + "/data/setup3.ini");
+		ofstream stq(residul + "/data/setup1.ini");
+		ofstream st2q(residul + "/data/setup2.ini");
+		ofstream st2qw(residul + "/data/setup.ini");
 		string line1q;
 
 		for (int i = 0; i < 300; i++)
